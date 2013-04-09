@@ -1,0 +1,138 @@
+{% extends "base.html" %}
+{% block title %}Listes de prix{% endblock title %}
+{% block nav-liste %}<li class="dropdown active">{% endblock nav-liste %}
+{% block content %}
+
+<div class="row-fluid well">
+	<div class="span12">
+		<h3>Machine</h3>
+		<h4>{{ machine.code }}</h4>
+		<table class="table table-striped table-bordered table-condensed">
+			<thead>
+				<tr>
+					<th>Code</th>
+					<th>Description</th>
+					{% if user.is_superuser %}
+					<th>Prix liste ({{ machine.fournisseur.devise.symbole }}&nbsp;{{ machine.fournisseur.devise.codeiso }})</th>
+					<th>Cost ($&nbsp;CAD)</th>
+					{% endif %}
+					<th>Prix vente ($&nbsp;CAD)</th>
+					{% if user.is_superuser %}
+					<th>Profit ($&nbsp;CAD)</th>
+					<th>B.B</th>
+					{% endif %}
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>{{ machine.code }}</td>
+					<td>{{ machine.description }}</td>
+					{% if user.is_superuser %}
+					<td>{{ machine.prixliste }}&nbsp;{{ machine.fournisseur.devise.symbole }}</td>
+					<td>{{ machine.cost }}&nbsp;$</td>
+					{% endif %}
+					<td>{{ machine.plMin }}&nbsp;$</td>
+					{% if user.is_superuser %}
+					<td>{{ machine.profit }}&nbsp;$</td>
+					<td>{{ machine.profit_pourcent }}&nbsp;%</td>
+					{% endif %}
+				</tr>
+			</tbody>
+		</table>
+		{% if machine.options.count != 0 %}
+		<h4>Options</h4>
+		<table class="table table-striped table-bordered table-condensed">
+			<thead>
+				<tr>
+					<th>Choix</th>
+					<th>Code</th>
+					<th>Description</th>
+					{% if user.is_superuser %}
+					<th>Prix liste ({{ machine.fournisseur.devise.symbole }}&nbsp;{{ machine.fournisseur.devise.codeiso }})</th>
+					<th>Cost ($&nbsp;CAD)</th>
+					{% endif %}
+					<th>Prix vente ($&nbsp;CAD)</th>
+					{% if user.is_superuser %}
+					<th>Profit ($&nbsp;CAD)</th>
+					<th>B.B</th>
+					{% endif %}
+				</tr>
+			</thead>
+			<tbody>
+				<form method="post" action="">
+				{% for option in machine.options.all %}
+					<tr>
+						<td>
+							<input {{ option.checked }} id="id_form-{{ forloop.counter0 }}-calcul" name="form-{{ forloop.counter0 }}-calcul" type="checkbox">
+							<input id="id_form-{{ forloop.counter0 }}-id" name="form-{{ forloop.counter0 }}-id" value='{{ option.id }}' type="hidden">
+						</td>
+						<td><input readonly='True' style='width:90px;' id="id_form-{{ forloop.counter0 }}-code" maxlength="100" name="form-{{ forloop.counter0 }}-code" type="text" value="{{ option.code }}"></td>
+						<td>{{ option.description }}</td>
+						{% if user.is_superuser %}
+						<td>{{ option.prixliste }}&nbsp;{{ machine.fournisseur.devise.symbole }}</td>
+						<td>{{ option.cost }}&nbsp;$</td>
+						{% endif %}
+						<td>{{ option.plMin }}&nbsp;$</td>
+						{% if user.is_superuser %}
+						<td>{{ option.profit }}&nbsp;$</td>
+						<td>{{ option.profit_pourcent }}&nbsp;%</td>
+						{% endif %}
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+		{% else %}
+		<p>Aucune option est disponible pour cette machine</p>
+		{% endif %}
+		<table class="table table-striped table-bordered table-condensed">
+			<thead>
+				<tr>
+					<th>Objets</th>
+					{% if user.is_superuser %}
+					<th>Prix liste ({{ machine.fournisseur.devise.symbole }}&nbsp;{{ machine.fournisseur.devise.codeiso }})</th>
+					<th>Cost ($&nbsp;CAD)</th>
+					{% endif %}
+					<th>Prix vente ($&nbsp;CAD)</th>
+					{% if user.is_superuser %}
+					<th>Profit ($&nbsp;CAD)</th>
+					<th>B.B</th>
+					{% endif %}
+				</tr>
+			</thead>
+			<tbody>
+				{% for objet in total.liste %}
+				<tr>
+					<td>{{ objet.code }} : {{ objet.description }}</td>
+					{% if user.is_superuser %}
+					<td>{{ objet.prixliste }}&nbsp;$</td>
+					<td>{{ objet.cost }}&nbsp;$</td>
+					{% endif %}
+					<td>{{ objet.plMin }}&nbsp;$</td>
+					{% if user.is_superuser %}
+					<td>{{ objet.profit }}&nbsp;$</td>
+					<td>{{ objet.profit_pourcent }}&nbsp;%</td>
+					{% endif %}
+				</tr>
+				{% endfor %}
+				<tr>
+					<th>Total:</th>
+					{% if user.is_superuser %}
+					<th>{{ total.prixliste }}&nbsp;$</th>
+					<th>{{ total.cost }}&nbsp;$</th>
+					{% endif %}
+					<th>{{ total.plMin }}&nbsp;$</th>
+					{% if user.is_superuser %}
+					<th>{{ total.profit }}&nbsp;$</th>
+					<th>{{ total.profit_pourcent }}&nbsp;%</th>
+					{% endif %}
+				</tr>
+				<tr>
+					{{ formset.management_form }}
+					<td colspan='{% if user.is_superuser %}5{% else %}1{% endif %}'></td><td><input class="btn" type="submit" value="Calculer" />{% csrf_token %}</td>
+				</tr>
+				</form>
+			</tbody>
+		</table>
+	</div>
+</div>
+{% endblock %}

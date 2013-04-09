@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>GEI | {% block title %}{% endblock title %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- Le styles -->
+    <link href="{{STATIC_URL}}css/bootstrap.css" rel="stylesheet">
+	<style>
+      body {
+        padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
+	  }
+    </style>
+    <link href="{{STATIC_URL}}css/bootstrap-responsive.css" rel="stylesheet">
+	<script type="text/javascript" src="{{STATIC_URL}}js/jquery-1.9.1.min.js"></script>
+	<script type="text/javascript" src="{{STATIC_URL}}js/bootstrap.js"></script>
+	{% block extrahead %}
+    {% endblock extrahead %}
+	<script type="text/javascript">
+    $(document).ready(function(){$('.dropdown-toggle').dropdown()});
+	$(function(){
+    {% block jquery %}
+    {% endblock %}
+    });
+    </script>
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    
+	
+</head>
+
+<body>
+	{% block nav %}
+	<div class="navbar navbar-inverse navbar-fixed-top">
+	  <div class="navbar-inner">
+		<div class="container">
+		  <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+		  </a>
+		  <a class="brand" href="/">GEI</a>
+		  <div class="nav-collapse">
+			<ul class="nav">
+			  {% block nav-home %}<li>{% endblock nav-home %}<a href="/"><i class="icon-home"></i> Accueil</a></li>	  
+			  {% block nav-eci %}<li class="dropdown">{% endblock nav-eci  %}
+				  <a data-toggle="dropdown" class="dropdown-toggle" href="#">EuGénie Canada Inc. <b class="caret"></b></a>
+				  <ul class="dropdown-menu">
+					<li class="dropdown-submenu">
+					  <a href="#">Feuilles de temps</a>
+					  <ul class="dropdown-menu">
+						{% if perms.feuilledetemps.add_bloc %}<li><a href="{% url 'feuilledetemps.views.add_blocs' %}">Ajouter des blocs de temps</a></li>{% endif %}
+						{% if perms.feuilledetemps.add_bloc_banque %}<li><a href="{% url 'feuilledetemps.views.add_blocs_banque' %}">Ajouter des heures dans la banque</a></li>{% endif %}
+					  </ul>
+					</li>
+					<li class="dropdown-submenu">
+					  <a href="#">Rapports</a>
+					  <ul class="dropdown-menu">
+						<li><a href="{% url 'feuilledetemps.views.index' %}">Index</a></li>
+						<li><a href="{% url 'feuilledetemps.views.listerapports' %}">Projets</a></li>
+						<li><a href="{% url 'feuilledetemps.views.listetaches' %}">Tâches</a></li>
+						<li><a href="{% url 'feuilledetemps.views.listeemployes' %}">Employés</a></li>
+						<li><a href="{% url 'feuilledetemps.views.liste_clients' %}">Clients</a></li>
+					  </ul>
+					</li>
+				  </ul>
+			  </li>
+			  {% block nav-jrc %}<li class="dropdown">{% endblock nav-jrc  %}
+				  <a data-toggle="dropdown" class="dropdown-toggle" href="#">JRC Machineries Inc. <b class="caret"></b></a>
+				  <ul class="dropdown-menu">
+					<li class="dropdown-submenu">
+					  <a href="#">Feuilles de temps</a>
+					  <ul class="dropdown-menu">
+						{% if perms.feuilledetemps.add_bloc %}<li><a href="#">Ajouter des blocs de temps</a></li>{% endif %}
+						{% if perms.feuilledetemps.add_bloc_banque %}<li><a href="#">Ajouter des heures dans la banque</a></li>{% endif %}
+					  </ul>
+					</li>
+					<li class="dropdown-submenu">
+					  <a href="#">Rapports</a>
+					  <ul class="dropdown-menu">
+						<li><a href="#">Index</a></li>
+						<li><a href="#">Projets</a></li>
+						<li><a href="#">Tâches</a></li>
+						<li><a href="#">Employés</a></li>
+						<li><a href="#">Clients</a></li>
+					  </ul>
+					</li>
+				  </ul>
+			  </li>
+			  {% block nav-tpe %}<li class="dropdown">{% endblock nav-tpe  %}
+				  <a data-toggle="dropdown" class="dropdown-toggle" href="#">Techno-Pro Expert Inc. <b class="caret"></b></a>
+				  <ul class="dropdown-menu">
+					<li class="dropdown-submenu">
+					  <a href="#">Feuilles de temps</a>
+					  <ul class="dropdown-menu">
+						{% if perms.feuilledetemps.add_bloc %}<li><a href="#">Ajouter des blocs de temps</a></li>{% endif %}
+						{% if perms.feuilledetemps.add_bloc_banque %}<li><a href="#">Ajouter des heures dans la banque</a></li>{% endif %}
+					  </ul>
+					</li>
+					<li class="dropdown-submenu">
+					  <a href="#">Rapports</a>
+					  <ul class="dropdown-menu">
+						<li><a href="#">Index</a></li>
+						<li><a href="#">Projets</a></li>
+						<li><a href="#">Tâches</a></li>
+						<li><a href="#">Employés</a></li>
+						<li><a href="#">Clients</a></li>
+					  </ul>
+					</li>
+				  </ul>
+				</li>
+				{% block nav-liste %}<li class="dropdown">{% endblock nav-liste  %}
+					<a data-toggle="dropdown" class="dropdown-toggle" href="#">Liste de prix <b class="caret"></b></a>
+					<ul class="dropdown-menu">
+						<li><a href="{% url 'machines.views.liste_fournisseurs' %}">Fournisseurs</a></li>
+					</ul>
+				</li>
+			</ul>
+			<ul class="nav pull-right">
+			<li class="dropdown">
+				<a href="#" class="dropdown-toggle" data-toggle="dropdown">{% filter force_escape %}{% firstof user.first_name user.username user.get_short_name user.get_username %}{% endfilter %} <b class="caret"></b></a>
+				<ul class="dropdown-menu">
+				  {% if user.is_staff %}<li><a href="/admin">Administration</a></li>{% endif %}
+				  <li><a href="/accounts/password_change">Changer le mot de passe</a></li>
+				  <li><a href="/accounts/logout">Déconnecter</a></li>
+				</ul>
+			</li>
+			</ul>
+		  </div><!-- /.nav-collapse -->
+		</div><!-- /.container -->
+	  </div><!-- /.navbar-inner -->
+	</div><!-- /.navbar -->
+	{% endblock nav %}
+	
+    <div id="messages">
+      {% if messages %}
+        {% for message in messages %}
+          <div class="alert alert-{{message.tags}}">
+            <a class="close" data-dismiss="alert">×</a>
+            {{message}}
+          </div>
+        {% endfor %}
+      {% endif %}
+    </div>
+
+    <div class="container">
+    {% block content %}
+    {% endblock content %}
+    </div> <!-- /container -->
+</body>
+</html>

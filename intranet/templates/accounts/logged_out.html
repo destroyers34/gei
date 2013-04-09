@@ -1,0 +1,8 @@
+{% extends "accounts/base.html" %}
+
+{% block content %}
+<section class="loginform cf">
+<p>You have been logged out.</p>
+<a href="{% url 'django.contrib.auth.views.login' %}">Login again</a>
+<section>
+{% endblock %}

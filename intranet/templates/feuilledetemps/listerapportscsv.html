@@ -1,0 +1,54 @@
+﻿<table>
+	<tr>
+		<th colspan=5>Projets Actifs</th>
+	</tr>
+    <tr>
+        <th>Projet</th>
+        <th>Client</th>
+		<th>Budget MAT</th>
+		<th>Budget MO</th>
+		<th>Temps</th>
+    </tr>
+    {% for f in rapport_actif %}
+	<tr>
+		<td>{{f.projet__numero}} {{f.projet__nom}} {{f.projet__modele}}</td>
+		<td>{{f.projet__client__compagnie}}</td>
+		<td>{{f.projet__budget_mat}}</td>
+		<td>{{f.projet__budget_mo}}</td>
+		<td>{{f.heure}}</td>
+	</tr>
+{% endfor %}
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+	<th>Total:</th>
+	<td>{{total_actif.total}}</td>
+</tr>
+<tr>
+		<th colspan=5>Projets Inactifs</th>
+	</tr>
+    <tr>
+        <th>Projet</th>
+        <th>Client</th>
+		<th>Budget MAT</th>
+		<th>Budget MO</th>
+		<th>Temps</th>
+    </tr>
+    {% for f in rapport_inactif %}
+	<tr>
+		<td>{{f.projet__numero}} {{f.projet__nom}} {{f.projet__modele}}</td>
+		<td>{{f.projet__client__compagnie}}</td>
+		<td>{{f.projet__budget_mat}}</td>
+		<td>{{f.projet__budget_mo}}</td>
+		<td>{{f.heure}}</td>
+	</tr>
+{% endfor %}
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+	<th>Total:</th>
+	<td>{{total_inactif.total}}</td>
+</tr>
+</table>

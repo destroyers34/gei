@@ -1,0 +1,22 @@
+﻿<table>
+    <tr>Rapport de temps {% if date_debut != null %} du {{date_debut}} au {{date_fin}}{% endif %}</tr>
+	<tr>
+		<th>Date</th>
+		<th>Employé</th>
+		<th>Numéro de projet</th>
+		<th>Tâche</th>
+		<th>Temps</th>
+	</tr>
+	{% for f in blocs %}
+	<tr>
+		<td>{{f.date}}</td>
+		<td>{{f.employe__user__first_name}} {{f.employe__user__last_name}}</td>
+		<td>{{f.projet__numero}} {{f.projet__nom}} {{f.projet__modele}}</td>
+		<td>{{f.tache__numero}} {{f.tache__description}}</td>
+		<td>{{f.temps}}</td>
+ 	</tr>
+	{% endfor %}
+	<tr>
+		<td colspan='3'></td><th>Total:</th><td>{{total.total}}</td>
+	</tr>
+</table>

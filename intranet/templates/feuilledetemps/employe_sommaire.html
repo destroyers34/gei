@@ -1,0 +1,44 @@
+﻿{% extends "base.html" %}
+{% block title %}Rapports{% endblock title %}
+{% block nav-eci %}<li class="dropdown active">{% endblock nav-eci %}
+{% block content %}
+<div class="row-fluid well">
+	<div class="span12">
+		<h4>Rapport de temps</h4>
+		<h3>{{employe.first_name}} {{employe.last_name}}</h3>
+		<table class="table table-striped table-bordered table-condensed">
+			<thead>
+				<tr>
+					<th>Numéro du projet</th>
+					<th>Tâche</th>
+					<th>Temps (Heures)</th>
+				</tr>
+			</thead>
+			<tfoot>
+				<tr>
+					<td></td><th>Total:</th><th>{{total.total}}</th>
+				</tr>
+				<tr>
+					<td colspan='3'><a href='getcsv'>Télécharger en format Excel</a></td>
+				</tr>
+			</tfoot>
+			<tbody>
+		{% for f in blocs %}
+			<tr>
+				<td rowspan='{{f.tache_projet|length}}'><a href='{% url 'feuilledetemps.views.rapportdetail' f.projet__numero %}'>{{f.projet__numero}} {{f.projet__nom}} {{f.projet__modele}}</a></td>
+				{% for t in f.tache_projet %}
+					<td><a href='{% url 'feuilledetemps.views.tachedetail' t.tache__numero %}'>{{ t.tache__numero }} {{ t.tache__description }}</a></td>
+					<td>{{ t.heure_tache }}</td>
+					</tr>
+					<tr>
+				{% endfor %}
+				<td></td>
+				<th>Total {{f.projet__numero}} :</th>
+				<th>{{ f.heure }}</th>
+			</tr>
+		{% endfor %}
+		</tbody>
+		</table>
+	</div>
+</div>
+{% endblock %}

@@ -1,0 +1,19 @@
+﻿<table>
+<tr>
+	<th>Numéro de tâche</th>
+	<th>Description</th>
+	<th>Temps Total</th>
+</tr>
+{% for f in blocs %}
+<tr>
+	<td>{{f.tache__numero}}</td>
+	<td>{{f.tache__description}}</td>
+	<td>{{f.heure}}</td>
+</tr>
+{% endfor %}
+<tr>
+	<td></td>
+	<th>Total:</th>
+	<td>{{total.total}}</td>
+</tr>
+</table>

@@ -1,0 +1,24 @@
+﻿
+		<table>
+		<caption>Rapport de projet par client</caption>
+			<tr>
+				<th>Clients</th>
+				<th>Numéros</th>
+				<th>Noms</th>
+				<th>Modèles</th>
+			</tr>
+		{% for clients in liste_clients %}
+			<tr>
+			<td>{{clients.compagnie}}</td>
+			{% for projets in clients.liste_projets %}
+				{% if forloop.first %}{% else %}
+				<td></td>
+				{% endif %}
+				<td><a href'{% url 'feuilledetemps.views.rapportdetail' projets.numero %}'>{{ projets.numero }}</a></td>
+				<td><a href'{% url 'feuilledetemps.views.liste_nom_projet' projets.nom %}'>{{ projets.nom }}</td>
+				<td><a href'{% url 'feuilledetemps.views.liste_modele_projet' projets.nom projets.modele %}'>{{ projets.modele }}</td>
+				</tr>
+				<tr>
+			{% endfor %}
+		{% endfor %}
+		</table>

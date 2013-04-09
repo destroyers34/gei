@@ -1,0 +1,22 @@
+﻿<table>
+	<tr>
+		<th>Numéro de projet</th>
+		<th>Tâche</th>
+		<th>Employé</th>
+		<th>Temps</th>
+	</tr>
+{% for f in rapport %}
+	<tr>
+		<td>{{ numero_projet }} {{f.projet__nom}} {{f.projet__modele}}</td>
+		<td>{{ numero_tache }} {{f.tache__description}}</td>
+		<td>{{f.employe__user__first_name}} {{f.employe__user__last_name}}</td>
+		<td>{{f.heure}}</td>
+ 	</tr>
+{% endfor %}
+	<tr>
+		<td></td>
+		<td></td>
+		<th>Total:</th>
+		<td>{{total.total}}</td>
+	</tr>
+</table>

@@ -1,0 +1,49 @@
+﻿{% extends "base.html" %}
+{% block title %}Rapports{% endblock title %}
+{% block extrahead %}
+<link rel="stylesheet" href="{{STATIC_URL}}css\datepicker.css" />
+<script type="text/javascript" src="{{STATIC_URL}}js/bootstrap-datepicker.js"></script>
+<script type="text/javascript" src="{{STATIC_URL}}js/jquery.formset.js"></script>
+{% endblock extrahead %}
+{% block jquery %}
+$('#blocForm tbody tr').formset({prefix: '{{ formset.prefix }}',added: function(row) {row.find(".date").datepicker({format: 'yyyy-mm-dd'});}, load: function(row) {row.find(".date").datepicker({format: 'yyyy-mm-dd'});}});
+$('.date').datepicker({format: 'yyyy-mm-dd'});
+{% endblock jquery %}
+{% block nav-eci %}<li class="dropdown active">{% endblock nav-eci %}
+{% block content %}
+<div class="row-fluid well">
+	<div class="span12">
+		<h4>Formulaire d'ajout de temps dans la banque d'heure</h4>
+		<form id="blocForm" class="form-inline" method="post" action="">{% csrf_token %}
+			<table>
+			<thead>
+				<tr>
+					<th>Employé</th>
+					<th>Date</th>
+					<th>Projet</th>
+					<th>Tache</th>
+					<th>Temps</th>
+				</tr>
+			</thead>
+			<tbody>
+			{% for form in formset %}
+		{{ form.errors }}
+				{{ form.id }}
+				<tr>
+					<td>{{ form.employe }}</td>
+					<td><input class='date' type="text" name="{{ form.date.html_name }}" id="id_{{ form.date.html_name }}" /></td>
+					<td>{{ form.projet }}</td>
+					<td>{{ form.tache }}</td>
+					<td>{{ form.temps }}</td>
+					<td></td>
+				</tr>
+			{% endfor %}
+			</tbody>
+			</table>
+			{{ formset.management_form }}
+			<br />
+			<p><input class="btn" type="submit" value="Sauvegarder" /></p>
+		</form>
+	</div>
+</div>
+{% endblock %}

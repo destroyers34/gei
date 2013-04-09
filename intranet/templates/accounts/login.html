@@ -1,0 +1,21 @@
+﻿{% extends "accounts/base.html" %}
+{% block content %}
+<section class="loginform cf">
+{% if form.errors %}
+<p>Erreur d'authentification</p>
+{% endif %}
+<form name="login" action="{% url 'django.contrib.auth.views.login' %}" method="post" ">
+	<ul>
+	{% csrf_token %}
+  {% for field in form %}
+		<li><label>{{ field.label }}</label>   {{ field }}</li>
+		{% endfor %}
+		<li>
+		<input type="submit" value="Login"></li>
+	</ul>
+	<input type="hidden" name="next" value="/" />
+</form>
+</section>
+{% endblock %}
+
+

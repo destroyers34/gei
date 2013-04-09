@@ -1,0 +1,173 @@
+﻿{% extends "base.html" %}
+{% block title %}Rapports{% endblock title %}
+{% block extrahead %}
+<link rel="stylesheet" href="{{STATIC_URL}}css\datepicker.css" />
+<script type="text/javascript" src="{{STATIC_URL}}js/bootstrap-datepicker.js"></script>
+{% endblock extrahead %}
+{% block jquery %}
+$( "#datepicker1" ).datepicker({format: 'yyyy-mm-dd'});
+$( "#datepicker2" ).datepicker({format: 'yyyy-mm-dd'});
+$('#myTab a').click(function (e) {
+  e.preventDefault();
+  $(this).tab('show');
+})
+{% endblock jquery %}
+{% block nav-eci %}<li class="dropdown active">{% endblock nav-eci %}
+{% block content %}
+<div class="row-fluid well">
+	<div class="span12"> 
+		<h4>Rapport de temps de chacun des projets</h3>
+		<ul class="nav nav-tabs" id="myTab">
+		  <li><a href="#attente">En Attente</a></li>
+		  <li class="active"><a href="#actif">En Cours</a></li>
+		  <li><a href="#inactif">Compléter</a></li>
+		</ul>
+
+		<div class="tab-content">
+		<div class="tab-pane attente" id="attente">
+			  <table class="table table-striped table-bordered table-condensed">
+				<caption>Projets en attentes</caption>
+				<thead>
+					<tr>
+						<th>Numéro</th>
+						<th>Nom</th>
+						<th>Modèle</th>
+						<th>Client</th>
+						<th>Budget MAT</th>
+						<th>Budget MO (Heures)</th>
+					</tr>
+				</thead>
+				<tfoot>
+					<tr>
+						<td colspan='3'></td>
+						<th>Total:</th>
+						<th>{{ projets_attente.total_mat }} $</th>
+						<th>{{ projets_attente.total_mo }}</th>
+					</tr>
+					<tr>
+						<td colspan='6'><a href='getcsv'>Télécharger .xls</a></td>
+					</tr>
+				</tfoot>
+				<tbody>
+			{% for projet in projets_attente.projets %}
+				<tr>
+				<td>{{projet.numero}}</td>
+				<td>{{projet.nom}}</td>
+				<td>{{projet.modele}}</td>
+				<td>{{projet.client.compagnie}}</td>
+				<td>{{projet.budget_mat}} $</td>
+				<td>{{projet.budget_mo}}</td>
+				</tr>
+			{% endfor %}
+			</tbody>
+			</table>
+		  </div>
+		  
+		  <div class="tab-pane active" id="actif">
+			  <table class="table table-striped table-bordered table-condensed">
+				<caption>Projets actifs</caption>
+				<thead>
+					<tr>
+						<th>Numéro</th>
+						<th>Nom</th>
+						<th>Modèle</th>
+						<th>Client</th>
+						<th>Budget MAT</th>
+						<th>Budget MO (Heures)</th>
+						<th>Temps (Heures)</th>
+						<th>% MO</th>
+						<th>Jours Restant</th>
+					</tr>
+				</thead>
+				<tfoot>
+					<tr>
+						<td colspan='3'></td>
+						<th>Total:</th>
+						<th>{{total_budget_actif.0.total_budget_mat}} $</th>
+						<th>{{total_budget_actif.0.total_budget_mo}}</th>
+						<th>{{total_actif.total}}</th>
+						<th>{{total_pourcent}} %</th>
+						<th>{{total_actif.jours_travail}} jours de 8h</th>
+					</tr>
+					<tr>
+						<td colspan='9'><a href='getcsv'>Télécharger .xls</a></td>
+					</tr>
+				</tfoot>
+				<tbody>
+			{% for f in rapport_actif %}
+				<tr>
+				<td><a href='{% url 'feuilledetemps.views.rapportdetail' f.projet__numero %}'>{{f.projet__numero}}</a></td>
+				<td><a href='{% url 'feuilledetemps.views.liste_nom_projet' f.projet__nom %}'>{{f.projet__nom}}</a></td>
+				<td><a href='{% url 'feuilledetemps.views.liste_modele_projet' f.projet__nom f.projet__modele %}'>{{f.projet__modele}}</a></td>
+				<td><a href='../clients/{{f.projet__client__id }}'>{{f.projet__client__compagnie}}</a></td>
+				<td>{{f.projet__budget_mat}} $</td>
+				<td>{{f.projet__budget_mo}}</td>
+				<td>{{f.heure}}</td>
+				<td>{{f.pourcent}} %</td>
+				<td>{{ f.jour_debut }} {{ f.jour_fin }} {{ f.jours_restant }}</td>
+				</tr>
+			{% endfor %}
+			</tbody>
+			</table>
+		  </div>
+		  
+		  <div class="tab-pane" id="inactif">
+			  <table class="table table-striped table-bordered table-condensed">
+				<caption>Projets inactifs</caption>
+				<thead>
+					<tr>
+						<th>Numéro</th>
+						<th>Nom</th>
+						<th>Modèle</th>
+						<th>Client</th>
+						<th>Budget MAT</th>
+						<th>Budget MO (Heures)</th>
+						<th>Temps (Heures)</th>
+						<th>% MO</th>
+					</tr>
+				</thead>
+				<tfoot>
+					<tr>
+						<td colspan='5'></td><th>Total:</th><th>{{total_inactif.total}}</th><td></td>
+					</tr>
+					<tr>
+						<td colspan='8'><a href='getcsv'>Télécharger .xls</a></td>
+					</tr>
+				</tfoot>
+				<tbody>
+			{% for f in rapport_inactif %}
+				<tr>
+				<td><a href='{% url 'feuilledetemps.views.rapportdetail' numero_projet=f.projet__numero %}'>{{f.projet__numero}}</a></td>
+				<td><a href='{% url 'feuilledetemps.views.liste_nom_projet' f.projet__nom %}'>{{f.projet__nom}}</a></td>
+				<td><a href='{% url 'feuilledetemps.views.liste_modele_projet' f.projet__nom f.projet__modele %}'>{{f.projet__modele}}</a></td>
+				<td><a href='../clients/{{f.projet__client__id }}'>{{f.projet__client__compagnie}}</a></td>
+				<td>{{f.projet__budget_mat}} $</td>
+				<td>{{f.projet__budget_mo}}</td>
+				<td>{{f.heure}}</td>
+				<td>{{f.pourcent}} %</td>
+				</tr>
+			{% endfor %}
+			</tbody>
+			</table>
+		  </div>
+		</div>
+  </div>
+</div>
+<div class="row-fluid well">
+	<div class="span12">
+		<form class="form-inline" action="" method="post">{% csrf_token %}
+			<p>Affichez les blocs de temps de l'intervalle suivant:</p>
+			<p><label for="id_projet">Projet:</label>
+			{{ form.projet }}
+			<label for="datepicker1">Date début:</label>
+			<input class="input-small" id="datepicker1" type="text" name="date_debut" />
+			<label for="datepicker2"> Date fin:</label>
+			<input class="input-small" type="text" name="date_fin" id="datepicker2" value="{{ date }}" />
+			<input class="btn" type="submit" value="Rechercher" /></p>
+			{% if form.errors %}
+			<p>Vous n'avez pas remplie les champs correctement</p>
+			{% endif %}
+		</form>
+	</div>
+</div>
+{% endblock %}

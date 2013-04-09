@@ -1,0 +1,48 @@
+﻿{% extends "base.html" %}
+{% block title %}Rapports{% endblock title %}
+{% block nav-eci %}<li class="dropdown active">{% endblock nav-eci %}
+{% block content %}
+<div class="row-fluid well">
+	<div class="span12">
+		<h4>Rapport de temps des machines</h4>
+		<h3>{{ nom_projet }}</h3>
+		<table class="table table-bordered table-striped">
+		<thead>
+			<tr>
+				<th>Modèle</th>
+				<th>Projets</th>
+				<th>Temps</th>
+			</tr>
+		</thead>
+		<tfoot>
+			<tr>
+				<td></td><th>Total:</th><th>{{total.total}}</th>
+			</tr>
+			<tr>
+				<!-- <td colspan='3'><a href='getcsv'>Télécharger .xls</a></td> -->
+			</tr>
+		</tfoot>
+		<tbody>
+		{% for f in blocs %}
+			<tr>
+			<td rowspan='{{f.liste_projet|length}}'><a href='{% url 'feuilledetemps.views.liste_modele_projet' nom_projet=nom_projet modele_projet=f.projet__modele %}'>{{f.projet__modele}}</a></td>
+			{% for p in f.liste_projet %}
+				<td><a href='{% url 'feuilledetemps.views.rapportdetail' p.projet__numero %}'>{{ p.projet__numero }}</a></td>
+				<td>{{ p.heure_modele }}</td>
+				</tr>
+				<tr>
+			{% endfor %}
+				<td></td>
+				<th>Moyenne {{f.projet__modele}} :</th>
+				<th>{{ f.moyenne }}</th>
+			</tr>
+			<tr>
+				<td></td>
+				<th>Total {{f.projet__modele}} :</th>
+				<th>{{ f.heure }}</th>
+		{% endfor %}
+		</tbody>
+		</table>
+	</div>
+</div>
+{% endblock %}
