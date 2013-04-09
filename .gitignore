@@ -1,0 +1,7 @@
+#ignore thumbnails created by windows
+Thumbs.db
+#Ignore django created file
+*.log
+*.pot
+*.pyc
+local_settings.py
