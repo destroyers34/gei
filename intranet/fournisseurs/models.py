@@ -1,5 +1,4 @@
 ﻿from django.db import models
-from decimal import *
 
 class Devise(models.Model):
     nom = models.CharField(max_length=100)
