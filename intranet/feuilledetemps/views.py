@@ -404,8 +404,22 @@ def liste_nom_projet(request, nom_projet):
         b.update({'liste_projet' : liste_projet, 'moyenne':moyenne})
     return render(request, 'feuilledetemps/liste_nom_projet.html', {'blocs': blocs, 'total':total, 'nom_projet':nom_projet})
 
-#@permission_required('feuilledetemps.afficher_rapport_temps')
-#def liste_nom_projet_csv(request, nom_projet):    
+@permission_required('feuilledetemps.afficher_rapport_temps')
+def liste_nom_projet_csv(request, nom_projet):    
+    blocs = Bloc.objects.filter(projet__nom=nom_projet).values('projet__modele').annotate(heure=Sum('temps'))
+    total = Bloc.objects.filter(projet__nom=nom_projet).aggregate(total=Sum('temps'))
+    for b in blocs:
+        liste_projet = Bloc.objects.filter(projet__nom=nom_projet,projet__modele=b['projet__modele']).values('projet__numero').annotate(heure_modele=Sum('temps')).order_by('projet__numero')
+        liste_temps_projets = list()
+        for projet in liste_projet:
+            liste_temps_projets.append(projet['heure_modele'])
+        moyenne = format(reduce(lambda x, y: x + y, liste_temps_projets) / len(liste_temps_projets), '.2f')
+        b.update({'liste_projet' : liste_projet, 'moyenne':moyenne})
+    response = render_to_response("feuilledetemps/liste_nom_projet_csv.html", {'blocs': blocs, 'total':total, 'nom_projet':nom_projet})
+    filename = "Rapport des projets de nom %s %s.xls" % (nom_projet,datetime.now().strftime("%Y-%m-%d"))
+    response['Content-Disposition'] = 'attachment; filename='+filename
+    response['Content-Type'] = 'application/vnd.ms-excel; charset=utf-8'
+    return response   
     
 @permission_required('feuilledetemps.afficher_rapport_temps')    
 def liste_modele_projet(request, nom_projet, modele_projet):
@@ -416,11 +430,24 @@ def liste_modele_projet(request, nom_projet, modele_projet):
         liste_temps_projets.append(b['heure'])
         liste_tache = Bloc.objects.filter(projet__nom=nom_projet,projet__modele=modele_projet,projet__numero=b['projet__numero']).values('tache__numero','tache__description').annotate(heure_tache=Sum('temps')).order_by('tache__numero')
         b.update({'liste_tache' : liste_tache})
-    moyenne = reduce(lambda x, y: x + y, liste_temps_projets) / len(liste_temps_projets)
+    moyenne = format(reduce(lambda x, y: x + y, liste_temps_projets) / len(liste_temps_projets), '.2f')
     return render(request, 'feuilledetemps/liste_modele_projet.html', {'blocs': blocs, 'total':total, 'nom_projet':nom_projet, 'modele_projet':modele_projet, 'moyenne':moyenne})
 
-#@permission_required('feuilledetemps.afficher_rapport_temps')    
-#def liste_modele_projet_csv(request, nom_projet, modele_projet):
+@permission_required('feuilledetemps.afficher_rapport_temps')    
+def liste_modele_projet_csv(request, nom_projet, modele_projet):
+    blocs = Bloc.objects.filter(projet__nom=nom_projet,projet__modele=modele_projet).values('projet__numero').annotate(heure=Sum('temps')).order_by('projet__numero')
+    total = Bloc.objects.filter(projet__nom=nom_projet,projet__modele=modele_projet).aggregate(total=Sum('temps'))
+    liste_temps_projets = list()
+    for b in blocs:
+        liste_temps_projets.append(b['heure'])
+        liste_tache = Bloc.objects.filter(projet__nom=nom_projet,projet__modele=modele_projet,projet__numero=b['projet__numero']).values('tache__numero','tache__description').annotate(heure_tache=Sum('temps')).order_by('tache__numero')
+        b.update({'liste_tache' : liste_tache})
+    moyenne = format(reduce(lambda x, y: x + y, liste_temps_projets) / len(liste_temps_projets), '.2f')
+    response = render_to_response("feuilledetemps/liste_modele_projet_csv.html", {'blocs': blocs, 'total':total, 'nom_projet':nom_projet, 'modele_projet':modele_projet, 'moyenne':moyenne})
+    filename = "Rapport des projets %s %s %s.xls" % (nom_projet,modele_projet,datetime.now().strftime("%Y-%m-%d"))
+    response['Content-Disposition'] = 'attachment; filename='+filename
+    response['Content-Type'] = 'application/vnd.ms-excel; charset=utf-8'
+    return response   
     
 @permission_required('feuilledetemps.afficher_rapport_temps')    
 def liste_clients(request):
@@ -445,5 +472,22 @@ def liste_clients_csv(request):
 @permission_required('feuilledetemps.afficher_rapport_temps')    
 def client_details(request, client_id):
     client = Client.objects.get(id=client_id)
-    return render(request, 'feuilledetemps/client_details.html', {'client':client})    
+    liste_projets = list()
+    for projet in client.projet_set.all():
+        heures = Bloc.objects.filter(projet=projet).aggregate(total=Sum('temps'))
+        liste_projets.append({'projet':projet,'heures':heures})
+    return render(request, 'feuilledetemps/client_details.html', {'client':client,'liste_projets':liste_projets})
+
+@permission_required('feuilledetemps.afficher_rapport_temps')    
+def client_details_csv(request, client_id):
+    client = Client.objects.get(id=client_id)
+    liste_projets = list()
+    for projet in client.projet_set.all():
+        heures = Bloc.objects.filter(projet=projet).aggregate(total=Sum('temps'))
+        liste_projets.append({'projet':projet,'heures':heures})
+    response = render_to_response("feuilledetemps/client_details_csv.html", {'client':client,'liste_projets':liste_projets})
+    filename = "Rapport des projets %s %s.xls" % (client.compagnie,datetime.now().strftime("%Y-%m-%d"))
+    response['Content-Disposition'] = 'attachment; filename='+filename
+    response['Content-Type'] = 'application/vnd.ms-excel; charset=utf-8'
+    return response    
     

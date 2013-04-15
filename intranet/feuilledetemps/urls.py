@@ -14,6 +14,7 @@ urlpatterns = patterns('feuilledetemps.views',
     url(r'^eci/rapports/clients/getcsv/$', 'liste_clients_csv'),
 
     url(r'^eci/rapports/clients/(?P<client_id>\d+)/$', 'client_details'),
+    url(r'^eci/rapports/clients/(?P<client_id>\d+)/getcsv/$', 'client_details_csv'),
 
     url(r'^eci/rapports/(?P<date_debut>\d{4}-\d{2}-\d{2})/(?P<date_fin>\d{4}-\d{2}-\d{2})/$', 'listeblocs'),
     url(r'^eci/rapports/(?P<date_debut>\d{4}-\d{2}-\d{2})/(?P<date_fin>\d{4}-\d{2}-\d{2})/getcsv/$', 'listeblocs_csv'),
@@ -22,8 +23,10 @@ urlpatterns = patterns('feuilledetemps.views',
     url(r'^eci/rapports/projets/getcsv/$', 'listerapports_csv'),
     
     url(r'^eci/rapports/projets-noms/(?P<nom_projet>\w+)/$', 'liste_nom_projet'),
+    url(r'^eci/rapports/projets-noms/(?P<nom_projet>\w+)/getcsv/$', 'liste_nom_projet_csv'),
     
     url(r'^eci/rapports/projets-noms/(?P<nom_projet>\w+)/(?P<modele_projet>[-A-Za-z0-9_]+)/$', 'liste_modele_projet'),
+    url(r'^eci/rapports/projets-noms/(?P<nom_projet>\w+)/(?P<modele_projet>[-A-Za-z0-9_]+)/getcsv/$', 'liste_modele_projet_csv'),
     
     url(r'^eci/rapports/projets/(?P<numero_projet>[-A-Za-z0-9_]+)/$', 'rapportdetail'),
     url(r'^eci/rapports/projets/(?P<numero_projet>[-A-Za-z0-9_]+)/getcsv/$', 'rapportdetail_csv'),

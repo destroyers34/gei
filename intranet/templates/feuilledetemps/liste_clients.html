@@ -12,6 +12,7 @@
 				<th>Numéros</th>
 				<th>Noms</th>
 				<th>Modèles</th>
+				
 			</tr>
 		</thead>
 		<tfoot>
@@ -24,9 +25,10 @@
 			<tr>
 			<td rowspan='{{clients.liste_projets|length}}'><a href='{% url 'feuilledetemps.views.client_details' clients.id %}'>{{clients.compagnie}}</a></td>
 			{% for projets in clients.liste_projets %}
-				<td><a href='{% url 'feuilledetemps.views.rapportdetail' projets.numero %}'>{{ projets.numero }}</a></td>
-				<td><a href='{% url 'feuilledetemps.views.liste_nom_projet' projets.nom %}'>{{ projets.nom }}</td>
-				<td><a href='{% url 'feuilledetemps.views.liste_modele_projet' projets.nom projets.modele %}'>{{ projets.modele }}</td>
+				<td><a href="{% url 'feuilledetemps.views.rapportdetail' projets.numero %}">{{ projets.numero }}</a></td>
+				<td><a href="{% url 'feuilledetemps.views.liste_nom_projet' projets.nom %}">{{ projets.nom }}</a></td>
+				<td><a href="{% url 'feuilledetemps.views.liste_modele_projet' projets.nom projets.modele %}">{{ projets.modele }}</a></td>
+				
 				</tr>
 				<tr>
 			{% endfor %}

@@ -1,0 +1,31 @@
+﻿		<h4>Rapport de temps des machines</h4>
+		<h3>{{ nom_projet }} {{ modele_projet }}</h3>
+		<table>
+			<tr>
+				<th>Projets</th>
+				<th>Tâches</th>
+				<th>Temps (Heures)</th>
+			</tr>
+		{% for f in blocs %}
+			<tr>
+			<td rowspan='{{f.liste_tache|length}}'>{{f.projet__numero}}</td>
+			{% for t in f.liste_tache %}
+				<td>{{ t.tache__numero }} {{ t.tache__description }}</td>
+				<td>{{ t.heure_tache }}</td>
+				</tr>
+				<tr>
+				{% if forloop.last %}
+				<td></td>
+				<th>Total {{ f.projet__numero }} : </th>
+				<th>{{ f.heure }}</th>
+				{% endif %}
+			{% endfor %}
+		</tr>
+		{% endfor %}
+			<tr>
+				<td></td><th>Moyenne :</th><th>{{moyenne}}</th>
+			</tr>
+			<tr>
+				<td></td><th>Total :</th><th>{{total.total}}</th>
+			</tr>
+		</table>
