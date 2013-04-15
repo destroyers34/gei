@@ -59,7 +59,7 @@ def add_blocs_banque_success(request):
     
 @permission_required('feuilledetemps.afficher_rapport_temps')
 def listerapports(request):
-    rapport = Bloc.objects.values('projet__numero', 'projet__nom','projet__modele','projet__client__compagnie','projet__client__id','projet__budget_mat','projet__budget_mo','projet__date_debut','projet__date_fin').annotate(heure=Sum('temps')).order_by('-projet__numero')
+    rapport = Bloc.objects.values('projet__numero', 'projet__nom','projet__modele','projet__client__compagnie','projet__client__id','projet__budget_mat','projet__budget_mo','projet__date_debut','projet__date_fin').annotate(heure=Sum('temps')).order_by('projet__numero')
     rapport_actif =  rapport.filter(projet__actif=True)
     total_actif = Bloc.objects.filter(projet__actif=True).aggregate(total=Sum('temps'))
     total_budget_actif = Projet.objects.raw("SELECT x.id, sum(x.somme_mat) as 'total_budget_mat', sum(x.somme_mo) as 'total_budget_mo' FROM (SELECT DISTINCT p.id, p.numero, sum(p.budget_mat) as 'somme_mat', sum(p.budget_mo) as 'somme_mo' FROM feuilledetemps_bloc as b INNER JOIN projet_projet as p on p.id = b.projet_id WHERE p.actif = True GROUP BY b.id) as x")
@@ -68,7 +68,7 @@ def listerapports(request):
     rapport_inactif =  rapport.filter(projet__actif=False)
     total_inactif = Bloc.objects.filter(projet__actif=False).aggregate(total=Sum('temps'))
     date = datetime.now().strftime("%Y-%m-%d")
-    projets = Projet.objects.filter(actif=True)
+    projets = Projet.objects.filter(actif=True).order_by('numero')
     projets_attente = {}
     projets_liste = list()
     total_mat = 0
@@ -102,13 +102,13 @@ def listerapports(request):
 
 @permission_required('feuilledetemps.afficher_rapport_temps')
 def listerapports_csv(request):
-    rapport_actif = Bloc.objects.filter(projet__actif=True).values('projet__numero', 'projet__nom','projet__modele','projet__client__compagnie','projet__client__id','projet__budget_mat','projet__budget_mo','projet__date_debut','projet__date_fin').annotate(heure=Sum('temps')).order_by('-projet__numero')
+    rapport_actif = Bloc.objects.filter(projet__actif=True).values('projet__numero', 'projet__nom','projet__modele','projet__client__compagnie','projet__client__id','projet__budget_mat','projet__budget_mo','projet__date_debut','projet__date_fin').annotate(heure=Sum('temps')).order_by('projet__numero')
     total_actif = Bloc.objects.filter(projet__actif=True).aggregate(total=Sum('temps'))
     total_budget_actif = Projet.objects.raw("SELECT x.id, sum(x.somme_mat) as 'total_budget_mat', sum(x.somme_mo) as 'total_budget_mo' FROM (SELECT DISTINCT p.id, p.numero, sum(p.budget_mat) as 'somme_mat', sum(p.budget_mo) as 'somme_mo' FROM feuilledetemps_bloc as b INNER JOIN projet_projet as p on p.id = b.projet_id WHERE p.actif = True GROUP BY b.id) as x")
     total_pourcent = format(total_actif['total']/total_budget_actif[0].total_budget_mo*100, '.2f')
     total_actif.update({'jours_travail' : format((total_budget_actif[0].total_budget_mo - total_actif['total'])/8, '.2f')})
     date = datetime.now().strftime("%Y-%m-%d")
-    projets = Projet.objects.filter(actif=True)
+    projets = Projet.objects.filter(actif=True).order_by('numero')
     projets_attente = {}
     projets_liste = list()
     total_mat = 0
@@ -179,7 +179,7 @@ def rapportdetail_csv(request, numero_projet):
     
 @permission_required('feuilledetemps.afficher_rapport_temps')
 def projettemps(request, numero_projet, date_debut, date_fin):  
-    blocs = Bloc.objects.filter(date__gte=date_debut,date__lte=date_fin,projet__numero=numero_projet).values('projet__numero', 'date', 'employe__user__first_name', 'employe__user__last_name', 'tache__numero', 'tache__description', 'temps').order_by('date')
+    blocs = Bloc.objects.filter(date__gte=date_debut,date__lte=date_fin,projet__numero=numero_projet).values('projet__numero', 'date', 'employe__user__username', 'employe__user__first_name', 'employe__user__last_name', 'tache__numero', 'tache__description', 'temps').order_by('date')
     total = Bloc.objects.filter(date__gte=date_debut,date__lte=date_fin,projet__numero=numero_projet).aggregate(total=Sum('temps'))
     date = datetime.now().strftime("%Y-%m-%d")
     if request.method == 'POST':
@@ -191,7 +191,7 @@ def projettemps(request, numero_projet, date_debut, date_fin):
             return HttpResponseRedirect(redirect_str) # Redirect after POST
     else: 
         form = DateRangeForm()
-    return render(request, 'feuilledetemps/employedetail.html', {'blocs': blocs, 'total': total, 'date':date, 'form':form, 'username':username})
+    return render(request, 'feuilledetemps/employedetail.html', {'blocs': blocs, 'total': total, 'date':date, 'form':form})
 
 @permission_required('feuilledetemps.afficher_rapport_temps')
 def projettemps_csv(request, numero_projet, date_debut, date_fin):  

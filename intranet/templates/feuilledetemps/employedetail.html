@@ -50,7 +50,7 @@ $( "#datepicker2" ).datepicker({format: 'yyyy-mm-dd'});
 		{% for f in blocs %}
 			<tr>
 			<td>{{f.date}}</td>
-			<td><a href="{% url 'feuilledetemps.views.employe_sommaire' username %}">{{f.employe__user__first_name}} {{f.employe__user__last_name}}</a></td>
+			<td><a href="{% url 'feuilledetemps.views.employe_sommaire' f.employe__user__username %}">{{f.employe__user__first_name}} {{f.employe__user__last_name}}</a></td>
 			<td><a href="{% url 'feuilledetemps.views.rapportdetail' f.projet__numero %}">{{f.projet__numero}} {{f.projet__nom}} {{f.projet__modele}}</a></td>
 			<td><a href="{% url 'feuilledetemps.views.tachedetail' f.tache__numero %}">{{f.tache__numero}} {{f.tache__description}}</a></td>
 			<td>{{f.temps}}</td>
