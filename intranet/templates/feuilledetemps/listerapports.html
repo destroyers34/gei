@@ -6,8 +6,8 @@
 <link href="{{STATIC_URL}}css/extra.css" rel="stylesheet">
 {% endblock extrahead %}
 {% block jquery %}
-$( "#datepicker1" ).datepicker({format: 'yyyy-mm-dd'});
-$( "#datepicker2" ).datepicker({format: 'yyyy-mm-dd'});
+$( "#datepicker1" ).datepicker({format: 'yyyy-mm-dd', autoclose: true});
+$( "#datepicker2" ).datepicker({format: 'yyyy-mm-dd', autoclose: true});
 $('#myTab a').click(function (e) {
   e.preventDefault();
   $(this).tab('show');

@@ -54,14 +54,14 @@
 				  <a data-toggle="dropdown" class="dropdown-toggle" href="#">EuGénie Canada Inc. <b class="caret"></b></a>
 				  <ul class="dropdown-menu">
 					<li class="dropdown-submenu">
-					  <a href="#">Feuilles de temps</a>
+					  <a href="{% url 'feuilledetemps.views.add_blocs' %}">Feuilles de temps</a>
 					  <ul class="dropdown-menu">
 						{% if perms.feuilledetemps.add_bloc %}<li><a href="{% url 'feuilledetemps.views.add_blocs' %}">Ajouter des blocs de temps</a></li>{% endif %}
 						{% if perms.feuilledetemps.add_bloc_banque %}<li><a href="{% url 'feuilledetemps.views.add_blocs_banque' %}">Ajouter des heures dans la banque</a></li>{% endif %}
 					  </ul>
 					</li>
 					<li class="dropdown-submenu">
-					  <a href="#">Rapports</a>
+					  <a href="{% url 'feuilledetemps.views.listerapports' %}">Rapports</a>
 					  <ul class="dropdown-menu">
 						<li><a href="{% url 'feuilledetemps.views.index' %}">Index</a></li>
 						<li><a href="{% url 'feuilledetemps.views.listerapports' %}">Projets</a></li>

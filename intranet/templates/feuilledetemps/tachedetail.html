@@ -5,8 +5,8 @@
 <script type="text/javascript" src="{{STATIC_URL}}js/bootstrap-datepicker.js"></script>
 {% endblock extrahead %}
 {% block jquery %}
-$( "#datepicker1" ).datepicker({format: 'yyyy-mm-dd'});
-$( "#datepicker2" ).datepicker({format: 'yyyy-mm-dd'});
+$( "#datepicker1" ).datepicker({format: 'yyyy-mm-dd', autoclose: true});
+$( "#datepicker2" ).datepicker({format: 'yyyy-mm-dd', autoclose: true});
 {% endblock jquery %}
 {% block nav-eci %}<li class="dropdown active">{% endblock nav-eci %}
 {% block content %}	
