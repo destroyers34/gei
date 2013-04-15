@@ -102,13 +102,32 @@ def listerapports(request):
 
 @permission_required('feuilledetemps.afficher_rapport_temps')
 def listerapports_csv(request):
-    rapport = Bloc.objects.values('projet__numero', 'projet__nom','projet__modele','projet__client__compagnie','projet__budget_mat','projet__budget_mo').annotate(heure=Sum('temps')).order_by('-projet__numero')
-    rapport_actif =  rapport.filter(projet__actif=True)
+    rapport_actif = Bloc.objects.filter(projet__actif=True).values('projet__numero', 'projet__nom','projet__modele','projet__client__compagnie','projet__client__id','projet__budget_mat','projet__budget_mo','projet__date_debut','projet__date_fin').annotate(heure=Sum('temps')).order_by('-projet__numero')
     total_actif = Bloc.objects.filter(projet__actif=True).aggregate(total=Sum('temps'))
-    rapport_inactif =  rapport.filter(projet__actif=False)
-    total_inactif = Bloc.objects.filter(projet__actif=False).aggregate(total=Sum('temps'))
+    total_budget_actif = Projet.objects.raw("SELECT x.id, sum(x.somme_mat) as 'total_budget_mat', sum(x.somme_mo) as 'total_budget_mo' FROM (SELECT DISTINCT p.id, p.numero, sum(p.budget_mat) as 'somme_mat', sum(p.budget_mo) as 'somme_mo' FROM feuilledetemps_bloc as b INNER JOIN projet_projet as p on p.id = b.projet_id WHERE p.actif = True GROUP BY b.id) as x")
+    total_pourcent = format(total_actif['total']/total_budget_actif[0].total_budget_mo*100, '.2f')
+    total_actif.update({'jours_travail' : format((total_budget_actif[0].total_budget_mo - total_actif['total'])/8, '.2f')})
+    date = datetime.now().strftime("%Y-%m-%d")
+    projets = Projet.objects.filter(actif=True)
+    projets_attente = {}
+    projets_liste = list()
+    total_mat = 0
+    total_mo = 0
+    for projet in projets:
+        if projet.bloc_set.count() == 0:
+            projets_liste.append(projet)
+            total_mat += projet.budget_mat
+            total_mo += projet.budget_mo
+    projets_attente.update({'projets':projets_liste, 'total_mat':total_mat, 'total_mo':total_mo})
+    for b in rapport_actif:
+        date_fin = b['projet__date_fin']
+        if date_fin is not None:
+            jours_restant = date_fin.timetuple().tm_yday - datetime.now().timetuple().tm_yday
+        else:
+            jours_restant = "Indéterminé"
+        b.update({'pourcent' : format(b['heure']/b['projet__budget_mo']*100, '.2f'), 'jours_restant':jours_restant})
     # Create the HttpResponse object with the appropriate CSV header.
-    response = render_to_response("feuilledetemps/listerapportscsv.html", {'rapport_actif': rapport_actif, 'total_actif': total_actif,'rapport_inactif': rapport_inactif, 'total_inactif': total_inactif})
+    response = render_to_response("feuilledetemps/listerapportscsv.html", {'rapport_actif': rapport_actif, 'total_actif': total_actif, 'date':date,'total_budget_actif':total_budget_actif, 'total_pourcent':total_pourcent, 'projets_attente':projets_attente})
     filename = "temps_par_Projet_%s.xls" % datetime.now().strftime("%Y-%m-%d")
     response['Content-Disposition'] = 'attachment; filename='+filename
     response['Content-Type'] = 'application/vnd.ms-excel; charset=utf-8'
