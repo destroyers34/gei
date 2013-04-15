@@ -15,7 +15,7 @@ class Employe(models.Model):
     user = models.OneToOneField(User)
     compagnie = models.ForeignKey(Compagnie,verbose_name=u"Compagnie", blank=True, null=True)
     hire_date = models.DateField(blank=True,verbose_name=u"Date d'Embauche")
-    banque_heure = models.DecimalField(max_digits=11,decimal_places=2,blank=True,verbose_name=u"Heure en Banque")
+    banque_heure = models.DecimalField(max_digits=11,decimal_places=2,blank=True,verbose_name=u"Heure en Banque",default='0')
     
     def __unicode__(self):
         return u'%s %s' % (self.user.first_name, self.user.last_name)

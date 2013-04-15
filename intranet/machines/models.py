@@ -13,8 +13,8 @@ class Option(models.Model):
     code = models.CharField(max_length=100, unique=True)
     description = models.TextField()
     prixliste = models.DecimalField(max_digits=9, decimal_places=2)
-    escompte = models.DecimalField(max_digits=5, decimal_places=2)
-    ratio = models.DecimalField(max_digits=5, decimal_places=2)
+    escompte = models.DecimalField(max_digits=5, decimal_places=2,default='0')
+    ratio = models.DecimalField(max_digits=5, decimal_places=2,default='0')
     fournisseur = models.ForeignKey(Fournisseur)
     
     def __unicode__(self):
@@ -56,8 +56,8 @@ class Machine(models.Model):
     fournisseur = models.ForeignKey(Fournisseur)
     prixliste = models.DecimalField(max_digits=9, decimal_places=2)
     dateprix = models.DateField()
-    escompte = models.DecimalField(max_digits=5, decimal_places=2)
-    ratio = models.DecimalField(max_digits=5, decimal_places=2)
+    escompte = models.DecimalField(max_digits=5, decimal_places=2,default='0')
+    ratio = models.DecimalField(max_digits=5, decimal_places=2,default='0')
     categorie = models.ForeignKey(Categorie)
     options = models.ManyToManyField(Option, through='Machine_Option')
     
