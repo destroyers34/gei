@@ -96,10 +96,10 @@ $('#myTab a').click(function (e) {
 				<tbody>
 			{% for f in rapport_actif %}
 				<tr>
-				<td><a href='{% url 'feuilledetemps.views.rapportdetail' f.projet__numero %}'>{{f.projet__numero}}</a></td>
-				<td><a href='{% url 'feuilledetemps.views.liste_nom_projet' f.projet__nom %}'>{{f.projet__nom}}</a></td>
-				<td><a href='{% url 'feuilledetemps.views.liste_modele_projet' f.projet__nom f.projet__modele %}'>{{f.projet__modele}}</a></td>
-				<td><a href='../clients/{{f.projet__client__id }}'>{{f.projet__client__compagnie}}</a></td>
+				<td><a href="{% url 'feuilledetemps.views.rapportdetail' f.projet__numero %}">{{f.projet__numero}}</a></td>
+				<td><a href="{% url 'feuilledetemps.views.liste_nom_projet' f.projet__nom %}">{{f.projet__nom}}</a></td>
+				<td><a href="{% url 'feuilledetemps.views.liste_modele_projet' f.projet__nom f.projet__modele %}">{{f.projet__modele}}</a></td>
+				<td><a href="../clients/{{f.projet__client__id }}">{{f.projet__client__compagnie}}</a></td>
 				<td>{{f.projet__budget_mat}} $</td>
 				<td>{{f.projet__budget_mo}}</td>
 				<td>{{f.heure}}</td>
@@ -137,10 +137,10 @@ $('#myTab a').click(function (e) {
 				<tbody>
 			{% for f in rapport_inactif %}
 				<tr>
-				<td><a href='{% url 'feuilledetemps.views.rapportdetail' numero_projet=f.projet__numero %}'>{{f.projet__numero}}</a></td>
-				<td><a href='{% url 'feuilledetemps.views.liste_nom_projet' f.projet__nom %}'>{{f.projet__nom}}</a></td>
-				<td><a href='{% url 'feuilledetemps.views.liste_modele_projet' f.projet__nom f.projet__modele %}'>{{f.projet__modele}}</a></td>
-				<td><a href='../clients/{{f.projet__client__id }}'>{{f.projet__client__compagnie}}</a></td>
+				<td><a href="{% url 'feuilledetemps.views.rapportdetail' numero_projet=f.projet__numero %}">{{f.projet__numero}}</a></td>
+				<td><a href="{% url 'feuilledetemps.views.liste_nom_projet' f.projet__nom %}">{{f.projet__nom}}</a></td>
+				<td><a href="{% url 'feuilledetemps.views.liste_modele_projet' f.projet__nom f.projet__modele %}">{{f.projet__modele}}</a></td>
+				<td><a href="../clients/{{f.projet__client__id }}">{{f.projet__client__compagnie}}</a></td>
 				<td>{{f.projet__budget_mat}} $</td>
 				<td>{{f.projet__budget_mo}}</td>
 				<td>{{f.heure}}</td>

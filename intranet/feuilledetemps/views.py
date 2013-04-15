@@ -82,7 +82,7 @@ def listerapports(request):
     for b in rapport_actif:
         date_fin = b['projet__date_fin']
         if date_fin is not None:
-            jours_restant = date_fin.timetuple().tm_yday - datetime.now().timetuple().tm_yday
+            jours_restant = (date_fin - datetime.now().date()).days
         else:
             jours_restant = "Indéterminé"
         b.update({'pourcent' : format(b['heure']/b['projet__budget_mo']*100, '.2f'), 'jours_restant':jours_restant})
@@ -122,7 +122,7 @@ def listerapports_csv(request):
     for b in rapport_actif:
         date_fin = b['projet__date_fin']
         if date_fin is not None:
-            jours_restant = date_fin.timetuple().tm_yday - datetime.now().timetuple().tm_yday
+            jours_restant = (date_fin - datetime.now().date()).days
         else:
             jours_restant = "Indéterminé"
         b.update({'pourcent' : format(b['heure']/b['projet__budget_mo']*100, '.2f'), 'jours_restant':jours_restant})
