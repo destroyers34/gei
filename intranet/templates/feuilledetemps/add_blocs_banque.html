@@ -14,7 +14,7 @@ $('.date').datepicker({format: 'yyyy-mm-dd', autoclose: true});
 <div class="row-fluid well">
 	<div class="span12">
 		<h4>Formulaire d'ajout de temps dans la banque d'heure</h4>
-		<form id="blocForm" class="form-inline" method="post" action="">{% csrf_token %}
+		<form id="blocForm" class="form-inline" method="post" autocomplete="off" action="">{% csrf_token %}
 			<table>
 			<thead>
 				<tr>
