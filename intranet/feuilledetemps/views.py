@@ -497,7 +497,7 @@ def rapport_complet(request, numero_projet):
     liste_bloc = Bloc.objects.filter(projet=projet).order_by('tache','date','employe')
     total_temps = liste_bloc.values('tache__numero','tache__description').annotate(total_tache=Sum('temps')).order_by('tache')
     total_projet = Bloc.objects.filter(projet=projet).aggregate(total=Sum('temps'))
-    return render(request, 'feuilledetemps/rapport_complet.html', {'projet':projet,'liste_bloc':liste_bloc, 'total_temps':total_temps, 'total_projet':total_projet})
+    return render(request, 'feuilledetemps/rapport_complet.html', {'projet':projet,'liste_bloc':liste_bloc, 'total_temps':total_temps, 'total_projet':total_projet, 'pourcent':format(total_projet['total']/projet.budget_mo*100, '.2f')})
 
 
 

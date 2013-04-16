@@ -22,9 +22,9 @@ class Projet(models.Model):
     
     def jours_restant(self):
         if self.date_fin is not None:
-            return self.date_fin.timetuple().tm_yday - datetime.now().timetuple().tm_yday
+            return (self.date_fin - datetime.now().date()).days
         else:
-            return u'Indéterminé'
+            return "Indéterminé"
     
     class Meta:
         verbose_name = u"Projets"

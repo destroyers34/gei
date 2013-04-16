@@ -106,10 +106,10 @@ $('#myTab a').click(function (e) {
 						<th class='center-text'>{{total_budget_actif.0.total_budget_mo}}</th>
 						<th class='center-text'>{{total_actif.total}}</th>
 						<th class='center-text'>{{total_pourcent}} %</th>
-						<th class='center-text'>{{total_actif.jours_travail}}</th>
+						<th></th>
 					</tr>
 					<tr>
-						<td colspan='9'><a href='getcsv'>Télécharger .xls</a></td>
+						<td colspan='7'><a href='getcsv'>Télécharger .xls</a></td><th>Budget MO restant (8H) :</th><th class='center-text'>{{total_actif.jours_travail}}</th>
 					</tr>
 				</tfoot>
 				<tbody>
