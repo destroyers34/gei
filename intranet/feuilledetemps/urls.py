@@ -19,6 +19,8 @@ urlpatterns = patterns('feuilledetemps.views',
     url(r'^eci/rapports/(?P<date_debut>\d{4}-\d{2}-\d{2})/(?P<date_fin>\d{4}-\d{2}-\d{2})/$', 'listeblocs'),
     url(r'^eci/rapports/(?P<date_debut>\d{4}-\d{2}-\d{2})/(?P<date_fin>\d{4}-\d{2}-\d{2})/getcsv/$', 'listeblocs_csv'),
     
+    url(r'^eci/rapports/complet/(?P<numero_projet>[-A-Za-z0-9_]+)/$', 'rapport_complet'),
+    
     url(r'^eci/rapports/projets/$', 'listerapports'),
     url(r'^eci/rapports/projets/getcsv/$', 'listerapports_csv'),
     

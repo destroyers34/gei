@@ -491,3 +491,16 @@ def client_details_csv(request, client_id):
     response['Content-Type'] = 'application/vnd.ms-excel; charset=utf-8'
     return response    
     
+@permission_required('feuilledetemps.afficher_rapport_temps')    
+def rapport_complet(request, numero_projet):
+    projet = Projet.objects.get(numero=numero_projet)
+    liste_bloc = Bloc.objects.filter(projet=projet).order_by('tache','date','employe')
+    total_temps = liste_bloc.values('tache__numero','tache__description').annotate(total_tache=Sum('temps')).order_by('tache')
+    total_projet = Bloc.objects.filter(projet=projet).aggregate(total=Sum('temps'))
+    return render(request, 'feuilledetemps/rapport_complet.html', {'projet':projet,'liste_bloc':liste_bloc, 'total_temps':total_temps, 'total_projet':total_projet})
+
+
+
+
+
+
