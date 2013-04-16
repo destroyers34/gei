@@ -494,7 +494,7 @@ def client_details_csv(request, client_id):
 @permission_required('feuilledetemps.afficher_rapport_temps')    
 def rapport_complet(request, numero_projet):
     projet = Projet.objects.get(numero=numero_projet)
-    liste_bloc = Bloc.objects.filter(projet=projet).order_by('tache','date','employe')
+    liste_bloc = Bloc.objects.filter(projet=projet).order_by('tache','date','employe').values('tache__numero','tache__description','employe__user__first_name','employe__user__last_name').annotate(total_employe=Sum('temps'))
     total_temps = liste_bloc.values('tache__numero','tache__description').annotate(total_tache=Sum('temps')).order_by('tache')
     total_projet = Bloc.objects.filter(projet=projet).aggregate(total=Sum('temps'))
     return render(request, 'feuilledetemps/rapport_complet.html', {'projet':projet,'liste_bloc':liste_bloc, 'total_temps':total_temps, 'total_projet':total_projet, 'pourcent':format(total_projet['total']/projet.budget_mo*100, '.2f')})
