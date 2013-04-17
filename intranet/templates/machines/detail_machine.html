@@ -13,12 +13,12 @@
 					<th>Code</th>
 					<th>Description</th>
 					{% if user.is_superuser %}
-					<th>Prix liste ({{ machine.fournisseur.devise.symbole }}&nbsp;{{ machine.fournisseur.devise.codeiso }})</th>
-					<th>Cost ($&nbsp;CAD)</th>
+					<th>Prix liste</th>
+					<th>Cost</th>
 					{% endif %}
-					<th>Prix vente ($&nbsp;CAD)</th>
+					<th>Prix vente</th>
 					{% if user.is_superuser %}
-					<th>Profit ($&nbsp;CAD)</th>
+					<th>Profit</th>
 					<th>B.B</th>
 					{% endif %}
 				</tr>
@@ -48,12 +48,12 @@
 					<th>Code</th>
 					<th>Description</th>
 					{% if user.is_superuser %}
-					<th>Prix liste ({{ machine.fournisseur.devise.symbole }}&nbsp;{{ machine.fournisseur.devise.codeiso }})</th>
-					<th>Cost ($&nbsp;CAD)</th>
+					<th>Prix liste</th>
+					<th>Cost</th>
 					{% endif %}
-					<th>Prix vente ($&nbsp;CAD)</th>
+					<th>Prix vente</th>
 					{% if user.is_superuser %}
-					<th>Profit ($&nbsp;CAD)</th>
+					<th>Profit</th>
 					<th>B.B</th>
 					{% endif %}
 				</tr>
@@ -69,7 +69,7 @@
 						<td><input readonly='True' style='width:90px;' id="id_form-{{ forloop.counter0 }}-code" maxlength="100" name="form-{{ forloop.counter0 }}-code" type="text" value="{{ option.code }}"></td>
 						<td>{{ option.description }}</td>
 						{% if user.is_superuser %}
-						<td>{{ option.prixliste }}&nbsp;{{ machine.fournisseur.devise.symbole }}</td>
+						<td>{{ option.prixliste }}&nbsp;{{ option.fournisseur.devise.symbole }}</td>
 						<td>{{ option.cost }}&nbsp;$</td>
 						{% endif %}
 						<td>{{ option.plMin }}&nbsp;$</td>
@@ -89,12 +89,12 @@
 				<tr>
 					<th>Objets</th>
 					{% if user.is_superuser %}
-					<th>Prix liste ({{ machine.fournisseur.devise.symbole }}&nbsp;{{ machine.fournisseur.devise.codeiso }})</th>
-					<th>Cost ($&nbsp;CAD)</th>
+					<th>Prix liste</th>
+					<th>Cost</th>
 					{% endif %}
-					<th>Prix vente ($&nbsp;CAD)</th>
+					<th>Prix vente</th>
 					{% if user.is_superuser %}
-					<th>Profit ($&nbsp;CAD)</th>
+					<th>Profit</th>
 					<th>B.B</th>
 					{% endif %}
 				</tr>
@@ -104,7 +104,7 @@
 				<tr>
 					<td>{{ objet.code }} : {{ objet.description }}</td>
 					{% if user.is_superuser %}
-					<td>{{ objet.prixliste }}&nbsp;$</td>
+					<td>{{ objet.prixliste }}&nbsp;{{ objet.fournisseur.devise.symbole }}</td>
 					<td>{{ objet.cost }}&nbsp;$</td>
 					{% endif %}
 					<td>{{ objet.plMin }}&nbsp;$</td>
@@ -117,7 +117,7 @@
 				<tr>
 					<th>Total:</th>
 					{% if user.is_superuser %}
-					<th>{{ total.prixliste }}&nbsp;$</th>
+					<th></th>
 					<th>{{ total.cost }}&nbsp;$</th>
 					{% endif %}
 					<th>{{ total.plMin }}&nbsp;$</th>

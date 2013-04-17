@@ -13,12 +13,12 @@
 					<th>Code</th>
 					<th>Description</th>
 					{% if user.is_superuser %}
-					<th>Prix liste ({{ fournisseur.devise.symbole }}&nbsp;{{ fournisseur.devise.codeiso }})</th>
-					<th>Cost ($&nbsp;CAD)</th>
+					<th>Prix liste</th>
+					<th>Cost</th>
 					{% endif %}
-					<th>Prix vente ($&nbsp;CAD)</th>
+					<th>Prix vente</th>
 					{% if user.is_superuser %}
-					<th>Profit ($&nbsp;CAD)</th>
+					<th>Profit</th>
 					<th>B.B</th>
 					{% endif %}
 				</tr>

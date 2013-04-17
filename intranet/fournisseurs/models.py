@@ -3,7 +3,7 @@
 class Devise(models.Model):
     nom = models.CharField(max_length=100)
     codeiso = models.CharField(max_length=3)
-    symbole = models.CharField(max_length=1)
+    symbole = models.CharField(max_length=3)
     taux = models.DecimalField(max_digits=8, decimal_places=4, default='1')
     date = models.DateField()
 
