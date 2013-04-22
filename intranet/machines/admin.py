@@ -9,7 +9,7 @@ class OptionInline(admin.TabularInline):
 class MachineAdmin(admin.ModelAdmin):
     list_display   = ('code', 'description','categorie', 'fournisseur', 'prixliste', 'prixCAD', 'dateprix', 'escompte', 'cost', 'ratioEffectif', 'plMin', 'profit', 'profit_pourcent')
     search_fields = ['code', 'description','categorie__nom', 'fournisseur__nom']
-    list_filter    = ('code', 'description','categorie', 'fournisseur', 'prixliste', 'dateprix','escompte','ratio')
+    list_filter    = ('categorie', 'fournisseur', 'prixliste', 'dateprix','escompte','ratio')
     ordering       = ('code', )
     inlines = [
         OptionInline,
@@ -17,8 +17,8 @@ class MachineAdmin(admin.ModelAdmin):
 
 class OptionAdmin(admin.ModelAdmin):
     actions = None
-    list_display   = ('code', 'description', 'prixliste','escompte','ratio')
-    list_filter    = ('code', 'description', 'prixliste','escompte','ratio')
+    list_display   = ('code','fournisseur', 'description', 'prixliste','escompte','ratio')
+    list_filter    = ('fournisseur','prixliste','escompte','ratio')
     ordering       = ('code', )
     
 admin.site.register(Categorie)
