@@ -104,30 +104,22 @@ TEMPLATE_DIRS = (
 
 )
 
-AUTH_PROFILE_MODULE = 'employe.Employe'
+AUTH_PROFILE_MODULE = 'ressources.Employe'
 
 INSTALLED_APPS = (
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
-    #'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
 	'grappelli',
-    'fournisseurs',
-    'machines',
-    'feuilledetemps',
-    'employe',
-    'projet',
-#    'report_builder',
+    'ressources',
+    'clients',
+    'projets',
+    'listes_de_prix',
+    'feuilles_de_temps',
     'accounts',
-    'client',
-#    'django_filters',
-    # Uncomment the next line to enable the admin:
     'django.contrib.admin',
-    # Uncomment the next line to enable admin documentation:
-    # 'django.contrib.admindocs',
-
 )
 
 APPEND_SLASH = True
