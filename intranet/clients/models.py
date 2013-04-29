@@ -1,6 +1,6 @@
 ﻿from django.db import models
 
-class Client(models.Model):
+class Compagnie(models.Model):
 	nom = models.CharField(max_length=50,verbose_name=u"Nom")
 	adresse = models.CharField(max_length=50,verbose_name=u"Adresse", blank=True)
 	ville = models.CharField(max_length=50,verbose_name=u"Ville", blank=True)
@@ -14,7 +14,7 @@ class Client(models.Model):
 		return u'%s' % (self.nom)
 
 	class Meta:
-		verbose_name = u"Client"
+		verbose_name = u"Compagnie"
 
 class Contact(models.Model):
     prenom = models.CharField(max_length=50,verbose_name=u"Prénom", blank=True)
@@ -22,9 +22,9 @@ class Contact(models.Model):
     fonction = models.CharField(max_length=50,verbose_name=u"Fonction", blank=True)
     telephonne = models.CharField(max_length=50,verbose_name=u"Numéro de téléphonne", blank=True)
     email = models.CharField(max_length=50,verbose_name=u"Adresse courriel", blank=True)
-    client = models.ForeignKey(Client,verbose_name=u"Compagnie")
+    compagnie = models.ForeignKey(Compagnie,verbose_name=u"Compagnie")
     def __unicode__(self):
-		return u'%s %s - %s' % (self.prenom,self.nom,self.client)
+		return u'%s %s - %s' % (self.prenom,self.nom,self.fonction)
 
     class Meta:
         verbose_name = u"Contact"

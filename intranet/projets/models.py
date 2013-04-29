@@ -1,11 +1,11 @@
 ﻿from django.db import models
-from clients.models import Client
+from clients.models import Compagnie
 from datetime import datetime
 
 class Projet(models.Model):
     numero = models.CharField(max_length=30,unique=True,verbose_name=u"Numéro du projet")
     nom = models.CharField(max_length=30,verbose_name=u"Nom du projet")
-    client = models.ForeignKey(Client,verbose_name=u"Client")
+    client = models.ForeignKey(Compagnie,verbose_name=u"Client")
     date_soumission = models.DateField(verbose_name=u"Date de soumission", null=True, blank=True)
     date_debut = models.DateField(verbose_name=u"Date de début", null=True, blank=True)
     date_fin = models.DateField(verbose_name=u"Date de fin", null=True, blank=True)
