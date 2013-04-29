@@ -30,6 +30,7 @@ class Projet_Eugenie(Projet):
     
     class Meta:
         verbose_name = u"Projet EuGénie"
+        verbose_name_plural = u"Projets EuGénie"
         ordering = ['-numero']
 
 class Projet_TPE(Projet):
@@ -48,6 +49,7 @@ class Projet_TPE(Projet):
     
     class Meta:
         verbose_name = u"Projet Techno-Pro Experts"
+        verbose_name_plural = u"Projets Techno-Pro Experts"
         ordering = ['-numero']
         
 #class Projet_JRC(Projet):
