@@ -81,13 +81,19 @@ def listerapports(request):
     projets_attente.update({'projets':projets_liste, 'total_mat':total_mat, 'total_mo':total_mo})
     for b in rapport_actif:
         date_fin = b['projet__date_fin']
+        pourcent = 0
         if date_fin is not None:
             jours_restant = (date_fin - datetime.now().date()).days
         else:
             jours_restant = "Indéterminé"
-        b.update({'pourcent' : format(b['heure']/b['projet__budget_mo']*100, '.2f'), 'jours_restant':jours_restant})
+        if b['projet__budget_mo'] > 0:
+            pourcent = format(b['heure']/b['projet__budget_mo']*100, '.2f')
+        b.update({'pourcent' : pourcent, 'jours_restant':jours_restant})
     for b in rapport_inactif:
-        b.update({'pourcent' : format(b['heure']/b['projet__budget_mo']*100, '.2f')})
+        pourcent = 0
+        if b['projet__budget_mo'] > 0:
+            pourcent = format(b['heure']/b['projet__budget_mo']*100, '.2f')
+        b.update({'pourcent' : pourcent, })
     if request.method == 'POST':
         form = FilterForm(request.POST)
         if form.is_valid():
@@ -294,7 +300,7 @@ def liste_employes_csv(request):
 
 @permission_required('feuilledetemps.afficher_rapport_temps')
 def employedetail(request, username):
-    blocs = Bloc.objects.values('date','employe__user__first_name','employe__user__last_name','projet__numero','projet__nom','projet__modele','tache__numero','tache__description','temps').filter(employe__user__username=username).order_by('date')
+    blocs = Bloc.objects.values('date','employe__user__username','employe__user__first_name','employe__user__last_name','projet__numero','projet__nom','projet__modele','tache__numero','tache__description','temps').filter(employe__user__username=username).order_by('date')
     total = Bloc.objects.filter(employe__user__username=username).aggregate(total=Sum('temps'))
     date = datetime.now().strftime("%Y-%m-%d")
     if request.method == 'POST':
@@ -320,7 +326,7 @@ def employedetail_csv(request, username):
 
 @permission_required('feuilledetemps.afficher_rapport_temps')
 def employedetailperiode(request, username, date_debut, date_fin):
-    blocs = Bloc.objects.values('date','employe__user__first_name','employe__user__last_name','projet__numero','projet__nom','projet__modele','tache__numero','tache__description','temps').filter(employe__user__username=username,date__gte=date_debut,date__lte=date_fin).order_by('date')
+    blocs = Bloc.objects.values('date','employe__user__first_name','employe__user__username','employe__user__last_name','projet__numero','projet__nom','projet__modele','tache__numero','tache__description','temps').filter(employe__user__username=username,date__gte=date_debut,date__lte=date_fin).order_by('date')
     total = Bloc.objects.filter(employe__user__username=username,date__gte=date_debut,date__lte=date_fin).aggregate(total=Sum('temps'))
     date = datetime.now().strftime("%Y-%m-%d")
     if request.method == 'POST':
