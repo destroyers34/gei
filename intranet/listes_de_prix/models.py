@@ -23,7 +23,7 @@ class Machinerie(models.Model):
     details = models.TextField(verbose_name=u"Détails",blank=True, null=True)
     fournisseur = models.ForeignKey(Fournisseur,verbose_name=u"Fournisseur")
     prix_fournisseur = models.DecimalField(verbose_name=u"Prix du fournisseur",max_digits=9, decimal_places=2)
-    dateprix = models.DateField(verbose_name=u"Date du prix",)
+    dateprix = models.DateField(verbose_name=u"Date du prix",null=True,blank=True)
     escompte = models.DecimalField(verbose_name=u"Escompte (%)",max_digits=5, decimal_places=2,default='0')
     ratio = models.DecimalField(verbose_name=u"Ratio",max_digits=5, decimal_places=2,default='0')
     class Meta:
@@ -33,10 +33,10 @@ class Machinerie(models.Model):
         )
         
     def __unicode__(self):
-        return u"%s %s" % (self.code, self.description)
+        return u"%s %s" % (self.numero, self.description)
     
     def prixCAD(self):
-        return format(self.fournisseur.devise.toCAD(self.prixliste), '.2f')
+        return format(self.fournisseur.devise.toCAD(self.prix_fournisseur), '.2f')
     prixCAD.short_description = 'Prix ($ CAD)'
     
     def cost(self):
