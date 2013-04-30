@@ -3,7 +3,7 @@ from clients.models import Compagnie, Contact
 
 class ContactInline(admin.StackedInline):
     model = Contact
-    extra = 0
+    extra = 1
 
 class CompagnieAdmin(admin.ModelAdmin):
     list_display = ('nom','adresse','ville','province_etat','postal_code','pays','telephonne','fax')

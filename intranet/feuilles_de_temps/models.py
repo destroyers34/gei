@@ -21,6 +21,8 @@ class Bloc(models.Model):
 class Bloc_Eugenie(Bloc):
     projet = models.ForeignKey(Projet_Eugenie,verbose_name=u"Projet")
     class Meta:
+        verbose_name = u"Bloc Eugénie"
+        verbose_name_plural = u"Blocs Eugénie"
         permissions = (
                 ("afficher_rapport_temps_eugenie","Afficher un rapport de temps EuGénie"),
         )
@@ -28,6 +30,8 @@ class Bloc_Eugenie(Bloc):
 class Bloc_TPE(Bloc):
     projet = models.ForeignKey(Projet_TPE,verbose_name=u"Projet")
     class Meta:
+        verbose_name = u"Bloc Techno-Pro Experts"
+        verbose_name_plural = u"Blocs Techno-Pro Experts"
         permissions = (
                 ("afficher_rapport_temps_tpe","Afficher un rapport de temps TPE"),
         )
@@ -38,7 +42,13 @@ class Banque(models.Model):
     employe = models.ForeignKey(Employe,verbose_name=u"Employé")
     date = models.DateField(verbose_name=u"Date")
     temps = models.DecimalField(max_digits=4,decimal_places=2,verbose_name=u"Temps")
-    
+    class Meta:
+        verbose_name = u"Bloc Banque"
+        verbose_name_plural = u"Blocs Banque"
+        permissions = (
+                ("afficher_rapport_banque","Afficher un rapport de temps des heures en banque"),
+        )
+        
     def __unicode__(self):
         return u'%s %s %s %s %s' % (self.employe, self.date, self.temps)
     

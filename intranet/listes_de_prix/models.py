@@ -16,8 +16,8 @@ class Fournisseur(models.Model):
     ratio = models.DecimalField(verbose_name=u"Ratio",max_digits=5, decimal_places=2, default='1')
     def __unicode__(self):
         return u"%s" % self.nom
-
-class Machine(models.Model):
+    
+class Machinerie(models.Model):
     numero = models.CharField(verbose_name=u"Numéro",max_length=100, unique=True)
     description = models.TextField(verbose_name=u"Description")
     details = models.TextField(verbose_name=u"Détails",blank=True, null=True)
@@ -26,8 +26,8 @@ class Machine(models.Model):
     dateprix = models.DateField(verbose_name=u"Date du prix",)
     escompte = models.DecimalField(verbose_name=u"Escompte (%)",max_digits=5, decimal_places=2,default='0')
     ratio = models.DecimalField(verbose_name=u"Ratio",max_digits=5, decimal_places=2,default='0')
-    categorie = models.ForeignKey(Categorie,verbose_name=u"Catégorie")    
     class Meta:
+        abstract = True
         permissions = (
                 ("afficher_listes_prix","Afficher les listes de prix"),
         )
@@ -65,5 +65,8 @@ class Machine(models.Model):
         return format(Decimal(self.profit())/Decimal(self.plMin())*100, '.2f')
     profit_pourcent.short_description = 'Profit (% Brute)'
     
-class Option(Machine):
+class Machine(Machinerie):
+    categorie = models.ForeignKey(Categorie,verbose_name=u"Catégorie")    
+
+class Option(Machinerie):
     machines = models.ManyToManyField(Machine, related_name='options_machine')
