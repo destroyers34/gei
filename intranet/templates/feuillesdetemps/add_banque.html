@@ -9,7 +9,7 @@
 $('#blocForm tbody tr').formset({prefix: '{{ formset.prefix }}',added: function(row) {row.find(".date").datepicker({format: 'yyyy-mm-dd', autoclose: true});}, load: function(row) {row.find(".date").datepicker({format: 'yyyy-mm-dd', autoclose: true});}});
 $('.date').datepicker({format: 'yyyy-mm-dd', autoclose: true});
 {% endblock jquery %}
-{% block nav-eci %}<li class="dropdown active">{% endblock nav-eci %}
+{% block nav-feuille %}<li class="dropdown active">{% endblock nav-feuille %}
 {% block content %}
 <div class="row-fluid well">
 	<div class="span12">
@@ -20,8 +20,6 @@ $('.date').datepicker({format: 'yyyy-mm-dd', autoclose: true});
 				<tr>
 					<th>Employé</th>
 					<th>Date</th>
-					<th>Projet</th>
-					<th>Tache</th>
 					<th>Temps</th>
 				</tr>
 			</thead>
@@ -32,8 +30,6 @@ $('.date').datepicker({format: 'yyyy-mm-dd', autoclose: true});
 				<tr>
 					<td>{{ form.employe }}</td>
 					<td><input class='date' type="text" name="{{ form.date.html_name }}" id="id_{{ form.date.html_name }}" /></td>
-					<td>{{ form.projet }}</td>
-					<td>{{ form.tache }}</td>
 					<td>{{ form.temps }}</td>
 					<td></td>
 				</tr>

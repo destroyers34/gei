@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load url from future %}
 {% block title %}Listes de prix{% endblock title %}
 {% block nav-liste %}<li class="dropdown active">{% endblock nav-liste %}
 {% block content %}
@@ -16,8 +17,8 @@
 			<tbody>
 				{% for fournisseur in liste_fournisseurs %}
 					<tr>
-						<td><a href='{% url 'fournisseurs.views.detail_fournisseur' fournisseur.id %}'>{{fournisseur.nom}}</a></td>
-						<td><a href='{% url 'machines.views.liste_machines' fournisseur.id %}' class='btn btn-small btn-primary'><i class='icon-list icon-white'></i> Afficher</a></td>
+						<td><a href="{% url 'detail_fournisseur' fournisseur_id=fournisseur.id %}">{{fournisseur.nom}}</a></td>
+						<td><a href="{% url 'liste_machines' fournisseur_id=fournisseur.id %}" class='btn btn-small btn-primary'><i class='icon-list icon-white'></i> Afficher</a></td>
 					</tr>
 				{% endfor %}
 			</tbody>

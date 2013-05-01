@@ -1,0 +1,34 @@
+﻿{% extends "print_base.html" %}
+{% block title %}Rapports{% endblock title %}
+{% block content %}
+<div class="row-fluid well">
+	<div class="span12">
+		<h4>Liste des projets par client</h4>
+		<table class="table table-bordered table-striped">
+		<thead>
+			<tr>
+				<th>Clients</th>
+				<th>Numéros</th>
+				<th>Noms</th>
+				<th>Modèles</th>	
+			</tr>
+		</thead>
+		<tbody>
+		{% for clients in liste_clients %}
+			<tr>
+			<td rowspan='{{clients.liste_projets|length}}'><a href="">{{clients.nom}}</a></td>
+			{% for projets in clients.liste_projets %}
+				<td><a href="">{{ projets.numero }}</a></td>
+				<td><a href="">{{ projets.nom }}</a></td>
+				<td><a href="">{{ projets.modele }}</a></td>
+				
+				</tr>
+				<tr>
+			{% endfor %}
+			</tr>
+		{% endfor %}
+		</tbody>
+		</table>
+	</div>
+</div>
+{% endblock %}

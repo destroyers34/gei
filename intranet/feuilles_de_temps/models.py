@@ -50,7 +50,7 @@ class Banque(models.Model):
         )
         
     def __unicode__(self):
-        return u'%s %s %s %s %s' % (self.employe, self.date, self.temps)
+        return u'%s %s %s' % (self.employe, self.date, self.temps)
     
     def save(self, *args, **kwargs):
         employe = Employe.objects.get(id=self.employe.id)

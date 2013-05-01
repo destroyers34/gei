@@ -31,10 +31,10 @@
 					</tr>
 					{% endifchanged %}
 					<tr>
-						<td><a href='{% url 'machines.views.detail_machine' fournisseur.id machine.id %}'>{{ machine.code }}</a></td>
+						<td rowspan='{% if machine.details %}2{% else %}1{% endif %}'><a href="{% url 'details_machine' fournisseur.id machine.id %}">{{ machine.numero }}</a></td>
 						<td>{{ machine.description }}</td>
 						{% if user.is_superuser %}
-						<td>{{ machine.prixliste }}&nbsp;{{ machine.fournisseur.devise.symbole }}</td>
+						<td>{{ machine.prix_fournisseur }}&nbsp;{{ machine.fournisseur.devise.symbole }}</td>
 						<td>{{ machine.cost }}&nbsp;$</td>
 						{% endif %}
 						<td>{{ machine.plMin }}&nbsp;$</td>
@@ -42,6 +42,7 @@
 						<td>{{ machine.profit }}&nbsp;$</td>
 						<td>{{ machine.profit_pourcent }}&nbsp;%</td>
 						{% endif %}
+						{% if machine.details %}<tr><td colspan='{% if user.is_superuser %}6{% else %}2{% endif %}'>{{machine.details}}</td></tr>{% endif %}
 					</tr>
 				{% endfor %}
 			</tbody>

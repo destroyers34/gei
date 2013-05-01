@@ -112,7 +112,6 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-	#'grappelli',
     'django_admin_bootstrapped',
     'ressources',
     'clients',
@@ -120,6 +119,7 @@ INSTALLED_APPS = (
     'listes_de_prix',
     'feuilles_de_temps',
     'accounts',
+    'rapports',
     'django.contrib.admin',
 )
 

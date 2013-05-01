@@ -50,64 +50,63 @@
 		  <div class="nav-collapse">
 			<ul class="nav">
 			  {% block nav-home %}<li>{% endblock nav-home %}<a href="/"><i class="icon-home"></i> Accueil</a></li>	  
-			  {% block nav-eci %}<li class="dropdown">{% endblock nav-eci  %}
-				  <a data-toggle="dropdown" class="dropdown-toggle" href="#">EuGénie Canada Inc. <b class="caret"></b></a>
+			  {% block nav-feuille %}<li class="dropdown">{% endblock nav-feuille  %}
+				  <a data-toggle="dropdown" class="dropdown-toggle" href="#">Feuilles de temps <b class="caret"></b></a>
 				  <ul class="dropdown-menu">
+					{% if perms.feuilles_de_temps.add_bloc_eugenie %}
 					<li class="dropdown-submenu">
-					  <a href="{% url 'feuilledetemps.views.add_blocs' %}">Feuilles de temps</a>
+					  <a href="{% url 'add_blocs_eci'%}">EuGénie Canada</a>
 					  <ul class="dropdown-menu">
-						{% if perms.feuilledetemps.add_bloc %}<li><a href="{% url 'feuilledetemps.views.add_blocs' %}">Ajouter des blocs de temps</a></li>{% endif %}
-						{% if perms.feuilledetemps.add_bloc_banque %}<li><a href="{% url 'feuilledetemps.views.add_blocs_banque' %}">Ajouter des heures dans la banque</a></li>{% endif %}
+						<li><a href="{% url 'add_blocs_eci'%}">Ajouter des blocs de temps</a></li>
+					  </ul>
+					</li>
+					{% endif %}
+					<li class="dropdown-submenu">
+					  <a href="">Techno-Pro Experts</a>
+					  <ul class="dropdown-menu">
+						<li><a href="">Ajouter des blocs de temps</a></li>
 					  </ul>
 					</li>
 					<li class="dropdown-submenu">
-					  <a href="{% url 'feuilledetemps.views.listerapports' %}">Rapports</a>
+					  <a href="">JRC Machinerie</a>
 					  <ul class="dropdown-menu">
-						<li><a href="{% url 'feuilledetemps.views.index' %}">Index</a></li>
-						<li><a href="{% url 'feuilledetemps.views.listerapports' %}">Projets</a></li>
-						<li><a href="{% url 'feuilledetemps.views.listetaches' %}">Tâches</a></li>
-						<li><a href="{% url 'feuilledetemps.views.listeemployes' %}">Employés</a></li>
-						<li><a href="{% url 'feuilledetemps.views.liste_clients' %}">Clients</a></li>
+						<li><a href="">Ajouter des blocs de temps</a></li>
 					  </ul>
 					</li>
+					{% if perms.feuilledetemps.add_banque %}
+					<li class="dropdown-submenu">
+					  <a href="{% url 'add_banque' %}">Banque d'heures</a>
+					  <ul class="dropdown-menu">
+						<li><a href="{% url 'add_banque' %}">Ajouter des heures</a></li>
+					  </ul>
+					</li>
+					{% endif %}
 				  </ul>
 			  </li>
-			  {% block nav-jrc %}<li class="dropdown">{% endblock nav-jrc  %}
-				  <a data-toggle="dropdown" class="dropdown-toggle" href="#">JRC Machineries Inc. <b class="caret"></b></a>
+			  {% block nav-rapport %}<li class="dropdown">{% endblock nav-rapport  %}
+				  <a data-toggle="dropdown" class="dropdown-toggle" href="#">Rapports <b class="caret"></b></a>
 				  <ul class="dropdown-menu">
 					<li class="dropdown-submenu">
-					  <a href="#">Feuilles de temps</a>
+					  <a href="#">EuGénie Canada</a>
 					  <ul class="dropdown-menu">
-						{% if perms.feuilledetemps.add_bloc %}<li><a href="#">Ajouter des blocs de temps</a></li>{% endif %}
-						{% if perms.feuilledetemps.add_bloc_banque %}<li><a href="#">Ajouter des heures dans la banque</a></li>{% endif %}
-					  </ul>
-					</li>
-					<li class="dropdown-submenu">
-					  <a href="#">Rapports</a>
-					  <ul class="dropdown-menu">
-						<li><a href="#">Index</a></li>
 						<li><a href="#">Projets</a></li>
 						<li><a href="#">Tâches</a></li>
 						<li><a href="#">Employés</a></li>
 						<li><a href="#">Clients</a></li>
 					  </ul>
 					</li>
-				  </ul>
-			  </li>
-			  {% block nav-tpe %}<li class="dropdown">{% endblock nav-tpe  %}
-				  <a data-toggle="dropdown" class="dropdown-toggle" href="#">Techno-Pro Expert Inc. <b class="caret"></b></a>
-				  <ul class="dropdown-menu">
 					<li class="dropdown-submenu">
-					  <a href="#">Feuilles de temps</a>
+					  <a href="#">Techno-Pro Experts</a>
 					  <ul class="dropdown-menu">
-						{% if perms.feuilledetemps.add_bloc %}<li><a href="#">Ajouter des blocs de temps</a></li>{% endif %}
-						{% if perms.feuilledetemps.add_bloc_banque %}<li><a href="#">Ajouter des heures dans la banque</a></li>{% endif %}
+						<li><a href="#">Projets</a></li>
+						<li><a href="#">Tâches</a></li>
+						<li><a href="#">Employés</a></li>
+						<li><a href="#">Clients</a></li>
 					  </ul>
 					</li>
 					<li class="dropdown-submenu">
-					  <a href="#">Rapports</a>
+					  <a href="#">JRC Machinierie</a>
 					  <ul class="dropdown-menu">
-						<li><a href="#">Index</a></li>
 						<li><a href="#">Projets</a></li>
 						<li><a href="#">Tâches</a></li>
 						<li><a href="#">Employés</a></li>
@@ -117,9 +116,9 @@
 				  </ul>
 				</li>
 				{% block nav-liste %}<li class="dropdown">{% endblock nav-liste  %}
-					<a data-toggle="dropdown" class="dropdown-toggle" href="#">Liste de prix <b class="caret"></b></a>
+					<a data-toggle="dropdown" class="dropdown-toggle" href="#">Listes de prix <b class="caret"></b></a>
 					<ul class="dropdown-menu">
-						<li><a href="{% url 'machines.views.liste_fournisseurs' %}">Fournisseurs</a></li>
+						<li><a href="{% url 'liste_fournisseurs' %}">Fournisseurs</a></li>
 					</ul>
 				</li>
 			</ul>

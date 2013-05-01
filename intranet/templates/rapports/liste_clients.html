@@ -1,0 +1,47 @@
+﻿{% extends "base.html" %}
+{% block title %}Rapports{% endblock title %}
+{% block nav-rapport %}<li class="dropdown active">{% endblock nav-rapport %}
+{% block content %}
+<div class="row-fluid well">
+	<div class="span12">
+		<h4>Liste des projets par client</h4>
+		<table class="table table-bordered table-striped">
+		<thead>
+			<tr>
+				<td colspan='4'>
+				<a class='btn btn-primary' href="{% url 'print_liste_clients_eci' %}">Imprimer</a> 
+				<a class='btn btn-primary' href="{% url 'xls_liste_clients_eci' %}">.xls</a>
+				</td>
+			</tr>
+			<tr>
+				<th>Clients</th>
+				<th>Numéros</th>
+				<th>Noms</th>
+				<th>Modèles</th>
+				
+			</tr>
+		</thead>
+		<tfoot>
+			<tr>
+				<td colspan='4'><a class='btn btn-primary' href="">Imprimer</a> <a class='btn btn-primary' href="">.xls</a></td>
+			</tr>
+		</tfoot>
+		<tbody>
+		{% for clients in liste_clients %}
+			<tr>
+			<td rowspan='{{clients.liste_projets|length}}'><a href="">{{clients.nom}}</a></td>
+			{% for projets in clients.liste_projets %}
+				<td><a href="">{{ projets.numero }}</a></td>
+				<td><a href="">{{ projets.nom }}</a></td>
+				<td><a href="">{{ projets.modele }}</a></td>
+				
+				</tr>
+				<tr>
+			{% endfor %}
+			</tr>
+		{% endfor %}
+		</tbody>
+		</table>
+	</div>
+</div>
+{% endblock %}

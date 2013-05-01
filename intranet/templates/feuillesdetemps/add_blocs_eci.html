@@ -9,11 +9,11 @@
 $('#blocForm tbody tr').formset({prefix: '{{ formset.prefix }}',added: function(row) {row.find(".date").datepicker({format: 'yyyy-mm-dd', autoclose: true});}, load: function(row) {row.find(".date").datepicker({format: 'yyyy-mm-dd', autoclose: true});}});
 $('.date').datepicker({format: 'yyyy-mm-dd', autoclose: true});
 {% endblock jquery %}
-{% block nav-eci %}<li class="dropdown active">{% endblock nav-eci %}
+{% block nav-feuille %}<li class="dropdown active">{% endblock nav-feuille %}
 {% block content %}
 <div class="row-fluid well">
 	<div class="span12">
-		<h4>Formulaire d'ajout de blocs de temps</h4>
+		<h4>Formulaire d'ajout de blocs de temps pour EuGénie Canada Inc.</h4>
 		<form id="blocForm" class="form-inline" method="post" autocomplete="off" action="">{% csrf_token %}
 			<table>
 			<thead>
