@@ -17,6 +17,12 @@ $( "#datepicker2" ).datepicker({format: 'yyyy-mm-dd', autoclose: true});
 		<table class="table table-striped table-bordered table-condensed">
 			<thead>
 				<tr>
+					<td class="align-right" colspan='5'>
+						<a class='btn btn-primary' href="{% url 'print_tache_details_eci' numero_tache %}">Imprimer</a> 
+						<a class='btn btn-primary' href="{% url 'xls_tache_details_eci' numero_tache %}">.xls</a>
+					</td>
+				</tr>
+				<tr>
 					<th>Numéro du projet</th>
 					<th>Machine</th>
 					<th>Modèle</th>
@@ -26,20 +32,23 @@ $( "#datepicker2" ).datepicker({format: 'yyyy-mm-dd', autoclose: true});
 			</thead>
 			<tfoot>
 				<tr>
-					<td colspan='3'></td><th>Total:</th><th>{{total.total}}</th>
+					<td colspan='3'></td><th>Total:</th><th>{{tache_total.heures}}</th>
 				</tr>
 				<tr>
-					<td colspan='5'><a href='getcsv'>Télécharger en format Excel</a></td>
+					<td class="align-right" colspan='5'>
+						<a class='btn btn-primary' href="{% url 'print_tache_details_eci' numero_tache %}">Imprimer</a> 
+						<a class='btn btn-primary' href="{% url 'xls_tache_details_eci' numero_tache %}">.xls</a>
+					</td>
 				</tr>
 			</tfoot>
 			<tbody>
-		{% for f in blocs %}
+		{% for projet in projets %}
 			<tr>
-			<td><a href='{% url 'feuilledetemps.views.rapportdetail' f.projet__numero %}'>{{f.projet__numero}}</a></td>
-			<td><a href='{% url 'feuilledetemps.views.liste_nom_projet' f.projet__nom %}'>{{f.projet__nom}}</a></td>
-			<td>{{f.projet__modele}}</td>
-			<td><a href='{% url 'feuilledetemps.views.projettachedetail' numero_tache=f.tache__numero numero_projet=f.projet__numero %}'><i class="icon-user"></i></a></td>
-			<td>{{f.heure}}</td>
+			<td><a href="{% url 'projet_details_eci' projet.numero %}">{{projet.numero}}</a></td>
+			<td><a href=''>{{projet.nom}}</a></td>
+			<td>{{projet.modele}}</td>
+			<td><a href=''><i class="icon-user"></i></a></td>
+			<td>{{projet.heure}}</td>
 			</tr>
 		{% endfor %}
 		</tbody>

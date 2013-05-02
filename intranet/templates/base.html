@@ -16,6 +16,7 @@
     </style>
 
     <link href="{{STATIC_URL}}css/bootstrap-responsive.css" rel="stylesheet" >
+	<link href="{{STATIC_URL}}css/extra.css" rel="stylesheet" >
 	<script type="text/javascript" src="{{STATIC_URL}}js/jquery-1.9.1.min.js"></script>
 	<script type="text/javascript" src="{{STATIC_URL}}js/bootstrap.js"></script>
 	{% block extrahead %}
@@ -87,12 +88,12 @@
 				  <a data-toggle="dropdown" class="dropdown-toggle" href="#">Rapports <b class="caret"></b></a>
 				  <ul class="dropdown-menu">
 					<li class="dropdown-submenu">
-					  <a href="#">EuGénie Canada</a>
+					  <a href="{% url 'liste_projets_eci' %}">EuGénie Canada</a>
 					  <ul class="dropdown-menu">
-						<li><a href="#">Projets</a></li>
-						<li><a href="#">Tâches</a></li>
-						<li><a href="#">Employés</a></li>
-						<li><a href="#">Clients</a></li>
+						<li><a href="{% url 'liste_projets_eci' %}">Projets</a></li>
+						<li><a href="{% url 'liste_taches_eci' %}">Tâches</a></li>
+						<li><a href="{% url 'liste_employes_eci' %}">Employés</a></li>
+						<li><a href="{% url 'liste_clients_eci' %}">Clients</a></li>
 					  </ul>
 					</li>
 					<li class="dropdown-submenu">

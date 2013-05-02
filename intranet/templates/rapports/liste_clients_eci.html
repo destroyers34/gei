@@ -8,9 +8,9 @@
 		<table class="table table-bordered table-striped">
 		<thead>
 			<tr>
-				<td colspan='4'>
-				<a class='btn btn-primary' href="{% url 'print_liste_clients_eci' %}">Imprimer</a> 
-				<a class='btn btn-primary' href="{% url 'xls_liste_clients_eci' %}">.xls</a>
+				<td class="align-right" colspan='4'>
+					<a class='btn btn-primary' href="{% url 'print_liste_clients_eci' %}">Imprimer</a> 
+					<a class='btn btn-primary' href="{% url 'xls_liste_clients_eci' %}">.xls</a>
 				</td>
 			</tr>
 			<tr>
@@ -18,18 +18,19 @@
 				<th>Numéros</th>
 				<th>Noms</th>
 				<th>Modèles</th>
-				
 			</tr>
 		</thead>
 		<tfoot>
 			<tr>
-				<td colspan='4'><a class='btn btn-primary' href="">Imprimer</a> <a class='btn btn-primary' href="">.xls</a></td>
+				<td class="align-right" colspan='4'>
+					<a class='btn btn-primary' href="{% url 'print_liste_clients_eci' %}">Imprimer</a> 
+					<a class='btn btn-primary' href="{% url 'xls_liste_clients_eci' %}">.xls</a></td>
 			</tr>
 		</tfoot>
 		<tbody>
 		{% for clients in liste_clients %}
 			<tr>
-			<td rowspan='{{clients.liste_projets|length}}'><a href="">{{clients.nom}}</a></td>
+			<td rowspan='{{clients.liste_projets|length}}'><a href="{% url 'client_details_eci' clients.id %}">{{clients.nom}}</a></td>
 			{% for projets in clients.liste_projets %}
 				<td><a href="">{{ projets.numero }}</a></td>
 				<td><a href="">{{ projets.nom }}</a></td>

@@ -1,3 +1,7 @@
 th.center-text, td.center-text {
 	text-align:center;
 }
+
+th.align-right, td.align-right {
+text-align: right;
+}

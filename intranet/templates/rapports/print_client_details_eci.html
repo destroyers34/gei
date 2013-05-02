@@ -1,6 +1,11 @@
-﻿		<h3>{{ client.compagnie }}</h3>
+﻿{% extends "print_base.html" %}
+{% block title %}Rapports{% endblock title %}
+{% block content %}
+		<h4>Liste des projets</h4>
+		<h3>{{ client.nom }}</h3>
 		<h3></h3>
-		<table>
+		<table class="table table-bordered table-striped">
+		<thead>
 			<tr>
 				<th>Numéros</th>
 				<th>Noms</th>
@@ -9,6 +14,8 @@
 				<th>Budget MO</th>
 				<th>Heures</th>
 			</tr>
+		</thead>
+		<tbody>
 		{% for p in liste_projets %}
 			<tr>
 				<td>{{ p.projet.numero }}</td>
@@ -19,5 +26,6 @@
 				<td>{{ p.heures.total }}</td>
 			</tr>
 			{% endfor %}
+		</tbody>
 		</table>
-
+{% endblock %}

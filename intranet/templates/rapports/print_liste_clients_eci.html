@@ -1,8 +1,6 @@
 ﻿{% extends "print_base.html" %}
 {% block title %}Rapports{% endblock title %}
 {% block content %}
-<div class="row-fluid well">
-	<div class="span12">
 		<h4>Liste des projets par client</h4>
 		<table class="table table-bordered table-striped">
 		<thead>
@@ -16,11 +14,11 @@
 		<tbody>
 		{% for clients in liste_clients %}
 			<tr>
-			<td rowspan='{{clients.liste_projets|length}}'><a href="">{{clients.nom}}</a></td>
+			<td rowspan='{{clients.liste_projets|length}}'>{{clients.nom}}</td>
 			{% for projets in clients.liste_projets %}
-				<td><a href="">{{ projets.numero }}</a></td>
-				<td><a href="">{{ projets.nom }}</a></td>
-				<td><a href="">{{ projets.modele }}</a></td>
+				<td>{{ projets.numero }}</td>
+				<td>{{ projets.nom }}</td>
+				<td>{{ projets.modele }}</td>
 				
 				</tr>
 				<tr>
@@ -29,6 +27,4 @@
 		{% endfor %}
 		</tbody>
 		</table>
-	</div>
-</div>
 {% endblock %}
