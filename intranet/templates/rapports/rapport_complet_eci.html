@@ -5,10 +5,15 @@
 <div class="row-fluid well">
 	<div class="span12">
 		<h4>Rapport du projet</h4>
-		<h3>{{ projet.numero }} : {{ projet.nom }} {{ projet.modele }}</h3>
+		<h3>
+			{{ projet.numero }} : {{ projet.nom }} {{ projet.modele }} 
+			<a class='btn btn-primary' href="{% url 'print_rapport_complet_eci' projet.numero %}">Imprimer</a> 
+			<a class='btn btn-primary' href="{% url 'xls_rapport_complet_eci' projet.numero %}">.xls</a>
+		</h3>
+
 		<table class='table'>
 			<tr>
-				<td colspan='3'><h6>Client : {{projet.client.compagnie}}</h6></td>
+				<td colspan='3'><h6>Client : {{projet.client.nom}}</h6></td>
 			</tr>
 			<tr>
 				<td><h6>Date début : {{projet.date_debut}}</h6></td>
@@ -18,7 +23,7 @@
 			<tr>
 				<td><h6>Budget Matériel : {{projet.budget_mat}} $</h6></td>
 				<td><h6>Budget Mains d'oeuvre : {{projet.budget_mo}} heures</h6></td>
-				<td><h6>Budget Mains d'oeuvre utilisé : {{ pourcent }} %</h6></td>
+				<td><h6>Budget Mains d'oeuvre utilisé : {{ projet.pourcent }} %</h6></td>
 			</tr>
 		</table>
 		
@@ -30,15 +35,15 @@
 				</tr>
 			</thead>
 			<tbody>
-		{% for bloc in liste_bloc %}
-			{% ifchanged bloc.tache__numero %}
+		{% for tache in liste_taches %}
+			{% ifchanged tache.numero %}
 			<tr>
-				<th colspan='2'>{{ bloc.tache__numero }} {{ bloc.tache__description }}</th>
+				<th colspan='2'>{{ tache.numero }} {{ tache.description }}</th>
 			</tr>
 			{% endifchanged %}
 			<tr>
-				<td>{{ bloc.employe__user__first_name }} {{ bloc.employe__user__last_name }}</td>
-				<td>{{ bloc.total_employe }}</td>
+				<td>{{ tache.bloc_eugenie__employe__user__first_name }} {{ tache.bloc_eugenie__employe__user__last_name }}</td>
+				<td>{{ tache.total_employe }}</td>
 			</tr>
 		{% endfor %}
 		</tbody>
@@ -56,23 +61,29 @@
 			</thead>
 			<tfoot>
 				<tr>
-					<th>Temps budget :</th>
-					<th>{{ projet.budget_mo }}</th>
+					<th>Total projet :</th>
+					<th>{{ total_projet.heures }}</th>
 				</tr>
 				<tr>
-					<th>Total projet :</th>
-					<th>{{ total_projet.total }}</th>
+					<th>Temps budget :</th>
+					<th>{{ projet.budget_mo }}</th>
 				</tr>
 				<tr>
 					<th>Budget Mains d'oeuvre utilisé :</th>
 					<th>{{ pourcent }} %</th>
 				</tr>
+				<tr>
+					<td class='align-right' colspan='2'>
+						<a class='btn btn-primary' href="{% url 'print_rapport_complet_eci' projet.numero %}">Imprimer</a>
+						<a class='btn btn-primary' href="{% url 'xls_rapport_complet_eci' projet.numero %}">.xls</a>
+					</td>
+				</tr>
 			</tfoot>
 			<tbody>
-		{% for total in total_temps %}
+		{% for total in total_tache %}
 			<tr>
-				<td>{{ total.tache__numero }} {{ total.tache__description }}</td>
-				<td>{{ total.total_tache }}</td>
+				<td>{{ total.numero }} {{ total.description }}</td>
+				<td>{{ total.heures }}</td>
 			</tr>
 		{% endfor %}
 		</tbody>

@@ -51,8 +51,8 @@ $('#myTab a').click(function (e) {
 				{% for employe in employes_actif %}
 					{% if employe.heure %}
 					<tr>
-					<td><a href="">{{employe.user.first_name}} {{employe.user.last_name}}</a></td>
-					<td><a href=""><i class="icon-list"></i></a></td>
+					<td><a href="{% url 'employe_details_eci' employe.user.username %}">{{employe.user.first_name}} {{employe.user.last_name}}</a></td>
+					<td><a href="{% url 'employe_blocs_eci' employe.user.username %}"><i class="icon-list"></i></a></td>
 					<td>{{employe.hire_date}}</td>
 					<td>{{employe.heure}}</td>
 					<td>{{employe.banque_heure}}</td>
@@ -98,7 +98,7 @@ $('#myTab a').click(function (e) {
 				{% for employe in employes_inactif %}
 					{% if employe.heure %}
 					<tr>
-					<td><a href="">{{employe.user.first_name}} {{employe.user.last_name}}</a></td>
+					<td><a href="{% url 'employe_details_eci' employe.user.username %}">{{employe.user.first_name}} {{employe.user.last_name}}</a></td>
 					<td><a href=""><i class="icon-list"></i></a></td>
 					<td>{{employe.hire_date}}</td>
 					<td>{{employe.heure}}</td>

@@ -75,6 +75,67 @@ def base_tache_details_eci(request, numero_tache):
     projets = Projet_Eugenie.objects.filter(bloc_eugenie__tache__numero=numero_tache).annotate(heure=Sum('bloc_eugenie__temps')).order_by('-numero')
     tache_total = Tache.objects.filter(numero=numero_tache).aggregate(heures=Sum('bloc_eugenie__temps'))
     return {'projets':projets,'tache_total':tache_total,'numero_tache':numero_tache}
+
+@permission_required('feuilledetemps.afficher_rapport_temps')
+def base_liste_projets_noms_eci(request, nom_projet):
+    modeles = Projet_Eugenie.objects.filter(nom=nom_projet).values('modele').annotate(heure=Sum('bloc_eugenie__temps')).order_by('modele')
+    modeles_total = Projet_Eugenie.objects.filter(nom=nom_projet).aggregate(heures=Sum('bloc_eugenie__temps'))
+    for modele in modeles:
+        liste_projets = Projet_Eugenie.objects.filter(nom=nom_projet,modele=modele['modele']).annotate(heure=Sum('bloc_eugenie__temps')).order_by('numero')
+        liste_heures = list()
+        for projet in liste_projets:
+            if projet.heure is not None:
+                liste_heures.append(projet.heure)
+        if len(liste_heures)>0 :
+            moyenne = format(reduce(lambda x, y: x + y, liste_heures) / len(liste_heures), '.2f')
+            modele.update({'liste_projets':liste_projets,'moyenne':moyenne})
+    return {'modeles':modeles,'modeles_total':modeles_total,'nom_projet':nom_projet}
+
+@permission_required('feuilledetemps.afficher_rapport_temps')
+def base_liste_projets_modeles_eci(request, nom_projet, modele_projet):
+    projets = Projet_Eugenie.objects.filter(nom=nom_projet,modele=modele_projet).values('numero').annotate(heure=Sum('bloc_eugenie__temps')).order_by('numero')
+    projets_total = Projet_Eugenie.objects.filter(nom=nom_projet,modele=modele_projet).aggregate(heures=Sum('bloc_eugenie__temps'))
+    liste_temps_projet = list()
+    for projet in projets:
+        liste_temps_projet.append(projet['heure'])
+        liste_taches = Tache.objects.filter(bloc_eugenie__projet__nom=nom_projet,bloc_eugenie__projet__modele=modele_projet,bloc_eugenie__projet__numero=projet['numero']).annotate(heure=Sum('bloc_eugenie__temps')).order_by('numero')
+        projet.update({'liste_taches' : liste_taches})
+    moyenne = format(reduce(lambda x, y: x + y, liste_temps_projet) / len(liste_temps_projet), '.2f')
+    return {'projets':projets,'projets_total':projets_total,'nom_projet':nom_projet,'modele_projet':modele_projet,'moyenne':moyenne}
+
+@permission_required('feuilledetemps.afficher_rapport_temps')
+def base_rapport_complet_eci(request, numero_projet):
+    projet = Projet_Eugenie.objects.get(numero=numero_projet)
+    total_projet = Projet_Eugenie.objects.filter(numero=numero_projet).aggregate(heures=Sum('bloc_eugenie__temps'))
+    liste_taches = Tache.objects.filter(bloc_eugenie__projet=projet).order_by('numero','bloc_eugenie__date','bloc_eugenie__employe').values('numero','description','bloc_eugenie__employe__user__first_name','bloc_eugenie__employe__user__last_name').annotate(total_employe=Sum('bloc_eugenie__temps'))
+    total_tache = liste_taches.values('numero','description').annotate(heures=Sum('bloc_eugenie__temps')).order_by('numero')
+    return {'projet':projet,'total_projet':total_projet,'liste_taches':liste_taches,'total_tache':total_tache,'pourcent':format(total_projet['heures']/projet.budget_mo*100, '.2f')}
+
+@permission_required('feuilledetemps.afficher_rapport_temps')
+def base_employe_details_eci(request, username):
+    employe = Employe.objects.get(user__username=username)
+    projets = Projet_Eugenie.objects.filter(bloc_eugenie__employe=employe).values('numero','nom','modele').annotate(heure=Sum('bloc_eugenie__temps')).order_by('numero')
+    total_projet = Projet_Eugenie.objects.filter(bloc_eugenie__employe=employe).aggregate(heures=Sum('bloc_eugenie__temps'))
+    projets = list(projets)
+    for projet in projets:
+        taches = Tache.objects.filter(bloc_eugenie__employe=employe,bloc_eugenie__projet__numero=projet['numero']).values('numero', 'description').annotate(heure=Sum('bloc_eugenie__temps')).order_by('numero')
+        projet.update({'taches' : taches})
+    return {'employe':employe,'projets':projets,'total_projet':total_projet}
+    
+@permission_required('feuilledetemps.afficher_rapport_temps')
+def base_projet_tache_details_eci(request, numero_projet, numero_tache):
+    projet = Projet_Eugenie.objects.get(numero=numero_projet)
+    tache = Tache.objects.get(numero=numero_tache)
+    employes = Employe.objects.filter(bloc_eugenie__projet=projet,bloc_eugenie__tache=tache).annotate(heure=Sum('bloc_eugenie__temps')).order_by('user__first_name')
+    total_employe = Employe.objects.filter(bloc_eugenie__projet=projet,bloc_eugenie__tache=tache).aggregate(heures=Sum('bloc_eugenie__temps'))
+    return {'projet':projet,'tache':tache,'employes':employes,'total_employe':total_employe}
+    
+@permission_required('feuilledetemps.afficher_rapport_temps')
+def base_employe_blocs_eci(request, username):
+    blocs = Bloc_Eugenie.objects.filter(employe__user__username=username).order_by('date')
+    total_bloc = Bloc_Eugenie.objects.filter(employe__user__username=username).aggregate(heures=Sum('temps'))
+    return {'blocs':blocs,'total_bloc':total_bloc}
+    
     
 @permission_required('feuilles_de_temps.afficher_rapport_temps_eugenie')    
 def liste_clients_eci(request):
@@ -137,7 +198,43 @@ def tache_details_eci(request, numero_tache):
         form = DateRangeForm()
     variables.update({'form':form,'date':datetime.now().strftime("%Y-%m-%d")})
     return render(request, 'rapports/tache_details_eci.html', variables)    
-        
+
+@permission_required('feuilledetemps.afficher_rapport_temps')
+def liste_projets_noms_eci(request, nom_projet):
+    return render(request, 'rapports/liste_projets_noms_eci.html', base_liste_projets_noms_eci(request, nom_projet))
+    
+@permission_required('feuilledetemps.afficher_rapport_temps')
+def liste_projets_modeles_eci(request, nom_projet, modele_projet):
+    return render(request, 'rapports/liste_projets_modeles_eci.html', base_liste_projets_modeles_eci(request, nom_projet, modele_projet))
+
+@permission_required('feuilledetemps.afficher_rapport_temps')
+def rapport_complet_eci(request, numero_projet):
+    return render(request, 'rapports/rapport_complet_eci.html', base_rapport_complet_eci(request, numero_projet))
+
+@permission_required('feuilledetemps.afficher_rapport_temps')
+def employe_details_eci(request, username):
+    return render(request, 'rapports/employe_details_eci.html', base_employe_details_eci(request, username))
+
+@permission_required('feuilledetemps.afficher_rapport_temps')
+def projet_tache_details_eci(request, numero_projet, numero_tache):
+    return render(request, 'rapports/projet_tache_details_eci.html', base_projet_tache_details_eci(request, numero_projet, numero_tache))
+
+@permission_required('feuilledetemps.afficher_rapport_temps')
+def employe_blocs_eci(request, username):
+    variables = base_employe_blocs_eci(request, username)
+    if request.method == 'POST':
+        form = DateRangeForm(request.POST)
+        if form.is_valid():
+            date_d = form.cleaned_data['date_debut']
+            date_f = form.cleaned_data['date_fin']
+            redirect_str = str(date_d) + '/' + str(date_f) + '/'
+            return HttpResponseRedirect(redirect_str) # Redirect after POST
+    else: 
+        form = DateRangeForm()
+    variables.update({'form':form,'date':datetime.now().strftime("%Y-%m-%d")})
+    return render(request, 'rapports/employe_blocs_eci.html', variables)
+    
+    
 @permission_required('feuilles_de_temps.afficher_rapport_temps_eugenie')    
 def print_liste_clients_eci(request):
     return render(request, 'rapports/print_liste_clients_eci.html', base_liste_clients_eci(request))
@@ -165,6 +262,30 @@ def print_projet_details_eci(request, numero_projet):
 @permission_required('feuilledetemps.afficher_rapport_temps')
 def print_tache_details_eci(request, numero_tache):
     return render(request, 'rapports/print_tache_details_eci.html', base_tache_details_eci(request, numero_tache))
+
+@permission_required('feuilledetemps.afficher_rapport_temps')
+def print_liste_projets_noms_eci(request, nom_projet):      
+    return render(request, 'rapports/print_liste_projets_noms_eci.html', base_liste_projets_noms_eci(request, nom_projet))
+
+@permission_required('feuilledetemps.afficher_rapport_temps')
+def print_liste_projets_modeles_eci(request, nom_projet, modele_projet):
+    return render(request, 'rapports/print_liste_projets_modeles_eci.html', base_liste_projets_modeles_eci(request, nom_projet, modele_projet))
+      
+@permission_required('feuilledetemps.afficher_rapport_temps')
+def print_rapport_complet_eci(request, numero_projet):
+    return render(request, 'rapports/print_rapport_complet_eci.html', base_rapport_complet_eci(request, numero_projet))
+
+@permission_required('feuilledetemps.afficher_rapport_temps')
+def print_employe_details_eci(request, username):
+    return render(request, 'rapports/print_employe_details_eci.html', base_employe_details_eci(request, username))
+
+@permission_required('feuilledetemps.afficher_rapport_temps')
+def print_projet_tache_details_eci(request, numero_projet, numero_tache):
+    return render(request, 'rapports/print_projet_tache_details_eci.html', base_projet_tache_details_eci(request, numero_projet, numero_tache))    
+
+@permission_required('feuilledetemps.afficher_rapport_temps')
+def print_employe_blocs_eci(request, username):    
+    return render(request, 'rapports/print_employe_blocs_eci.html', base_employe_blocs_eci(request, username))
     
     
 @permission_required('feuilles_de_temps.afficher_rapport_temps_eugenie')    
@@ -222,3 +343,52 @@ def xls_tache_details_eci(request, numero_tache):
     response['Content-Disposition'] = 'attachment; filename='+filename
     response['Content-Type'] = 'application/vnd.ms-excel; charset=utf-8'
     return response
+    
+@permission_required('feuilledetemps.afficher_rapport_temps')
+def xls_liste_projets_noms_eci(request, nom_projet):  
+    response = render_to_response("rapports/xls_liste_projets_noms_eci.html", base_liste_projets_noms_eci(request, nom_projet))
+    filename = "Liste des modeles %s - %s.xls" % (nom_projet,datetime.now().strftime("%Y-%m-%d"))
+    response['Content-Disposition'] = 'attachment; filename='+filename
+    response['Content-Type'] = 'application/vnd.ms-excel; charset=utf-8'
+    return response
+    
+@permission_required('feuilledetemps.afficher_rapport_temps')
+def xls_liste_projets_modeles_eci(request, nom_projet, modele_projet):
+    response = render_to_response("rapports/xls_liste_projets_modeles_eci.html", base_liste_projets_modeles_eci(request, nom_projet, modele_projet))
+    filename = "Liste des projets %s %s - %s.xls" % (nom_projet,modele_projet,datetime.now().strftime("%Y-%m-%d"))
+    response['Content-Disposition'] = 'attachment; filename='+filename
+    response['Content-Type'] = 'application/vnd.ms-excel; charset=utf-8'
+    return response
+    
+@permission_required('feuilledetemps.afficher_rapport_temps')
+def xls_rapport_complet_eci(request, numero_projet):
+    response = render_to_response('rapports/xls_rapport_complet_eci.html', base_rapport_complet_eci(request, numero_projet))
+    filename = "Rapport complet du projet %s - %s.xls" % (numero_projet,datetime.now().strftime("%Y-%m-%d"))
+    response['Content-Disposition'] = 'attachment; filename='+filename
+    response['Content-Type'] = 'application/vnd.ms-excel; charset=utf-8'
+    return response
+    
+@permission_required('feuilledetemps.afficher_rapport_temps')
+def xls_employe_details_eci(request, username):
+    response = render_to_response('rapports/xls_employe_details_eci.html', base_employe_details_eci(request, username))
+    filename = "Rapport de l'employe %s - %s.xls" % (username, datetime.now().strftime("%Y-%m-%d"))
+    response['Content-Disposition'] = 'attachment; filename='+filename
+    response['Content-Type'] = 'application/vnd.ms-excel; charset=utf-8'
+    return response
+    
+@permission_required('feuilledetemps.afficher_rapport_temps')
+def xls_projet_tache_details_eci(request, numero_projet, numero_tache):
+    response = render_to_response('rapports/xls_projet_tache_details_eci.html', base_projet_tache_details_eci(request, numero_projet, numero_tache))
+    filename = "Rapport details %s - %s - %s.xls" % (numero_projet, numero_tache, datetime.now().strftime("%Y-%m-%d"))
+    response['Content-Disposition'] = 'attachment; filename='+filename
+    response['Content-Type'] = 'application/vnd.ms-excel; charset=utf-8'
+    return response
+    
+@permission_required('feuilledetemps.afficher_rapport_temps')
+def xls_employe_blocs_eci(request, username):    
+    response = render_to_response('rapports/xls_employe_blocs_eci.html', base_employe_blocs_eci(request, username))
+    filename = "Liste des blocs de %s - %s.xls" % (username,datetime.now().strftime("%Y-%m-%d"))
+    response['Content-Disposition'] = 'attachment; filename='+filename
+    response['Content-Type'] = 'application/vnd.ms-excel; charset=utf-8'
+    return response
+    
