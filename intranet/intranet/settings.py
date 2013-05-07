@@ -1,8 +1,5 @@
 ﻿from local_settings import *
 
-DEBUG = True
-TEMPLATE_DEBUG = DEBUG
-
 ADMINS = (
     # ('Anthony Bechard', 'anthony@jrcmachinery.com'),
 )
