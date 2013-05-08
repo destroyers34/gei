@@ -136,6 +136,11 @@ def base_employe_blocs_eci(request, username):
     total_bloc = Bloc_Eugenie.objects.filter(employe__user__username=username).aggregate(heures=Sum('temps'))
     return {'blocs':blocs,'total_bloc':total_bloc}
     
+@permission_required('feuilledetemps.afficher_rapport_temps')
+def base_employe_blocs_periode_eci(request, username, date_debut, date_fin):
+    blocs = Bloc_Eugenie.objects.filter(employe__user__username=username,date__gte=date_debut,date__lte=date_fin).order_by('date')
+    total_bloc = Bloc_Eugenie.objects.filter(employe__user__username=username,date__gte=date_debut,date__lte=date_fin).aggregate(heures=Sum('temps'))
+    return {'blocs':blocs,'total_bloc':total_bloc}
     
 @permission_required('feuilles_de_temps.afficher_rapport_temps_eugenie')    
 def liste_clients_eci(request):
@@ -234,6 +239,21 @@ def employe_blocs_eci(request, username):
     variables.update({'form':form,'date':datetime.now().strftime("%Y-%m-%d")})
     return render(request, 'rapports/employe_blocs_eci.html', variables)
     
+@permission_required('feuilledetemps.afficher_rapport_temps')
+def employe_blocs_periode_eci(request, username, date_debut, date_fin):
+    variables = base_employe_blocs_periode_eci(request, username, date_debut, date_fin)
+    if request.method == 'POST':
+        form = DateRangeForm(request.POST)
+        if form.is_valid():
+            date_d = form.cleaned_data['date_debut']
+            date_f = form.cleaned_data['date_fin']
+            redirect_str = '../../' + str(date_d) + '/' + str(date_f) + '/'
+            return HttpResponseRedirect(redirect_str) # Redirect after POST
+    else: 
+        form = DateRangeForm()
+    variables.update({'form':form,'date':datetime.now().strftime("%Y-%m-%d")})
+    return render(request, 'rapports/employe_blocs_eci.html', variables)
+
     
 @permission_required('feuilles_de_temps.afficher_rapport_temps_eugenie')    
 def print_liste_clients_eci(request):
@@ -286,6 +306,10 @@ def print_projet_tache_details_eci(request, numero_projet, numero_tache):
 @permission_required('feuilledetemps.afficher_rapport_temps')
 def print_employe_blocs_eci(request, username):    
     return render(request, 'rapports/print_employe_blocs_eci.html', base_employe_blocs_eci(request, username))
+
+@permission_required('feuilledetemps.afficher_rapport_temps')
+def print_employe_blocs_periode_eci(request, username, date_debut, date_fin):    
+    return render(request, 'rapports/print_employe_blocs_eci.html', base_employe_blocs_periode_eci(request, username, date_debut, date_fin))    
     
     
 @permission_required('feuilles_de_temps.afficher_rapport_temps_eugenie')    
@@ -392,3 +416,10 @@ def xls_employe_blocs_eci(request, username):
     response['Content-Type'] = 'application/vnd.ms-excel; charset=utf-8'
     return response
     
+@permission_required('feuilledetemps.afficher_rapport_temps')
+def xls_employe_blocs_periode_eci(request, username, date_debut, date_fin):    
+    response = render_to_response('rapports/xls_employe_blocs_eci.html', base_employe_blocs_periode_eci(request, username, date_debut, date_fin))
+    filename = "Liste des blocs de %s - %s.xls" % (username,datetime.now().strftime("%Y-%m-%d"))
+    response['Content-Disposition'] = 'attachment; filename='+filename
+    response['Content-Type'] = 'application/vnd.ms-excel; charset=utf-8'
+    return response
