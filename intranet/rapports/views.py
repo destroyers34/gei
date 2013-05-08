@@ -301,6 +301,10 @@ def print_liste_projets_actif_eci(request):
 @permission_required('feuilledetemps.afficher_rapport_temps')
 def print_liste_projets_attente_eci(request):
     return render(request, 'rapports/print_liste_projets_attente_eci.html', base_liste_projets_eci(request))      
+
+@permission_required('feuilledetemps.afficher_rapport_temps')
+def print_liste_projets_complet_eci(request):
+    return render(request, 'rapports/print_liste_projets_complet_eci.html', base_liste_projets_eci(request))  
     
 @permission_required('feuilledetemps.afficher_rapport_temps')
 def print_liste_taches_eci(request):
