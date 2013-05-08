@@ -1,9 +1,11 @@
 ﻿{% extends "print_base.html" %}
 {% block title %}Rapports{% endblock title %}
 {% block content %}
+		<h3>EuGénie Canada Inc.</h3>
 		<h4>Rapport de temps de chacun des projets actif</h3>
+		<h4>{{date}}</h3>
 			  {% if projets_actif|length > 0 %}
-			  <table class="table table-striped table-bordered table-condensed">
+			  <table class="table table-bordered">
 				<thead>
 					<tr>
 						<th>Numéro</th>
@@ -24,9 +26,6 @@
 						<th class='center-text'>{{total_actif.total_heure}}</th>
 						<th class='center-text'>{{total_actif.total_pourcent}} %</th>
 						<th></th>
-					</tr>
-					<tr>
-						<th class="align-right" colspan='7'>Budget MO restant (8H) :</th><th class='center-text'>{{total_actif.jours_travail}}</th>
 					</tr>
 					</tfoot>
 				<tbody>

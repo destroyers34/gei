@@ -39,7 +39,6 @@ def base_liste_projets_eci(request):
     total_inactif = projets.filter(actif=False,en_attente=False).aggregate(total_heure=Sum('bloc_eugenie__temps'))
     heures = projets.filter(actif=True,en_attente=False).aggregate(total_heure=Sum('bloc_eugenie__temps'))
     total_actif.update({'total_heure':heures['total_heure']})
-    total_actif.update({'jours_travail': format((total_actif['total_mo'] - heures['total_heure'])/8, '.2f')})
     if total_actif['total_heure']:
         if total_actif['total_mo'] > 0:
             total_actif.update({'total_pourcent':format(total_actif['total_heure']/total_actif['total_mo']*100, '.2f')})
@@ -296,15 +295,21 @@ def print_client_details_eci(request, client_id):
 
 @permission_required('feuilledetemps.afficher_rapport_temps')
 def print_liste_projets_actif_eci(request):
-    return render(request, 'rapports/print_liste_projets_actif_eci.html', base_liste_projets_eci(request))    
+    variables = base_liste_projets_eci(request)
+    variables.update({'date':datetime.now().strftime("%Y-%m-%d")})
+    return render(request, 'rapports/print_liste_projets_actif_eci.html', variables)    
 
 @permission_required('feuilledetemps.afficher_rapport_temps')
 def print_liste_projets_attente_eci(request):
-    return render(request, 'rapports/print_liste_projets_attente_eci.html', base_liste_projets_eci(request))      
+    variables = base_liste_projets_eci(request)
+    variables.update({'date':datetime.now().strftime("%Y-%m-%d")})
+    return render(request, 'rapports/print_liste_projets_attente_eci.html', variables)      
 
 @permission_required('feuilledetemps.afficher_rapport_temps')
 def print_liste_projets_complet_eci(request):
-    return render(request, 'rapports/print_liste_projets_complet_eci.html', base_liste_projets_eci(request))  
+    variables = base_liste_projets_eci(request)
+    variables.update({'date':datetime.now().strftime("%Y-%m-%d")})
+    return render(request, 'rapports/print_liste_projets_complet_eci.html', variables)  
     
 @permission_required('feuilledetemps.afficher_rapport_temps')
 def print_liste_taches_eci(request):
