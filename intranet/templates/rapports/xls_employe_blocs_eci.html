@@ -10,11 +10,7 @@
 					<th>Temps</th>
 				</tr>
 			</thead>
-			<tfoot>
-				<tr>
-					<td colspan='3'></td><th>Total:</th><th>{{total_bloc.heures}}</th>
-				</tr>
-			</tfoot>
+			
 			<tbody>
 		{% for bloc in blocs %}
 			<tr>
@@ -26,5 +22,10 @@
 			</tr>
 		{% endfor %}
 		</tbody>
+		<tfoot>
+				<tr>
+					<td colspan='3'></td><th>Total:</th><th>{{total_bloc.heures}}</th>
+				</tr>
+			</tfoot>
 		</table>
 
