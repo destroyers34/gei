@@ -165,19 +165,7 @@ def client_details_eci(request, client_id):
 
 @permission_required('feuilledetemps.afficher_rapport_temps')
 def liste_projets_eci(request):
-    variables = base_liste_projets_eci(request)
-    if request.method == 'POST':
-        form = FilterForm(request.POST)
-        if form.is_valid():
-            date_d = form.cleaned_data['date_debut']
-            date_f = form.cleaned_data['date_fin']
-            projet = form.cleaned_data['projet']
-            redirect_str = str(projet.numero) + '/' + str(date_d) + '/' + str(date_f) + '/'
-            return HttpResponseRedirect(redirect_str) # Redirect after POST
-    else: 
-        form = FilterForm()
-    variables.update({'form':form,'date':datetime.now().strftime("%Y-%m-%d")})
-    return render(request, 'rapports/liste_projets_eci.html', variables)
+    return render(request, 'rapports/liste_projets_eci.html', base_liste_projets_eci(request))
     
 @permission_required('feuilledetemps.afficher_rapport_temps')
 def liste_taches_eci(request):
@@ -307,9 +295,13 @@ def print_client_details_eci(request, client_id):
     return render(request, 'rapports/print_client_details_eci.html', base_client_details_eci(request, client_id))    
 
 @permission_required('feuilledetemps.afficher_rapport_temps')
-def print_liste_projets_eci(request):
-    return render(request, 'rapports/print_liste_projets_eci.html', base_liste_projets_eci(request))    
+def print_liste_projets_actif_eci(request):
+    return render(request, 'rapports/print_liste_projets_actif_eci.html', base_liste_projets_eci(request))    
 
+@permission_required('feuilledetemps.afficher_rapport_temps')
+def print_liste_projets_attente_eci(request):
+    return render(request, 'rapports/print_liste_projets_attente_eci.html', base_liste_projets_eci(request))      
+    
 @permission_required('feuilledetemps.afficher_rapport_temps')
 def print_liste_taches_eci(request):
     return render(request, 'rapports/print_liste_taches_eci.html', base_liste_taches_eci(request))    
