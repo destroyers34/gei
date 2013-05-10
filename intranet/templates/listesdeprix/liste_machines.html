@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load humanize %}
 {% block title %}Listes de prix{% endblock title %}
 {% block nav-liste %}<li class="dropdown active">{% endblock nav-liste %}
 {% block content %}
@@ -34,12 +35,12 @@
 						<td rowspan='{% if machine.details %}2{% else %}1{% endif %}'><a href="{% url 'details_machine' fournisseur.id machine.id %}">{{ machine.numero }}</a></td>
 						<td>{{ machine.description }}</td>
 						{% if user.is_superuser %}
-						<td>{{ machine.prix_fournisseur }}&nbsp;{{ machine.fournisseur.devise.symbole }}</td>
-						<td>{{ machine.cost }}&nbsp;$</td>
+						<td>{{ machine.prix_fournisseur | intcomma }}&nbsp;{{ machine.fournisseur.devise.symbole }}</td>
+						<td>{{ machine.cost | intcomma }}&nbsp;$</td>
 						{% endif %}
-						<td>{{ machine.plMin }}&nbsp;$</td>
+						<td>{{ machine.plMin | intcomma }}&nbsp;$</td>
 						{% if user.is_superuser %}
-						<td>{{ machine.profit }}&nbsp;$</td>
+						<td>{{ machine.profit | intcomma }}&nbsp;$</td>
 						<td>{{ machine.profit_pourcent }}&nbsp;%</td>
 						{% endif %}
 						{% if machine.details %}<tr><td colspan='{% if user.is_superuser %}6{% else %}2{% endif %}'>{{machine.details}}</td></tr>{% endif %}

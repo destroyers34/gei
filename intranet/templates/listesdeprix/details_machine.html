@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load humanize %}
 {% block title %}Listes de prix{% endblock title %}
 {% block nav-liste %}<li class="dropdown active">{% endblock nav-liste %}
 {% block content %}
@@ -28,12 +29,12 @@
 					<td rowspan='{% if machine.details %}2{% else %}1{% endif %}'>{{ machine.numero }}</td>
 					<td>{{ machine.description }}</td>
 					{% if user.is_superuser %}
-					<td>{{ machine.prix_fournisseur }}&nbsp;{{ machine.fournisseur.devise.symbole }}</td>
-					<td>{{ machine.cost }}&nbsp;$</td>
+					<td>{{ machine.prix_fournisseur | intcomma }}&nbsp;{{ machine.fournisseur.devise.symbole }}</td>
+					<td>{{ machine.cost | intcomma }}&nbsp;$</td>
 					{% endif %}
-					<td>{{ machine.plMin }}&nbsp;$</td>
+					<td>{{ machine.plMin | intcomma }}&nbsp;$</td>
 					{% if user.is_superuser %}
-					<td>{{ machine.profit }}&nbsp;$</td>
+					<td>{{ machine.profit | intcomma }}&nbsp;$</td>
 					<td>{{ machine.profit_pourcent }}&nbsp;%</td>
 					{% endif %}
 					{% if machine.details %}<tr><td colspan='{% if user.is_superuser %}6{% else %}2{% endif %}'>{{machine.details}}</td></tr>{% endif %}
@@ -71,12 +72,12 @@
 						<td><input readonly='True' style='width:90px;' id="id_form-{{ forloop.counter0 }}-numero" maxlength="100" name="form-{{ forloop.counter0 }}-numero" type="text" value="{{ option.numero }}"></td>
 						<td>{{ option.description }}</td>
 						{% if user.is_superuser %}
-						<td>{{ option.prix_fournisseur }}&nbsp;{{ option.fournisseur.devise.symbole }}</td>
-						<td>{{ option.cost }}&nbsp;$</td>
+						<td>{{ option.prix_fournisseur | intcomma }}&nbsp;{{ option.fournisseur.devise.symbole }}</td>
+						<td>{{ option.cost | intcomma }}&nbsp;$</td>
 						{% endif %}
-						<td>{{ option.plMin }}&nbsp;$</td>
+						<td>{{ option.plMin | intcomma }}&nbsp;$</td>
 						{% if user.is_superuser %}
-						<td>{{ option.profit }}&nbsp;$</td>
+						<td>{{ option.profit | intcomma }}&nbsp;$</td>
 						<td>{{ option.profit_pourcent }}&nbsp;%</td>
 						{% endif %}
 					</tr>
@@ -108,12 +109,12 @@
 				<tr>
 					<td>{{ objet.numero }}</td>
 					{% if user.is_superuser %}
-					<td>{{ objet.prix_fournisseur }}&nbsp;{{ objet.fournisseur.devise.symbole }}</td>
-					<td>{{ objet.cost }}&nbsp;$</td>
+					<td>{{ objet.prix_fournisseur | intcomma }}&nbsp;{{ objet.fournisseur.devise.symbole }}</td>
+					<td>{{ objet.cost | intcomma }}&nbsp;$</td>
 					{% endif %}
-					<td>{{ objet.plMin }}&nbsp;$</td>
+					<td>{{ objet.plMin | intcomma }}&nbsp;$</td>
 					{% if user.is_superuser %}
-					<td>{{ objet.profit }}&nbsp;$</td>
+					<td>{{ objet.profit | intcomma }}&nbsp;$</td>
 					<td>{{ objet.profit_pourcent }}&nbsp;%</td>
 					{% endif %}
 				</tr>
@@ -122,11 +123,11 @@
 					<th>Total:</th>
 					{% if user.is_superuser %}
 					<th></th>
-					<th>{{ total.cost }}&nbsp;$</th>
+					<th>{{ total.cost | intcomma }}&nbsp;$</th>
 					{% endif %}
-					<th>{{ total.plMin }}&nbsp;$</th>
+					<th>{{ total.plMin | intcomma }}&nbsp;$</th>
 					{% if user.is_superuser %}
-					<th>{{ total.profit }}&nbsp;$</th>
+					<th>{{ total.profit | intcomma }}&nbsp;$</th>
 					<th>{{ total.profit_pourcent }}&nbsp;%</th>
 					{% endif %}
 				</tr>
