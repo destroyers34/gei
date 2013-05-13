@@ -44,7 +44,7 @@ class Projet_Eugenie(Projet):
         ordering = ['-numero']
 
 class Projet_TPE(Projet):
-    description = models.CharField(max_length=30,verbose_name=u"Nom")
+    description = models.CharField(max_length=30,verbose_name=u"Description")
     serial_number = models.CharField(max_length=30,verbose_name=u"Numéro de série", blank=True, null=True)
     budget_mat = models.DecimalField(max_digits=11,decimal_places=2,verbose_name=u"Budget MAT ($)",)
     budget_mo = models.DecimalField(max_digits=11,decimal_places=2,verbose_name=u"Budget MO (H)",)
