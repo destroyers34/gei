@@ -6,88 +6,89 @@
 
 <div class="row-fluid well">
 	<div class="span12">
-		<h3>Machine</h3>
-		<h4>{{ machine.numero }}</h4>
-		<table class="table table-striped table-bordered table-condensed">
-			<thead>
-				<tr>
-					<th>Code</th>
-					<th>Description</th>
-					{% if user.is_superuser %}
-					<th>Prix liste</th>
-					<th>Cost</th>
-					{% endif %}
-					<th>Prix vente</th>
-					{% if user.is_superuser %}
-					<th>Profit</th>
-					<th>B.B</th>
-					{% endif %}
-				</tr>
-			</thead>
-			<tbody>
-				<tr>
-					<td rowspan='{% if machine.details %}2{% else %}1{% endif %}'>{{ machine.numero }}</td>
-					<td>{{ machine.description }}</td>
-					{% if user.is_superuser %}
-					<td>{{ machine.prix_fournisseur | intcomma }}&nbsp;{{ machine.fournisseur.devise.symbole }}</td>
-					<td>{{ machine.cost | intcomma }}&nbsp;$</td>
-					{% endif %}
-					<td>{{ machine.plMin | intcomma }}&nbsp;$</td>
-					{% if user.is_superuser %}
-					<td>{{ machine.profit | intcomma }}&nbsp;$</td>
-					<td>{{ machine.profit_pourcent }}&nbsp;%</td>
-					{% endif %}
-					{% if machine.details %}<tr><td colspan='{% if user.is_superuser %}6{% else %}2{% endif %}'>{{machine.details}}</td></tr>{% endif %}
-				</tr>
-			</tbody>
-		</table>
-		
-		<h4>Options</h4>
-		{% if machine.options_machine.count != 0 %}
-		<table class="table table-striped table-bordered table-condensed">
-			<thead>
-				<tr>
-					<th>Choix</th>
-					<th>Code</th>
-					<th>Description</th>
-					{% if user.is_superuser %}
-					<th>Prix liste</th>
-					<th>Cost</th>
-					{% endif %}
-					<th>Prix vente</th>
-					{% if user.is_superuser %}
-					<th>Profit</th>
-					<th>B.B</th>
-					{% endif %}
-				</tr>
-			</thead>
-			<tbody>
-				<form method="post" action="">
-				{% for option in machine.options_machine.all %}
+		<div class="hidden-print">
+			<h3>Machine</h3>
+			<h4>{{ machine.numero }}</h4>
+			<table class="table table-striped table-bordered table-condensed">
+				<thead>
 					<tr>
-						<td>
-							<input {{ option.checked }} id="id_form-{{ forloop.counter0 }}-calcul" name="form-{{ forloop.counter0 }}-calcul" type="checkbox">
-							<input id="id_form-{{ forloop.counter0 }}-id" name="form-{{ forloop.counter0 }}-id" value='{{ option.id }}' type="hidden">
-						</td>
-						<td><input readonly='True' style='width:90px;' id="id_form-{{ forloop.counter0 }}-numero" maxlength="100" name="form-{{ forloop.counter0 }}-numero" type="text" value="{{ option.numero }}"></td>
-						<td>{{ option.description }}</td>
+						<th>Code</th>
+						<th>Description</th>
 						{% if user.is_superuser %}
-						<td>{{ option.prix_fournisseur | intcomma }}&nbsp;{{ option.fournisseur.devise.symbole }}</td>
-						<td>{{ option.cost | intcomma }}&nbsp;$</td>
+						<th>Prix liste</th>
+						<th>Cost</th>
 						{% endif %}
-						<td>{{ option.plMin | intcomma }}&nbsp;$</td>
+						<th>Prix vente</th>
 						{% if user.is_superuser %}
-						<td>{{ option.profit | intcomma }}&nbsp;$</td>
-						<td>{{ option.profit_pourcent }}&nbsp;%</td>
+						<th>Profit</th>
+						<th>B.B</th>
 						{% endif %}
 					</tr>
-				{% endfor %}
-			</tbody>
-		</table>
-		{% else %}
-		<p>Aucune option est disponible pour cette machine</p>
-		{% endif %}
-		
+				</thead>
+				<tbody>
+					<tr>
+						<td rowspan='{% if machine.details %}2{% else %}1{% endif %}'>{{ machine.numero }}</td>
+						<td>{{ machine.description }}</td>
+						{% if user.is_superuser %}
+						<td>{{ machine.prix_fournisseur | intcomma }}&nbsp;{{ machine.fournisseur.devise.symbole }}</td>
+						<td>{{ machine.cost | intcomma }}&nbsp;$</td>
+						{% endif %}
+						<td>{{ machine.plMin | intcomma }}&nbsp;$</td>
+						{% if user.is_superuser %}
+						<td>{{ machine.profit | intcomma }}&nbsp;$</td>
+						<td>{{ machine.profit_pourcent }}&nbsp;%</td>
+						{% endif %}
+						{% if machine.details %}<tr><td colspan='{% if user.is_superuser %}6{% else %}2{% endif %}'>{{machine.details}}</td></tr>{% endif %}
+					</tr>
+				</tbody>
+			</table>
+			
+			<h4>Options</h4>
+			{% if machine.options_machine.count != 0 %}
+			<table class="table table-striped table-bordered table-condensed">
+				<thead>
+					<tr>
+						<th>Choix</th>
+						<th>Code</th>
+						<th>Description</th>
+						{% if user.is_superuser %}
+						<th>Prix liste</th>
+						<th>Cost</th>
+						{% endif %}
+						<th>Prix vente</th>
+						{% if user.is_superuser %}
+						<th>Profit</th>
+						<th>B.B</th>
+						{% endif %}
+					</tr>
+				</thead>
+				<tbody>
+					<form method="post" action="">
+					{% for option in machine.options_machine.all %}
+						<tr>
+							<td>
+								<input {{ option.checked }} id="id_form-{{ forloop.counter0 }}-calcul" name="form-{{ forloop.counter0 }}-calcul" type="checkbox">
+								<input id="id_form-{{ forloop.counter0 }}-id" name="form-{{ forloop.counter0 }}-id" value='{{ option.id }}' type="hidden">
+							</td>
+							<td><input readonly='True' style='width:90px;' id="id_form-{{ forloop.counter0 }}-numero" maxlength="100" name="form-{{ forloop.counter0 }}-numero" type="text" value="{{ option.numero }}"></td>
+							<td>{{ option.description }}</td>
+							{% if user.is_superuser %}
+							<td>{{ option.prix_fournisseur | intcomma }}&nbsp;{{ option.fournisseur.devise.symbole }}</td>
+							<td>{{ option.cost | intcomma }}&nbsp;$</td>
+							{% endif %}
+							<td>{{ option.plMin | intcomma }}&nbsp;$</td>
+							{% if user.is_superuser %}
+							<td>{{ option.profit | intcomma }}&nbsp;$</td>
+							<td>{{ option.profit_pourcent }}&nbsp;%</td>
+							{% endif %}
+						</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+			{% else %}
+			<p>Aucune option est disponible pour cette machine</p>
+			{% endif %}
+			</div>
 		<h4>Total</h4>
 		<table class="table table-striped table-bordered table-condensed">
 			<thead>
@@ -131,7 +132,7 @@
 					<th>{{ total.profit_pourcent }}&nbsp;%</th>
 					{% endif %}
 				</tr>
-				<tr>
+				<tr class="hidden-print">
 					{{ formset.management_form }}
 					<td colspan='{% if user.is_superuser %}5{% else %}1{% endif %}'></td><td><input class="btn" type="submit" value="Calculer" />{% csrf_token %}</td>
 				</tr>
