@@ -15,7 +15,8 @@ class Compagnie(models.Model):
 
 	class Meta:
 		verbose_name = u"Compagnie"
-
+        ordering = ['nom']
+        
 class Contact(models.Model):
     prenom = models.CharField(max_length=50,verbose_name=u"Prénom", blank=True)
     nom = models.CharField(max_length=50,verbose_name=u"Nom", blank=True)
@@ -28,3 +29,4 @@ class Contact(models.Model):
 
     class Meta:
         verbose_name = u"Contact"
+        ordering = ['prenom','nom']
