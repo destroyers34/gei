@@ -190,6 +190,12 @@ def base_liste_clients_tpe(request):
         client.update({'liste_projets' : liste_projets})
     return {'liste_clients': liste_clients}
 
+@permission_required('feuilledetemps.afficher_rapport_temps_tpe')
+def base_liste_taches_tpe(request):
+    taches = Tache.objects.all().annotate(heure=Sum('bloc_tpe__temps')).order_by('numero')
+    total = Tache.objects.all().aggregate(heures=Sum('bloc_tpe__temps'))
+    return {'taches':taches,'total':total}
+    
     
 @permission_required('feuilles_de_temps.afficher_rapport_temps_eugenie')    
 def liste_clients_eci(request):
@@ -333,6 +339,10 @@ def liste_employes_tpe(request):
 def liste_clients_tpe(request):
     return render(request, 'rapports/liste_clients_tpe.html', base_liste_clients_tpe(request))
 
+@permission_required('feuilledetemps.afficher_rapport_temps_tpe')
+def liste_taches_tpe(request):
+    return render(request, 'rapports/liste_taches_tpe.html', base_liste_taches_tpe(request))
+    
     
 @permission_required('feuilles_de_temps.afficher_rapport_temps_eugenie')    
 def print_liste_clients_eci(request):
@@ -438,6 +448,10 @@ def print_liste_employes_tpe(request):
 def print_liste_clients_tpe(request):
     return render(request, 'rapports/print_liste_clients_tpe.html', base_liste_clients_tpe(request))
     
+@permission_required('feuilledetemps.afficher_rapport_temps_tpe')
+def print_liste_taches_tpe(request):
+    return render(request, 'rapports/print_liste_taches_tpe.html', base_liste_taches_tpe(request))    
+
     
 @permission_required('feuilles_de_temps.afficher_rapport_temps_eugenie')    
 def xls_liste_clients_eci(request):
@@ -587,6 +601,14 @@ def xls_liste_employes_tpe(request):
 def xls_liste_clients_tpe(request):
     response = render_to_response("rapports/xls_liste_clients_tpe.html", base_liste_clients_tpe(request))
     filename = "Liste des projets par client pour Techno-Pro Experts %s.xls" % (datetime.now().strftime("%Y-%m-%d"))
+    response['Content-Disposition'] = 'attachment; filename='+filename
+    response['Content-Type'] = 'application/vnd.ms-excel; charset=utf-8'
+    return response
+
+@permission_required('feuilledetemps.afficher_rapport_temps_tpe')
+def xls_liste_taches_tpe(request):    
+    response = render_to_response("rapports/xls_liste_taches_tpe.html", base_liste_taches_tpe(request))
+    filename = "Liste des tâches Techno-Pro Experts %s.xls" % datetime.now().strftime("%Y-%m-%d")
     response['Content-Disposition'] = 'attachment; filename='+filename
     response['Content-Type'] = 'application/vnd.ms-excel; charset=utf-8'
     return response    
