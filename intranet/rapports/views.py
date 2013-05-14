@@ -45,7 +45,7 @@ def base_liste_projets_eci(request):
         else:
             total_actif.update({'total_pourcent':format(total_actif['total_heure']*100, '.2f')})
     else:
-        total_actif.update({'total_pourcent':0 })
+        total_actif.update({'total_pourcent':format(0, '.2f') })
     return {'projets_attente':projets_attente,'projets_actif':projets_actif,'projets_inactif':projets_inactif,'total_attente':total_attente,'total_actif':total_actif,'total_inactif':total_inactif}
 
 @permission_required('feuilledetemps.afficher_rapport_temps')
@@ -170,7 +170,7 @@ def base_liste_projets_tpe(request):
         else:
             total_actif.update({'total_pourcent':format(total_actif['total_heure']*100, '.2f')})
     else:
-        total_actif.update({'total_pourcent':0 })
+        total_actif.update({'total_pourcent':format(0, '.2f') })
     return {'projets_attente':projets_attente,'projets_actif':projets_actif,'projets_inactif':projets_inactif,'total_attente':total_attente,'total_actif':total_actif,'total_inactif':total_inactif}
     
 @permission_required('feuilles_de_temps.afficher_rapport_temps_eugenie')    

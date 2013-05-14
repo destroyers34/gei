@@ -51,6 +51,16 @@ class Projet_TPE(Projet):
     def __unicode__(self):
         return u'%s : %s - %s' % (self.numero, self.nom, self.description)
     
+    def pourcent(self):
+        projets = Projet_TPE.objects.filter(numero=self.numero).aggregate(total=Sum('bloc_tpe__temps'))
+        if projets['total']:
+            if self.budget_mo > 0:
+                return format(projets['total']/self.budget_mo*100, '.2f')
+            else:
+                return format(projets['total']*100, '.2f')    
+        else:
+            return format(0, '.2f')    
+            
     class Meta:
         verbose_name = u"Projet Techno-Pro Experts"
         verbose_name_plural = u"Projets Techno-Pro Experts"
