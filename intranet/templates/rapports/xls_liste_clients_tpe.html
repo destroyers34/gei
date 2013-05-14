@@ -1,12 +1,12 @@
 ﻿<table>
-<caption>Liste des projets par clients</caption>
+<caption>Techno-Pro Experts - Liste des projets par clients</caption>
 	<tr>
 		<th>Clients</th>
 		<th>Numéros</th>
 		<th>Noms</th>
-		<th>Modèles</th>
 	</tr>
 {% for clients in liste_clients %}
+{% if clients.liste_projets|length > 0 %}
 	<tr>
 	<td>{{clients.nom}}</td>
 	{% for projets in clients.liste_projets %}
@@ -15,9 +15,9 @@
 		{% endif %}
 		<td>{{ projets.numero }}</td>
 		<td>{{ projets.nom }}</td>
-		<td>{{ projets.modele }}</td>
 		</tr>
 		<tr>
 	{% endfor %}
+	{% endif %}
 {% endfor %}
 </table>
