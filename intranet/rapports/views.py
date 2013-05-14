@@ -173,6 +173,16 @@ def base_liste_projets_tpe(request):
         total_actif.update({'total_pourcent':format(0, '.2f') })
     return {'projets_attente':projets_attente,'projets_actif':projets_actif,'projets_inactif':projets_inactif,'total_attente':total_attente,'total_actif':total_actif,'total_inactif':total_inactif}
     
+@permission_required('feuilledetemps.afficher_rapport_temps')
+def base_liste_employes_tpe(request):
+    employes = Employe.objects.all().annotate(heure=Sum('bloc_tpe__temps')).order_by('user__first_name')
+    employes_actif = employes.filter(user__is_active=True)
+    employes_inactif = employes.filter(user__is_active=False)   
+    total_actif = Employe.objects.filter(user__is_active=True).aggregate(heures=Sum('bloc_tpe__temps'), banque=Sum('banque_heure'))
+    total_inactif = Employe.objects.filter(user__is_active=False).aggregate(heures=Sum('bloc_tpe__temps'), banque=Sum('banque_heure'))
+    return {'employes_actif':employes_actif,'total_actif':total_actif,'employes_inactif':employes_inactif,'total_inactif':total_inactif}
+    
+    
 @permission_required('feuilles_de_temps.afficher_rapport_temps_eugenie')    
 def liste_clients_eci(request):
     return render(request, 'rapports/liste_clients_eci.html', base_liste_clients_eci(request))
@@ -307,6 +317,10 @@ def tache_periode_eci(request, numero_tache, date_debut, date_fin):
 def liste_projets_tpe(request):
     return render(request, 'rapports/liste_projets_tpe.html', base_liste_projets_tpe(request))
 
+@permission_required('feuilledetemps.afficher_rapport_temps')
+def liste_employes_tpe(request):
+    return render(request, 'rapports/liste_employes_tpe.html', base_liste_employes_tpe(request))
+
     
 @permission_required('feuilles_de_temps.afficher_rapport_temps_eugenie')    
 def print_liste_clients_eci(request):
@@ -404,6 +418,10 @@ def print_liste_projets_complet_tpe(request):
     variables.update({'date':datetime.now().strftime("%Y-%m-%d")})
     return render(request, 'rapports/print_liste_projets_complet_tpe.html', variables)  
     
+@permission_required('feuilledetemps.afficher_rapport_temps')
+def print_liste_employes_tpe(request):
+    return render(request, 'rapports/print_liste_employes_tpe.html', base_liste_employes_tpe(request))   
+
     
 @permission_required('feuilles_de_temps.afficher_rapport_temps_eugenie')    
 def xls_liste_clients_eci(request):
@@ -536,6 +554,14 @@ def xls_tache_periode_eci(request, numero_tache, date_debut, date_fin):
 def xls_liste_projets_tpe(request):    
     response = render_to_response('rapports/xls_liste_projets_tpe.html', base_liste_projets_tpe(request))
     filename = "Liste des projets Techno-Pro Experts %s.xls" % datetime.now().strftime("%Y-%m-%d")
+    response['Content-Disposition'] = 'attachment; filename='+filename
+    response['Content-Type'] = 'application/vnd.ms-excel; charset=utf-8'
+    return response
+    
+@permission_required('feuilledetemps.afficher_rapport_temps')
+def xls_liste_employes_tpe(request):     
+    response = render_to_response('rapports/xls_liste_employes_tpe.html', base_liste_employes_tpe(request))
+    filename = "Liste des employés Techno-Pro Experts %s.xls" % (datetime.now().strftime("%Y-%m-%d"))
     response['Content-Disposition'] = 'attachment; filename='+filename
     response['Content-Type'] = 'application/vnd.ms-excel; charset=utf-8'
     return response
