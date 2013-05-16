@@ -5,7 +5,7 @@ from django.forms.models import modelformset_factory
 from feuilles_de_temps.models import Bloc_Eugenie, Banque, Bloc_TPE
 from feuilles_de_temps.forms import BlocEugenieForm, BanqueForm, BlocTPEForm
 
-@permission_required('feuilles_de_temps.add_bloc')    
+@permission_required('feuilles_de_temps.add_bloc_eugenie')    
 def add_blocs_eci(request):
     BlocFormSet = modelformset_factory(Bloc_Eugenie, form=BlocEugenieForm)
     if request.method == 'POST':
@@ -17,7 +17,7 @@ def add_blocs_eci(request):
         formset = BlocFormSet(queryset=Bloc_Eugenie.objects.none())
     return render(request,"feuillesdetemps/add_blocs_eci.html", {"formset": formset,})
 
-@permission_required('feuilles_de_temps.add_bloc')    
+@permission_required('feuilles_de_temps.add_bloc_tpe')    
 def add_blocs_tpe(request):
     BlocFormSet = modelformset_factory(Bloc_TPE, form=BlocTPEForm)
     if request.method == 'POST':
