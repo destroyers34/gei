@@ -114,9 +114,8 @@ $('#myTab a').click(function (e) {
 			{% for projet in projets_actif %}
 				<tr>
 				{% if projet.heure %}
-				<td><a href="">{{projet.numero}}</a></td>
+				<td><a href="{% url 'projet_details_tpe' projet.numero %}">{{projet.numero}}</a></td>
 				<td><a href="">{{projet.nom}}</a></td>
-				<td><a href="">{{projet.modele}}</a></td>
 				{% else %}
 				<td>{{projet.numero}}</td>
 				<td>{{projet.nom}}</td>
@@ -170,9 +169,8 @@ $('#myTab a').click(function (e) {
 			{% for projet in projets_inactif %}
 				<tr>
 				{% if projet.heure %}
-				<td><a href="">{{projet.numero}}</a></td>
+				<td><a href="{% url 'projet_details_tpe' projet.numero %}">{{projet.numero}}</a></td>
 				<td><a href="">{{projet.nom}}</a></td>
-				<td><a href="">{{projet.modele}}</a></td>
 				{% else %}
 				<td>{{projet.numero}}</td>
 				<td>{{projet.nom}}</td>

@@ -196,6 +196,12 @@ def base_liste_taches_tpe(request):
     total = Tache.objects.all().aggregate(heures=Sum('bloc_tpe__temps'))
     return {'taches':taches,'total':total}
     
+@permission_required('feuilledetemps.afficher_rapport_temps_tpe')
+def base_projet_details_tpe(request, numero_projet):
+    taches = Tache.objects.filter(bloc_tpe__projet__numero=numero_projet).annotate(heure=Sum('bloc_tpe__temps')).order_by('numero')
+    projet_total = Projet_TPE.objects.filter(numero=numero_projet).aggregate(heures=Sum('bloc_tpe__temps'))
+    return {'taches':taches,'projet_total':projet_total,'numero_projet':numero_projet}
+
     
 @permission_required('feuilles_de_temps.afficher_rapport_temps_eugenie')    
 def liste_clients_eci(request):
@@ -343,6 +349,21 @@ def liste_clients_tpe(request):
 def liste_taches_tpe(request):
     return render(request, 'rapports/liste_taches_tpe.html', base_liste_taches_tpe(request))
     
+@permission_required('feuilledetemps.afficher_rapport_temps_tpe')
+def projet_details_tpe(request, numero_projet):
+    variables = base_projet_details_tpe(request, numero_projet)
+    if request.method == 'POST':
+        form = DateRangeForm(request.POST)
+        if form.is_valid():
+            date_d = form.cleaned_data['date_debut']
+            date_f = form.cleaned_data['date_fin']
+            redirect_str = str(date_d) + '/' + str(date_f) + '/'
+            return HttpResponseRedirect(redirect_str) # Redirect after POST
+    else: 
+        form = DateRangeForm()
+    variables.update({'form':form,'date':datetime.now().strftime("%Y-%m-%d")})
+    return render(request, 'rapports/projet_details_tpe.html', variables)
+
     
 @permission_required('feuilles_de_temps.afficher_rapport_temps_eugenie')    
 def print_liste_clients_eci(request):
@@ -451,6 +472,10 @@ def print_liste_clients_tpe(request):
 @permission_required('feuilledetemps.afficher_rapport_temps_tpe')
 def print_liste_taches_tpe(request):
     return render(request, 'rapports/print_liste_taches_tpe.html', base_liste_taches_tpe(request))    
+
+@permission_required('feuilledetemps.afficher_rapport_temps_tpe')
+def print_projet_details_tpe(request, numero_projet):
+    return render(request, 'rapports/print_projet_details_tpe.html', base_projet_details_tpe(request, numero_projet))
 
     
 @permission_required('feuilles_de_temps.afficher_rapport_temps_eugenie')    
@@ -612,3 +637,11 @@ def xls_liste_taches_tpe(request):
     response['Content-Disposition'] = 'attachment; filename='+filename
     response['Content-Type'] = 'application/vnd.ms-excel; charset=utf-8'
     return response    
+    
+@permission_required('feuilledetemps.afficher_rapport_temps_tpe')
+def xls_projet_details_tpe(request, numero_projet):
+    response = render_to_response('rapports/xls_projet_details_tpe.html', base_projet_details_tpe(request, numero_projet))
+    filename = "Details du projet %s - %s.xls" % (numero_projet, datetime.now().strftime("%Y-%m-%d"))
+    response['Content-Disposition'] = 'attachment; filename='+filename
+    response['Content-Type'] = 'application/vnd.ms-excel; charset=utf-8'
+    return response

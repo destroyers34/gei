@@ -1,15 +1,21 @@
-﻿
-		<h4>EuGénie Canada</h4>
+﻿{% extends "print_base.html" %}
+{% block title %}Rapports{% endblock title %}
+{% block content %}
+		<h4>Techno-Pro Experts</h4>
 		<h4>Rapport de temps des tâches du projet</h4>
 		<h3>{{ numero_projet }}</h3>
-		<table>
+		<table class="table table-striped table-bordered table-condensed">
 			<thead>
 				<tr>
 					<th>Tâche</th>
 					<th>Temps</th>
 				</tr>
 			</thead>
-
+			<tfoot>
+				<tr>
+					<th>Total:</th><th>{{projet_total.heures}}</th>
+				</tr>
+			</tfoot>
 			<tbody>
 		{% for tache in taches %}
 			<tr>
@@ -18,9 +24,5 @@
 			</tr>
 		{% endfor %}
 		</tbody>
-					<tfoot>
-				<tr>
-					<th>Total:</th><th>{{projet_total.heures}}</th>
-				</tr>
-			</tfoot>
 		</table>
+{% endblock %}
