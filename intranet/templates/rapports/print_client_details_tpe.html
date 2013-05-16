@@ -1,7 +1,7 @@
 ﻿{% extends "print_base.html" %}
 {% block title %}Rapports{% endblock title %}
 {% block content %}
-		<h4>EuGénie Canada</h4>
+		<h4>Techno-Pro Experts</h4>
 		<h4>Liste des projets</h4>
 		<h3>{{ client.nom }}</h3>
 		<h3></h3>
@@ -10,7 +10,6 @@
 			<tr>
 				<th>Numéros</th>
 				<th>Noms</th>
-				<th>Modèles</th>
 				<th>Budget MAT</th>
 				<th>Budget MO</th>
 				<th>Heures</th>
@@ -21,7 +20,6 @@
 			<tr>
 				<td>{{ p.projet.numero }}</td>
 				<td>{{ p.projet.nom }}</td>
-				<td>{{ p.projet.modele }}</td>
 				<td>{{ p.projet.budget_mat }}</td>
 				<td>{{ p.projet.budget_mo }}</td>
 				<td>{{ p.heures.total }}</td>

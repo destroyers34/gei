@@ -202,6 +202,15 @@ def base_projet_details_tpe(request, numero_projet):
     projet_total = Projet_TPE.objects.filter(numero=numero_projet).aggregate(heures=Sum('bloc_tpe__temps'))
     return {'taches':taches,'projet_total':projet_total,'numero_projet':numero_projet}
 
+@permission_required('feuilles_de_temps.afficher_rapport_temps_tpe')    
+def base_client_details_tpe(request, client_id):
+    client = Compagnie.objects.get(id=client_id)
+    liste_projets = list()
+    for projet in client.projet_tpe_set.all():
+        heures = Bloc_TPE.objects.filter(projet=projet).aggregate(total=Sum('temps'))
+        liste_projets.append({'projet':projet,'heures':heures})
+    return {'client':client,'liste_projets':liste_projets}
+
     
 @permission_required('feuilles_de_temps.afficher_rapport_temps_eugenie')    
 def liste_clients_eci(request):
@@ -364,6 +373,10 @@ def projet_details_tpe(request, numero_projet):
     variables.update({'form':form,'date':datetime.now().strftime("%Y-%m-%d")})
     return render(request, 'rapports/projet_details_tpe.html', variables)
 
+@permission_required('feuilles_de_temps.afficher_rapport_temps_tpe')    
+def client_details_tpe(request, client_id):
+    return render(request, 'rapports/client_details_tpe.html', base_client_details_tpe(request, client_id))
+
     
 @permission_required('feuilles_de_temps.afficher_rapport_temps_eugenie')    
 def print_liste_clients_eci(request):
@@ -476,6 +489,10 @@ def print_liste_taches_tpe(request):
 @permission_required('feuilledetemps.afficher_rapport_temps_tpe')
 def print_projet_details_tpe(request, numero_projet):
     return render(request, 'rapports/print_projet_details_tpe.html', base_projet_details_tpe(request, numero_projet))
+
+@permission_required('feuilles_de_temps.afficher_rapport_temps_tpe')    
+def print_client_details_tpe(request, client_id):
+    return render(request, 'rapports/print_client_details_tpe.html', base_client_details_tpe(request, client_id))
 
     
 @permission_required('feuilles_de_temps.afficher_rapport_temps_eugenie')    
@@ -645,3 +662,12 @@ def xls_projet_details_tpe(request, numero_projet):
     response['Content-Disposition'] = 'attachment; filename='+filename
     response['Content-Type'] = 'application/vnd.ms-excel; charset=utf-8'
     return response
+    
+@permission_required('feuilles_de_temps.afficher_rapport_temps_tpe')    
+def xls_client_details_tpe(request, client_id):
+    client = Compagnie.objects.get(id=client_id)
+    response = render_to_response("rapports/xls_client_details_tpe.html", base_client_details_tpe(request, client_id))
+    filename = "Rapport des projets %s %s.xls" % (client.nom,datetime.now().strftime("%Y-%m-%d"))
+    response['Content-Disposition'] = 'attachment; filename='+filename
+    response['Content-Type'] = 'application/vnd.ms-excel; charset=utf-8'
+    return response    
