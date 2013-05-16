@@ -62,18 +62,22 @@
 					  </ul>
 					</li>
 					{% endif %}
+					{% if perms.feuilles_de_temps.add_bloc_tpe %}
 					<li class="dropdown-submenu">
 					  <a href="{% url 'add_blocs_tpe'%}">Techno-Pro Experts</a>
 					  <ul class="dropdown-menu">
 						<li><a href="{% url 'add_blocs_tpe'%}">Ajouter des blocs de temps</a></li>
 					  </ul>
 					</li>
+					{% endif %}
+					{% if perms.feuilles_de_temps.add_bloc_jrc %}
 					<li class="dropdown-submenu">
 					  <a href="">JRC Machineries</a>
 					  <ul class="dropdown-menu">
 						<li><a href="">Ajouter des blocs de temps</a></li>
 					  </ul>
 					</li>
+					{% endif %}
 					{% if perms.feuilledetemps.add_banque %}
 					<li class="dropdown-submenu">
 					  <a href="{% url 'add_banque' %}">Banque d'heures</a>
@@ -87,6 +91,7 @@
 			  {% block nav-rapport %}<li class="dropdown">{% endblock nav-rapport  %}
 				  <a data-toggle="dropdown" class="dropdown-toggle" href="#">Rapports <b class="caret"></b></a>
 				  <ul class="dropdown-menu">
+					{% if perms.feuilledetemps.afficher_rapport_temps_eugenie %}
 					<li class="dropdown-submenu">
 					  <a href="{% url 'liste_projets_eci' %}">EuGénie Canada</a>
 					  <ul class="dropdown-menu">
@@ -96,6 +101,8 @@
 						<li><a href="{% url 'liste_clients_eci' %}">Clients</a></li>
 					  </ul>
 					</li>
+					{% endif %}
+					{% if perms.feuilledetemps.afficher_rapport_temps_tpe %}
 					<li class="dropdown-submenu">
 					  <a href="{% url 'liste_projets_tpe' %}">Techno-Pro Experts</a>
 					  <ul class="dropdown-menu">
@@ -105,6 +112,8 @@
 						<li><a href="{% url 'liste_clients_tpe' %}">Clients</a></li>
 					  </ul>
 					</li>
+					{% endif %}
+					{% if perms.feuilledetemps.afficher_rapport_temps_jrc %}
 					<li class="dropdown-submenu">
 					  <a href="#">JRC Machinieries</a>
 					  <ul class="dropdown-menu">
@@ -114,14 +123,17 @@
 						<li><a href="#">Clients</a></li>
 					  </ul>
 					</li>
+					{% endif %}
 				  </ul>
 				</li>
+				{% if perms.listes_de_prix.afficher_listes_de_prix %}
 				{% block nav-liste %}<li class="dropdown">{% endblock nav-liste  %}
 					<a data-toggle="dropdown" class="dropdown-toggle" href="#">Listes de prix <b class="caret"></b></a>
 					<ul class="dropdown-menu">
 						<li><a href="{% url 'liste_fournisseurs' %}">Fournisseurs</a></li>
 					</ul>
 				</li>
+				{% endif %}
 			</ul>
 			<ul class="nav pull-right">
 			<li class="dropdown">
