@@ -25,16 +25,10 @@
 				<tbody>
 			{% for projet in projets_inactif %}
 				<tr>
-				{% if projet.heure %}
-				<td><a href="{% url 'projet_details_eci' projet.numero %}">{{projet.numero}}</a></td>
-				<td><a href="{% url 'liste_projets_noms_eci' projet.nom %}">{{projet.nom}}</a></td>
-				<td><a href="{% url 'liste_projets_modeles_eci' projet.nom projet.modele %}">{{projet.modele}}</a></td>
-				{% else %}
 				<td>{{projet.numero}}</td>
 				<td>{{projet.nom}}</td>
 				<td>{{projet.modele}}</td>
-				{% endif %}
-				<td><a href="{% url 'client_details_eci' projet.client.id %}">{{projet.client.nom}}</a></td>
+				<td>{{projet.client.nom}}</td>
 				<td class='center-text'>{{projet.budget_mo}}</td>
 				<td class='center-text'>{{projet.heure}}</td>
 				<td class='center-text'>{{projet.pourcent}} %</td>

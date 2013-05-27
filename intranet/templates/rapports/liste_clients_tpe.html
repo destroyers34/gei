@@ -34,7 +34,7 @@
 			<td rowspan='{{clients.liste_projets|length}}'><a href="{% url 'client_details_tpe' clients.id %}">{{clients.nom}}</a></td>
 			{% for projets in clients.liste_projets %}
 				<td><a href="{% url 'projet_details_tpe' projets.numero %}">{{ projets.numero }}</a></td>
-				<td><a href="">{{ projets.nom }}</a></td>
+				<td><a href="{% url 'liste_projets_noms_tpe' projets.nom %}">{{ projets.nom }}</a></td>
 				
 				</tr>
 				<tr>

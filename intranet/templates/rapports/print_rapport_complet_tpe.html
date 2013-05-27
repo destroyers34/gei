@@ -1,5 +1,7 @@
-﻿
-		<h4>EuGénie Canada</h4>
+﻿{% extends "print_base.html" %}
+{% block title %}Rapports{% endblock title %}
+{% block content %}	
+		<h4>Techno-Pro Experts</h4>
 		<h4>Rapport du projet</h4>
 		<h3>
 			{{ projet.numero }} : {{ projet.nom }} {{ projet.modele }}
@@ -36,7 +38,7 @@
 			</tr>
 			{% endifchanged %}
 			<tr>
-				<td>{{ tache.bloc_eugenie__employe__user__first_name }} {{ tache.bloc_eugenie__employe__user__last_name }}</td>
+				<td>{{ tache.bloc_tpe__employe__user__first_name }} {{ tache.bloc_tpe__employe__user__last_name }}</td>
 				<td>{{ tache.total_employe }}</td>
 			</tr>
 		{% endfor %}
@@ -49,16 +51,7 @@
 					<th>Total (H)</th>
 				</tr>
 			</thead>
-
-			<tbody>
-		{% for total in total_tache %}
-			<tr>
-				<td>{{ total.numero }} {{ total.description }}</td>
-				<td>{{ total.heures }}</td>
-			</tr>
-		{% endfor %}
-		</tbody>
-					<tfoot>
+			<tfoot>
 				<tr>
 					<th>Total projet :</th>
 					<th>{{ total_projet.heures }}</th>
@@ -72,4 +65,13 @@
 					<th>{{ pourcent }} %</th>
 				</tr>
 			</tfoot>
+			<tbody>
+		{% for total in total_tache %}
+			<tr>
+				<td>{{ total.numero }} {{ total.description }}</td>
+				<td>{{ total.heures }}</td>
+			</tr>
+		{% endfor %}
+		</tbody>
 		</table>
+{% endblock content %}

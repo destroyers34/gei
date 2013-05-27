@@ -4,6 +4,7 @@
 {% block content %}
 <div class="row-fluid well">
 	<div class="span12">
+		<h4>EuGénie Canada</h4>
 		<h4>Liste des modèles</h4>
 		<h3>{{ nom_projet }}</h3>
 		<table class="table table-bordered table-striped">
@@ -53,7 +54,7 @@
 			{% else %}
 				<tr>
 					<td>{{modele.modele}}</td>
-					<td>Aucun</td>
+					<td>{{modele.numero}}</td>
 					<td>0</td>
 				</tr>
 			{% endif %}

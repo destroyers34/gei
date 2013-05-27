@@ -33,7 +33,7 @@
 			<tbody>
 		{% for tache in taches %}
 			<tr>
-			<td>{% if tache.heure %}<a href="">{{tache.numero}} {{tache.description}}</a>{% else %}{{tache.numero}} {{tache.description}}{% endif %}</td>
+			<td>{% if tache.heure %}<a href="{% url 'tache_details_tpe' tache.numero %}">{{tache.numero}} {{tache.description}}</a>{% else %}{{tache.numero}} {{tache.description}}{% endif %}</td>
 			<td>{{tache.heure|default_if_none:"0.00"}}</td>
 			</tr>
 		{% endfor %}

@@ -21,7 +21,7 @@
 				<th>Noms</th>
 				<th>Budget MAT</th>
 				<th>Budget MO</th>
-				<th>Heures</th>
+				<th>Temps (H)</th>
 			</tr>
 		</thead>
 		<tfoot>
@@ -36,7 +36,7 @@
 		{% for p in liste_projets %}
 			<tr>
 				<td><a href="{% url 'projet_details_tpe' p.projet.numero %}">{{ p.projet.numero }}</a></td>
-				<td><a href="">{{ p.projet.nom }}</a></td>
+				<td><a href="{% url 'liste_projets_noms_tpe' p.projet.nom %}">{{ p.projet.nom }}</a></td>
 				<td>{{ p.projet.budget_mat }}</td>
 				<td>{{ p.projet.budget_mo }}</td>
 				<td>{{ p.heures.total }}</td>

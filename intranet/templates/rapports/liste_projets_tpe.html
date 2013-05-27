@@ -62,7 +62,7 @@ $('#myTab a').click(function (e) {
 				<tr>
 				<td>{{projet.numero}}</td>
 				<td>{{projet.nom}}</td>
-				<td><a href="">{{projet.client.nom}}</a></td>
+				<td><a href="{% url 'client_details_tpe' projet.client.id %}">{{projet.client.nom}}</a></td>
 				<td class='center-text'>{{projet.budget_mo}}</td>
 				</tr>
 			{% endfor %}
@@ -115,12 +115,12 @@ $('#myTab a').click(function (e) {
 				<tr>
 				{% if projet.heure %}
 				<td><a href="{% url 'projet_details_tpe' projet.numero %}">{{projet.numero}}</a></td>
-				<td><a href="">{{projet.nom}}</a></td>
+				<td><a href="{% url 'liste_projets_noms_tpe' projet.nom %}">{{projet.nom}}</a></td>
 				{% else %}
 				<td>{{projet.numero}}</td>
 				<td>{{projet.nom}}</td>
 				{% endif %}
-				<td><a href="">{{projet.client.nom}}</a></td>
+				<td><a href="{% url 'client_details_tpe' projet.client.id %}">{{projet.client.nom}}</a></td>
 				<td class='center-text'>{{projet.budget_mo}}</td>
 				<td class='center-text'>{{projet.heure}}</td>
 				<td class='center-text'>{{projet.pourcent}} %</td>
@@ -170,12 +170,12 @@ $('#myTab a').click(function (e) {
 				<tr>
 				{% if projet.heure %}
 				<td><a href="{% url 'projet_details_tpe' projet.numero %}">{{projet.numero}}</a></td>
-				<td><a href="">{{projet.nom}}</a></td>
+				<td><a href="{% url 'liste_projets_noms_tpe' projet.nom %}">{{projet.nom}}</a></td>
 				{% else %}
 				<td>{{projet.numero}}</td>
 				<td>{{projet.nom}}</td>
 				{% endif %}
-				<td><a href="">{{projet.client.nom}}</a></td>
+				<td><a href="{% url 'client_details_tpe' projet.client.id %}">{{projet.client.nom}}</a></td>
 				<td class='center-text'>{{projet.budget_mo}}</td>
 				<td class='center-text'>{{projet.heure}}</td>
 				<td class='center-text'>{{projet.pourcent}} %</td>
