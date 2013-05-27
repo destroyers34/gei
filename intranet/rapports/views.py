@@ -32,7 +32,7 @@ def base_client_details_eci(request, client_id):
 def base_liste_projets_eci(request):
     projets = Projet_Eugenie.objects.all()
     projets_attente = projets.filter(actif=True,en_attente=True).order_by('numero')
-    projets_actif = projets.filter(actif=True,en_attente=False).annotate(heure=Sum('bloc_eugenie__temps')).order_by('numero')
+    projets_actif = projets.filter(actif=True,en_attente=False).annotate(heure=Sum('bloc_eugenie__temps')).order_by('priority','numero')
     projets_inactif = projets.filter(actif=False,en_attente=False).annotate(heure=Sum('bloc_eugenie__temps')).order_by('numero')
     total_attente = projets.filter(actif=True,en_attente=True).aggregate(total_mat=Sum('budget_mat'),total_mo=Sum('budget_mo'))
     total_actif = projets.filter(actif=True,en_attente=False).aggregate(total_mat=Sum('budget_mat'),total_mo=Sum('budget_mo'))
