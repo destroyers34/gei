@@ -29,9 +29,9 @@
 				<td>{{projet.nom}}</td>
 				<td>{{projet.modele}}</td>
 				<td>{{projet.client.nom}}</td>
-				<td class='center-text'>{{projet.budget_mo}}</td>
-				<td class='center-text'>{{projet.heure}}</td>
-				<td class='center-text'>{{projet.pourcent}} %</td>
+				<td class='center-text'>{{projet.budget_mo|default_if_none:"0,00"}}</td>
+				<td class='center-text'>{{projet.heure|default_if_none:"0,00"}}</td>
+				<td class='center-text'>{{projet.pourcent|default_if_none:"0,00"}} %</td>
 				</tr>
 			{% endfor %}
 			</tbody>
