@@ -1,0 +1,33 @@
+﻿{% extends "base.html" %}
+{% block title %}Rapports{% endblock title %}
+{% block nav-feuille %}<li class="dropdown active">{% endblock nav-feuille %}
+{% block content %}
+<div class="row-fluid well">
+	<div class="span12">		
+		<h4>EuGénie Canada</h4>
+		<h4>Derniers 20 blocs de temps ajouter</h4>
+			<table class="table table-bordered table-striped">
+			<thead>
+				<tr>
+					<th>Employé</th>
+					<th>Date</th>
+					<th>Projet</th>
+					<th>Tache</th>
+					<th>Temps</th>
+				</tr>
+			</thead>
+			<tbody>
+			{% for blocs in last_blocs %}
+				<tr>
+					<td>{{ blocs.employe }}</td>
+					<td>{{ blocs.date }}</td>
+					<td>{{ blocs.projet }}</td>
+					<td>{{ blocs.tache }}</td>
+					<td>{{ blocs.temps }}</td>
+				</tr>
+			{% endfor %}
+			</tbody>
+			</table>
+	</div>
+</div>
+{% endblock %}

@@ -6,6 +6,14 @@ from feuilles_de_temps.models import Bloc_Eugenie, Banque, Bloc_TPE
 from feuilles_de_temps.forms import BlocEugenieForm, BanqueForm, BlocTPEForm
 
 @permission_required('feuilles_de_temps.add_bloc_eugenie')    
+def blocs_eci(request):
+    queryset = Bloc_Eugenie.objects.all()
+    limit = 20
+    count = queryset.count()
+    last_blocs = queryset[count-limit:]
+    return render(request,"feuillesdetemps/blocs_eci.html", {"last_blocs": last_blocs,})
+    
+@permission_required('feuilles_de_temps.add_bloc_eugenie')    
 def add_blocs_eci(request):
     BlocFormSet = modelformset_factory(Bloc_Eugenie, form=BlocEugenieForm)
     if request.method == 'POST':
