@@ -78,7 +78,7 @@ def base_tache_details_eci(request, numero_tache):
 
 @permission_required('feuilledetemps.afficher_rapport_temps_eugenie')
 def base_liste_projets_noms_eci(request, nom_projet):
-    modeles = Projet_Eugenie.objects.filter(nom=nom_projet).values('numero','modele').annotate(heure=Sum('bloc_eugenie__temps')).order_by('modele')
+    modeles = Projet_Eugenie.objects.filter(nom=nom_projet).values('modele').annotate(heure=Sum('bloc_eugenie__temps')).order_by('modele')
     modeles_total = Projet_Eugenie.objects.filter(nom=nom_projet).aggregate(heures=Sum('bloc_eugenie__temps'))
     for modele in modeles:
         liste_projets = Projet_Eugenie.objects.filter(nom=nom_projet,modele=modele['modele']).annotate(heure=Sum('bloc_eugenie__temps')).order_by('numero')

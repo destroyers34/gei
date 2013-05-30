@@ -7,7 +7,7 @@
 		background-color: transparent;
 	}
 	td {
-		font-size: 10px;
+		font-size: 12px;
 	}
 	td img {
 		float: left;
@@ -26,7 +26,7 @@
 			<td style="width: 150px; vertical-align: bottom;">Projet</td>
 			<td style="width: 100px; vertical-align: bottom;">Date Début</td>
 			<td style="width: 100px; vertical-align: bottom;">Date Fin</td>
-			<td style="width: 50px; vertical-align: bottom;">Durée (J)</td>
+			<td style="width: 70px; vertical-align: bottom;">Durée (J)</td>
 			<td style="width: 500px; vertical-align: bottom;">
 				<table>
 				<tr>
@@ -45,7 +45,7 @@
 		</tr>
 		{% for projet in projets %}
 		<tr>
-			<td>{{ projet.numero }} {{ projet.nom }} {{ projet.modele }}</td>
+			<td><a href="{% url 'projet_details_eci' projet.numero %}">{{projet.numero}}</a> <a href="{% url 'liste_projets_noms_eci' projet.nom %}">{{projet.nom}}</a> <a href="{% url 'liste_projets_modeles_eci' projet.nom projet.modele %}">{{projet.modele}}</a></td></td>
 			<td>{{ projet.date_debut }}</td>
 			<td>{{ projet.date_fin }}</td>
 			<td>{{ projet.nbjours }}</td>
