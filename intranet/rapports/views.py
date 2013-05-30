@@ -174,6 +174,8 @@ def base_projets_gantt_eci(request):
             if projet.delay_pix < 0:
                 projet.delay_pix *= -1
                 projet.nbjours_pix -= projet.delay_pix
+                if projet.nbjours_pix < 0:
+                    projet.nbjours_pix = 0
                 projet.delay_pix = 0
                 projet.early = True
             if projet.delay_pix + projet.nbjours_pix > 500:

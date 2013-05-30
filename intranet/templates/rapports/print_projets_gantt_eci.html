@@ -21,11 +21,11 @@
 		<h4>Rapport des projets actifs</h4>
 		<table>
 		<tr>
-			<td style="width: 150px; vertical-align: bottom;">Projet</td>
-			<td style="width: 100px; vertical-align: bottom;">Date Début</td>
-			<td style="width: 100px; vertical-align: bottom;">Date Fin</td>
-			<td style="width: 50px; vertical-align: bottom;">Durée (J)</td>
-			<td style="width: 500px; vertical-align: bottom;">
+			<th style="width: 150px; vertical-align: bottom;">Projet</th>
+			<th style="width: 120px; vertical-align: bottom;">Date Début</th>
+			<th style="width: 120px; vertical-align: bottom;">Date Fin</th>
+			<th style="width: 50px; vertical-align: bottom;">Durée (J)</th>
+			<th style="width: 500px; vertical-align: bottom;">
 				<table>
 				<tr>
 					<td style="text-align: left; width: 250px;">{{ start }}</td>
@@ -46,7 +46,7 @@
 			<td>{{ projet.numero }} {{ projet.nom }} {{ projet.modele }}</td>
 			<td>{{ projet.date_debut }}</td>
 			<td>{{ projet.date_fin }}</td>
-			<td>{{ projet.nbjours }}</td>
+			<td class='center-text'>{{ projet.nbjours }}</td>
 			
 			<td style="border: solid 1px grey;">
 			{% if projet.nbjours != 0 %}
