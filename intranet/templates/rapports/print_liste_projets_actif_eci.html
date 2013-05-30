@@ -13,8 +13,6 @@
 						<th class='center-text'>Budget (H)</th>
 						<th class='center-text'>Temps (H)</th>
 						<th class='center-text'>% MO</th>
-						<th class='center-text'>Début</th>
-						<th class='center-text'>Fin</th>
 						<th class='center-text'>Restant (J)</th>
 						<th class='center-text'>Priorité</th>
 					</tr>
@@ -37,8 +35,6 @@
 				<td class='center-text'>{{projet.budget_mo|default_if_none:"0,00"}}</td>
 				<td class='center-text'>{{projet.heure|default_if_none:"0,00"}}</td>
 				<td class='center-text'>{{projet.pourcent|default_if_none:"0,00"}} %</td>
-				<td class='center-text'>{{projet.date_debut|date:"d/m/Y"}}</td>
-				<td class='center-text'>{{projet.date_fin|date:"d/m/Y"}}</td>
 				<td class='center-text'>{{projet.jours_restant}}</td>
 				<td class='center-text'>{{projet.priority}}</td>
 				</tr>
