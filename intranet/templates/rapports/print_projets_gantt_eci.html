@@ -1,4 +1,4 @@
-﻿{% extends "base.html" %}
+﻿{% extends "print_base.html" %}
 {% block title %}Rapports{% endblock title %}
 {% block nav-rapport %}<li class="dropdown active">{% endblock nav-rapport %}
 {% block extrahead %}
@@ -17,8 +17,6 @@
 </style>
 {% endblock extrahead %}
 {% block content %}
-<div class="row-fluid well">
-	<div class="span12">
 		<h4>EuGénie Canada</h4>
 		<h4>Rapport des projets actifs</h4>
 		<table>
@@ -72,12 +70,5 @@
 			</td>
 		</tr>
 		{% endfor %}
-		<tr>
-			<td colspan='5'>
-			<a class='btn btn-primary' href="{% url 'print_projets_gantt_eci' %}">Imprimer</a> 
-			</td> 
-		</tr>
 		</table>
-	</div>
-</div>
 {% endblock content %}

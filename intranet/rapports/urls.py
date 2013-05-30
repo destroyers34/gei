@@ -70,6 +70,7 @@ urlpatterns = patterns('rapports.views',
     url(r'^tpe/taches/numero/(?P<numero_tache>[-A-Za-z0-9_]+)/(?P<date_debut>\d{4}-\d{2}-\d{2})/(?P<date_fin>\d{4}-\d{2}-\d{2})/xls/$', 'xls_tache_periode_tpe', name='xls_tache_periode_tpe'),
     
     url(r'^eci/projets/attente/print/$', 'print_liste_projets_attente_eci', name='print_liste_projets_attente_eci'),
+    url(r'^eci/projets/gantt/print/$', 'print_projets_gantt_eci', name='print_projets_gantt_eci'),
     url(r'^eci/projets/actif/print/$', 'print_liste_projets_actif_eci', name='print_liste_projets_actif_eci'),
     url(r'^eci/projets/completer/print/$', 'print_liste_projets_complet_eci', name='print_liste_projets_complet_eci'),
     url(r'^eci/projets/numero/(?P<numero_projet>[-A-Za-z0-9_]+)/print/$', 'print_projet_details_eci', name='print_projet_details_eci'),

@@ -160,6 +160,10 @@ def base_projets_gantt_eci(request):
     start = date(datetime.now().year, 1, 1)
     end = date(datetime.now().year+1, 1, 1)
     duration = (end-start).days
+    jour = date.today()
+    jour_delay = (jour-start).days
+    jour_delay_p = jour_delay/duration
+    jour_delay_pix = jour_delay_p * 500
     for projet in projets:
         if projet.nbjours() != 0:
             projet.delay = (projet.date_debut-start).days
@@ -181,7 +185,7 @@ def base_projets_gantt_eci(request):
             projet.nbjours_p = 0
             projet.delay_pix = 0
             projet.nbjours_pix = 0
-    return {'projets':projets,'start':start,'end':end,'duration':duration}
+    return {'projets':projets,'start':start,'end':end,'jour_delay_pix':jour_delay_pix}
     
 @permission_required('feuilledetemps.afficher_rapport_temps_tpe')
 def base_liste_projets_tpe(request):
@@ -644,6 +648,10 @@ def print_projet_periode_eci(request, numero_projet, date_debut, date_fin):
 def print_tache_periode_eci(request, numero_tache, date_debut, date_fin):
     return render(request, 'rapports/print_employe_blocs_eci.html', base_tache_periode_eci(request, numero_tache, date_debut, date_fin))    
 
+@permission_required('feuilledetemps.afficher_rapport_temps_eugenie')
+def print_projets_gantt_eci(request):      
+    return render(request, 'rapports/print_projets_gantt_eci.html', base_projets_gantt_eci(request))    
+    
 @permission_required('feuilledetemps.afficher_rapport_temps_tpe')
 def print_liste_projets_actif_tpe(request):
     variables = base_liste_projets_tpe(request)
