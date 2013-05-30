@@ -1,0 +1,69 @@
+﻿<html>
+<head>
+<style type="text/css">
+	td {
+		font-family: arial;
+		font-size: 10px;
+	}
+	
+</style>
+</head>
+<body>
+<table>
+<tr>
+	<td colspan="7">
+		GANT chart
+	</td>
+</tr>
+<tr>
+	<td style="width: 200px; vertical-align: bottom;">Projet</td>
+	<td style="width: 100px; vertical-align: bottom;">Date Début</td>
+	<td style="width: 100px; vertical-align: bottom;">Date Fin</td>
+	<td style="width: 100px; vertical-align: bottom;">delay</td>
+	<td style="width: 100px; vertical-align: bottom;">delay %</td>
+	<td style="width: 100px; vertical-align: bottom;">delay pixel</td>
+	<td style="width: 100px; vertical-align: bottom;">nbjours</td>
+	<td style="width: 100px; vertical-align: bottom;">nbjours %</td>
+	<td style="width: 100px; vertical-align: bottom;">nbjours pixel</td>
+	<td style="width: 500px; vertical-align: bottom;">
+		<table style="width: 500px;">
+		<tr>
+			<td colspan="2" style="text-align: center; width:120px;">GANT Indicator</td>
+		</tr>
+		<tr>
+			<td style="text-align: left; width: 100px;">{{ start }}</td>
+			<td style="text-align: right;width: 100px;">{{ end }}</td>
+		</tr>
+		</table>
+	</td>
+</tr>
+{% for projet in projets %}
+<tr>
+	<td>{{ projet.numero }} {{ projet.nom }} {{ projet.modele }}</td>
+	<td>{{ projet.date_debut }}</td>
+	<td>{{ projet.date_fin }}</td>
+	<td>{{ projet.delay }}</td>
+	<td>{{ projet.delay_p }}</td>
+	<td>{{ projet.delay_pix }}</td>
+	<td>{{ projet.nbjours }}</td>
+	<td>{{ projet.nbjours_p }}</td>
+	<td>{{ projet.nbjours_pix }}</td>
+	
+	<td style="border: solid 1px grey;">
+	{% if projet.nbjours != 0 %}
+	{% if projet.early %}<img src="{{STATIC_URL}}images/blue-line.gif" height="15px;" width="{{ projet.nbjours_pix }}px;">
+	{% else %}
+	<img src="{{STATIC_URL}}images/shim.gif" height="15px;" width="{{ projet.delay_pix }}px;">
+	{% if projet.late %}
+	<img src="{{STATIC_URL}}images/blue-line.gif" height="15px;" width="{{ projet.nbjours_pix }}px;">
+	{% else %}
+	<img src="{{STATIC_URL}}images/blue-line.gif" height="15px;" width="{{ projet.nbjours_pix }}px;">
+	{% endif %}
+	{% endif %}
+	{% endif %}
+	</td>
+</tr>
+{% endfor %}
+</table>
+</body>
+</html>

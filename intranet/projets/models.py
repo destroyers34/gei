@@ -8,16 +8,22 @@ class Projet(models.Model):
     nom = models.CharField(max_length=30,verbose_name=u"Nom du projet")
     client = models.ForeignKey(Compagnie,verbose_name=u"Client")
     date_soumission = models.DateField(verbose_name=u"Date de soumission", null=True, blank=True)
-    date_debut = models.DateField(verbose_name=u"Date de début", null=True, blank=True)
-    date_fin = models.DateField(verbose_name=u"Date de fin", null=True, blank=True)
+    date_debut = models.DateField(verbose_name=u"Date de début", default=datetime.now())
+    date_fin = models.DateField(verbose_name=u"Date de fin", default=datetime.now())
     actif = models.BooleanField(verbose_name=u"Actif")
     en_attente = models.BooleanField(verbose_name=u"En attente")
     def jours_restant(self):
-        if self.date_fin is not None:
+        if self.date_fin is not None and self.date_debut is not None:
             return (self.date_fin - datetime.now().date()).days
         else:
             return "Indéterminé"
- 
+
+    def nbjours(self):
+        if self.date_fin is not None and self.date_debut is not None:
+            return (self.date_fin - self.date_debut).days
+        else:
+            return 0
+            
     class Meta:
             abstract = True
 

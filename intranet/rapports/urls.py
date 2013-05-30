@@ -3,6 +3,7 @@ from django.conf.urls import patterns, url
 urlpatterns = patterns('rapports.views',
     
     url(r'^eci/projets/$', 'liste_projets_eci', name='liste_projets_eci'),
+    url(r'^eci/projets/gantt$', 'projets_gantt_eci', name='projets_gantt_eci'),
     url(r'^eci/projets/numero/(?P<numero_projet>[-A-Za-z0-9_]+)/$', 'projet_details_eci', name='projet_details_eci'),
     url(r'^eci/projets/nom/(?P<nom_projet>\w+)/$', 'liste_projets_noms_eci', name='liste_projets_noms_eci'),
     url(r'^eci/projets/modele/(?P<nom_projet>\w+)/(?P<modele_projet>[-A-Za-z0-9_]+)/$', 'liste_projets_modeles_eci', name='liste_projets_modeles_eci'),

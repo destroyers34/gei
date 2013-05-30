@@ -1,10 +1,11 @@
-﻿from django.http import HttpResponse, HttpResponseRedirect
+﻿from __future__ import division
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, render_to_response
 from django.db.models import Sum, Avg
 from django.contrib.auth.decorators import permission_required, login_required
 from decimal import *
 import csv
-from datetime import time, datetime
+from datetime import time, datetime, date
 from clients.models import Compagnie
 from projets.models import Projet_Eugenie, Projet_TPE
 from feuilles_de_temps.models import Bloc_Eugenie, Bloc_TPE
@@ -153,6 +154,35 @@ def base_tache_periode_eci(request, numero_tache, date_debut, date_fin):
     total_bloc = Bloc_Eugenie.objects.filter(date__gte=date_debut,date__lte=date_fin,tache__numero=numero_tache).aggregate(heures=Sum('temps'))
     return {'blocs':blocs,'total_bloc':total_bloc,'date_debut':date_debut,'date_fin':date_fin}
 
+@permission_required('feuilledetemps.afficher_rapport_temps_eugenie')
+def base_projets_gantt_eci(request):    
+    projets = Projet_Eugenie.objects.filter(actif=True,en_attente=False).order_by('date_debut')
+    start = date(datetime.now().year, 1, 1)
+    end = date(datetime.now().year+1, 1, 1)
+    duration = (end-start).days
+    for projet in projets:
+        if projet.nbjours() != 0:
+            projet.delay = (projet.date_debut-start).days
+            projet.delay_p = projet.delay/duration
+            projet.nbjours_p = projet.nbjours()/duration
+            projet.delay_pix = projet.delay_p*500
+            projet.nbjours_pix = projet.nbjours_p*500
+            if projet.delay_pix < 0:
+                projet.delay_pix *= -1
+                projet.nbjours_pix -= projet.delay_pix
+                projet.delay_pix = 0
+                projet.early = True
+            if projet.delay_pix + projet.nbjours_pix > 500:
+                projet.nbjours_pix -= ((projet.delay_pix + projet.nbjours_pix) - 500)
+                projet.late = True
+        else:
+            projet.delay = 0
+            projet.delay_p = 0
+            projet.nbjours_p = 0
+            projet.delay_pix = 0
+            projet.nbjours_pix = 0
+    return {'projets':projets,'start':start,'end':end,'duration':duration}
+    
 @permission_required('feuilledetemps.afficher_rapport_temps_tpe')
 def base_liste_projets_tpe(request):
     projets = Projet_TPE.objects.all()
@@ -405,6 +435,10 @@ def tache_periode_eci(request, numero_tache, date_debut, date_fin):
     variables.update({'form':form,'date':datetime.now().strftime("%Y-%m-%d")})
     return render(request, 'rapports/employe_blocs_eci.html', variables)
 
+@permission_required('feuilledetemps.afficher_rapport_temps_eugenie')
+def projets_gantt_eci(request):      
+    return render(request, 'rapports/projets_gantt_eci.html', base_projets_gantt_eci(request))
+    
 @permission_required('feuilledetemps.afficher_rapport_temps_tpe')
 def liste_projets_tpe(request):
     return render(request, 'rapports/liste_projets_tpe.html', base_liste_projets_tpe(request))
