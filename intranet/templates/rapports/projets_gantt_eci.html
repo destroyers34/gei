@@ -11,7 +11,7 @@
 <body>
 <table>
 <tr>
-	<td colspan="7">
+	<td colspan="5">
 		GANT chart
 	</td>
 </tr>
@@ -19,12 +19,7 @@
 	<td style="width: 200px; vertical-align: bottom;">Projet</td>
 	<td style="width: 100px; vertical-align: bottom;">Date Début</td>
 	<td style="width: 100px; vertical-align: bottom;">Date Fin</td>
-	<td style="width: 100px; vertical-align: bottom;">delay</td>
-	<td style="width: 100px; vertical-align: bottom;">delay %</td>
-	<td style="width: 100px; vertical-align: bottom;">delay pixel</td>
 	<td style="width: 100px; vertical-align: bottom;">nbjours</td>
-	<td style="width: 100px; vertical-align: bottom;">nbjours %</td>
-	<td style="width: 100px; vertical-align: bottom;">nbjours pixel</td>
 	<td style="width: 500px; vertical-align: bottom;">
 		<table style="width: 500px;">
 		<tr>
@@ -42,12 +37,7 @@
 	<td>{{ projet.numero }} {{ projet.nom }} {{ projet.modele }}</td>
 	<td>{{ projet.date_debut }}</td>
 	<td>{{ projet.date_fin }}</td>
-	<td>{{ projet.delay }}</td>
-	<td>{{ projet.delay_p }}</td>
-	<td>{{ projet.delay_pix }}</td>
 	<td>{{ projet.nbjours }}</td>
-	<td>{{ projet.nbjours_p }}</td>
-	<td>{{ projet.nbjours_pix }}</td>
 	
 	<td style="border: solid 1px grey;">
 	{% if projet.nbjours != 0 %}
