@@ -28,7 +28,7 @@ $( "#datepicker2" ).datepicker({format: 'yyyy-mm-dd', autoclose: true});
 <div class="row-fluid well">
 	<div class="span12">		
 		<h4>EuGénie Canada</h4>
-		<h4>Derniers 20 blocs de temps ajouter</h4>
+		<h4>Blocs de {{username}} du {{date_debut}} au {{date_fin}}</h4>
 			<table class="table table-bordered table-striped">
 			<thead>
 				<tr>
@@ -40,13 +40,13 @@ $( "#datepicker2" ).datepicker({format: 'yyyy-mm-dd', autoclose: true});
 				</tr>
 			</thead>
 			<tbody>
-			{% for blocs in last_blocs %}
+			{% for bloc in blocs %}
 				<tr>
-					<td>{{ blocs.employe }}</td>
-					<td>{{ blocs.date }}</td>
-					<td>{{ blocs.projet }}</td>
-					<td>{{ blocs.tache }}</td>
-					<td>{{ blocs.temps }}</td>
+					<td>{{ bloc.employe }}</td>
+					<td>{{ bloc.date }}</td>
+					<td>{{ bloc.projet }}</td>
+					<td>{{ bloc.tache }}</td>
+					<td>{{ bloc.temps }}</td>
 				</tr>
 			{% endfor %}
 			</tbody>

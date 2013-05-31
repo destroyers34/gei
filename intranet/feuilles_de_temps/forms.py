@@ -36,3 +36,11 @@ class BaseBlocTPEFormSet(BaseModelFormSet):
     def __init__(self, *args, **kwargs):
         super(BaseBlocTPEFormSet, self).__init__(*args, **kwargs)
         self.queryset = Bloc_TPE.objects.none()
+        
+class ConsultationBlocEugenieForm(forms.ModelForm):
+    employe = forms.ModelChoiceField(queryset=Employe.objects.filter(user__is_active=True).order_by('user__first_name'))
+    date_debut = forms.DateField()
+    date_fin = forms.DateField()
+    class Meta:
+        model = Bloc_Eugenie
+        fields = ['employe', 'date_debut', 'date_fin']
