@@ -19,13 +19,13 @@
 {% block content %}
 <div class="row-fluid well">
 	<div class="span12">
-		<h4>EuGénie Canada</h4>
-		<h4>Rapport des projets actifs</h4>
+		<h4>EuGénie Canada Inc.</h4>
+		<h4>Rapport des projets actifs - {% now "DATE_FORMAT"%}</h4>
 		<table>
 		<tr>
 			<th style="width: 150px; vertical-align: bottom;">Projet</th>
-			<th style="width: 120px; vertical-align: bottom;">Date Début</th>
-			<th style="width: 120px; vertical-align: bottom;">Date Fin</th>
+			<th style="width: 120px; vertical-align: bottom;">Client</th>
+			<th style="width: 80px; vertical-align: bottom;">Date Fin</th>
 			<th style="width: 70px; vertical-align: bottom;">Durée (J)</th>
 			<td style="width: 500px; vertical-align: bottom;">
 				<table>
@@ -46,8 +46,8 @@
 		{% for projet in projets %}
 		<tr>
 			<td><a href="{% url 'projet_details_eci' projet.numero %}">{{projet.numero}}</a> <a href="{% url 'liste_projets_noms_eci' projet.nom %}">{{projet.nom}}</a> <a href="{% url 'liste_projets_modeles_eci' projet.nom projet.modele %}">{{projet.modele}}</a></td></td>
-			<td>{{ projet.date_debut }}</td>
-			<td>{{ projet.date_fin }}</td>
+			<td><a href="{% url 'client_details_eci' projet.client.id %}">{{ projet.client|truncatewords_html:2 }}</a></td>
+			<td class='center-text'>{{ projet.date_fin|date:"d M Y" }}</td>
 			<td class='center-text'>{{ projet.nbjours }}</td>
 			
 			<td style="border: solid 1px grey;">

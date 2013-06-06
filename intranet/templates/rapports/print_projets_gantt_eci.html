@@ -16,12 +16,12 @@
 </style>
 {% endblock extrahead %}
 {% block content %}
-		<h4>EuGénie Canada - Rapport des projets actifs</h4>
+		<h4>EuGénie Canada Inc. - Rapport des projets actifs - {% now "DATE_FORMAT"%}</h4>
 		<table>
 		<tr>
 			<th style="width: 125px; vertical-align: bottom;">Projet</th>
-			<th style="width: 100px; vertical-align: bottom;">Date Début</th>
-			<th style="width: 100px; vertical-align: bottom;">Date Fin</th>
+			<th style="width: 120px; vertical-align: bottom;">Clients</th>
+			<th style="width: 80px; vertical-align: bottom;">Date Fin</th>
 			<th style="width: 70px; vertical-align: bottom;">Durée (J)</th>
 			<th style="width: 500px; vertical-align: bottom;">
 				<table>
@@ -42,8 +42,8 @@
 		{% for projet in projets %}
 		<tr>
 			<td>{{ projet.numero }} {{ projet.nom }} {{ projet.modele }}</td>
-			<td>{{ projet.date_debut }}</td>
-			<td>{{ projet.date_fin }}</td>
+			<td>{{ projet.client|truncatewords_html:2 }}</td>
+			<td class='center-text'>{{ projet.date_fin|date:"d M Y" }}</td>
 			<td class='center-text'>{{ projet.nbjours }}</td>
 			
 			<td style="border: solid 1px grey;">
