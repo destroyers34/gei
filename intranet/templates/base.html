@@ -56,16 +56,16 @@
 				  <ul class="dropdown-menu">
 					{% if perms.feuilles_de_temps.add_bloc_eugenie %}
 					<li class="dropdown-submenu">
-					  <a href="{% url 'add_blocs_eci'%}">EuGénie Canada</a>
+					  <a href="{% url 'add_blocs_eci'%}">ECI</a>
 					  <ul class="dropdown-menu">
-						<li><a href="{% url 'blocs_eci'%}">Derniers blocs EuGénie</a></li>
+						<li><a href="{% url 'blocs_eci'%}">Derniers blocs ECI</a></li>
 						<li><a href="{% url 'add_blocs_eci'%}">Ajouter des blocs de temps</a></li>
 					  </ul>
 					</li>
 					{% endif %}
 					{% if perms.feuilles_de_temps.add_bloc_tpe %}
 					<li class="dropdown-submenu">
-					  <a href="{% url 'add_blocs_tpe'%}">Techno-Pro Experts</a>
+					  <a href="{% url 'add_blocs_tpe'%}">TPE</a>
 					  <ul class="dropdown-menu">
 						<li><a href="{% url 'add_blocs_tpe'%}">Ajouter des blocs de temps</a></li>
 					  </ul>
@@ -73,7 +73,7 @@
 					{% endif %}
 					{% if perms.feuilles_de_temps.add_bloc_jrc %}
 					<li class="dropdown-submenu">
-					  <a href="">JRC Machineries</a>
+					  <a href="">JRC</a>
 					  <ul class="dropdown-menu">
 						<li><a href="">Ajouter des blocs de temps</a></li>
 					  </ul>
@@ -94,7 +94,7 @@
 				  <ul class="dropdown-menu">
 					{% if perms.feuilledetemps.afficher_rapport_temps_eugenie %}
 					<li class="dropdown-submenu">
-					  <a href="{% url 'liste_projets_eci' %}">EuGénie Canada</a>
+					  <a href="{% url 'liste_projets_eci' %}">ECI</a>
 					  <ul class="dropdown-menu">
 						<li><a href="{% url 'liste_projets_eci' %}">Projets</a></li>
 						<li><a href="{% url 'liste_taches_eci' %}">Tâches</a></li>
@@ -105,7 +105,7 @@
 					{% endif %}
 					{% if perms.feuilledetemps.afficher_rapport_temps_tpe %}
 					<li class="dropdown-submenu">
-					  <a href="{% url 'liste_projets_tpe' %}">Techno-Pro Experts</a>
+					  <a href="{% url 'liste_projets_tpe' %}">TPE</a>
 					  <ul class="dropdown-menu">
 						<li><a href="{% url 'liste_projets_tpe' %}">Projets</a></li>
 						<li><a href="{% url 'liste_taches_tpe' %}">Tâches</a></li>
@@ -116,7 +116,7 @@
 					{% endif %}
 					{% if perms.feuilledetemps.afficher_rapport_temps_jrc %}
 					<li class="dropdown-submenu">
-					  <a href="#">JRC Machinieries</a>
+					  <a href="#">JRC</a>
 					  <ul class="dropdown-menu">
 						<li><a href="#">Projets</a></li>
 						<li><a href="#">Tâches</a></li>
