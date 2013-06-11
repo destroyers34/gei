@@ -156,7 +156,7 @@ def base_tache_periode_eci(request, numero_tache, date_debut, date_fin):
 
 @permission_required('feuilledetemps.afficher_rapport_temps_eugenie')
 def base_projets_gantt_eci(request):    
-    projets = Projet_Eugenie.objects.filter(actif=True,en_attente=False).order_by('date_debut')
+    projets = Projet_Eugenie.objects.filter(actif=True,en_attente=False).order_by('date_fin')
     start = date(datetime.now().year, 1, 1)
     end = date(datetime.now().year+1, 1, 1)
     duration = (end-start).days
