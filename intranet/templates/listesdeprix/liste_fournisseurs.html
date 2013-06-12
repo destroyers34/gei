@@ -8,6 +8,7 @@
 	<div class="span12"> 
 		<h3>Fournisseurs</h3>
 		<table class="table table-striped table-bordered table-condensed">
+			<caption>Actifs</caption>
 			<thead>
 				<tr>
 					<th>Nom</th>
@@ -16,10 +17,31 @@
 			</thead>
 			<tbody>
 				{% for fournisseur in liste_fournisseurs %}
-					<tr>
-						<td><a href="{% url 'detail_fournisseur' fournisseur_id=fournisseur.id %}">{{fournisseur.nom}}</a></td>
-						<td><a href="{% url 'liste_machines' fournisseur_id=fournisseur.id %}" class='btn btn-small btn-primary'><i class='icon-list icon-white'></i> Afficher</a></td>
-					</tr>
+					{% ifchanged fournisseur.actif %}
+						{% if forloop.first %}
+							<tr>
+								<td><a href="{% url 'detail_fournisseur' fournisseur_id=fournisseur.id %}">{{fournisseur.nom}}</a></td>
+								<td><a href="{% url 'liste_machines' fournisseur_id=fournisseur.id %}" class='btn btn-small btn-primary'><i class='icon-list icon-white'></i> Afficher</a></td>
+							</tr>
+						{% else %}
+							</tbody>
+							</table>
+							<table class="table table-striped table-bordered table-condensed">
+							<caption>Inactifs</caption>
+							<thead>
+								<tr>
+									<th>Nom</th>
+									<th>Liste de prix</th>
+								</tr>
+							</thead>
+							<tbody>
+						{% endif %}
+					{% else %}
+						<tr>
+							<td><a href="{% url 'detail_fournisseur' fournisseur_id=fournisseur.id %}">{{fournisseur.nom}}</a></td>
+							<td><a href="{% url 'liste_machines' fournisseur_id=fournisseur.id %}" class='btn btn-small btn-primary'><i class='icon-list icon-white'></i> Afficher</a></td>
+						</tr>
+					{% endifchanged %}
 				{% endfor %}
 			</tbody>
 		</table>

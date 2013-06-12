@@ -7,7 +7,7 @@ from listes_de_prix.models import Fournisseur, Machine, Option
 from listes_de_prix.forms import *
 
 def liste_fournisseurs(request):
-    liste_fournisseurs = Fournisseur.objects.all().order_by('nom')
+    liste_fournisseurs = Fournisseur.objects.all().order_by('-actif','nom')
     return render(request, 'listesdeprix/liste_fournisseurs.html', {'liste_fournisseurs': liste_fournisseurs})
 
 def detail_fournisseur(request, fournisseur_id):

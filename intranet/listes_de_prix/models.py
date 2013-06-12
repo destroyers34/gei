@@ -14,6 +14,7 @@ class Fournisseur(models.Model):
     siteweb = models.CharField(verbose_name=u"Site web",max_length=100, blank=True, null=True)
     devise = models.ForeignKey(Devise,verbose_name=u"Devise")
     ratio = models.DecimalField(verbose_name=u"Ratio",max_digits=5, decimal_places=2, default='1')
+    actif = models.BooleanField(verbose_name=u"Actif")
     def __unicode__(self):
         return u"%s" % self.nom
     
