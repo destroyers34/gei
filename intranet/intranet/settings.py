@@ -118,6 +118,7 @@ INSTALLED_APPS = (
     'feuilles_de_temps',
     'accounts',
     'rapports',
+    'gpao',
     'django.contrib.admin',
 )
 
