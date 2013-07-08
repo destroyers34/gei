@@ -12,6 +12,7 @@ urlpatterns = patterns('',
     url(r'^listesdeprix/', include('listes_de_prix.urls')),
     url(r'^feuillesdetemps/', include('feuilles_de_temps.urls')),
     url(r'^rapports/', include('rapports.urls')),
+    url(r'^gpao/', include('gpao.urls')),
 )
 
 urlpatterns += staticfiles_urlpatterns()
