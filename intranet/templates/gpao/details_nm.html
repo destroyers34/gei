@@ -1,0 +1,43 @@
+﻿{% extends "base.html" %}
+{% load admin_urls %}
+{% block title %}GPAO{% endblock title %}
+{% block nav-gpao %}<li class="dropdown active">{% endblock nav-gpao %}
+{% block content %}
+<div class="row-fluid well">
+	<div class="span12">		
+		<h4>GPAO</h4>
+		<h4>{{nm.reference}} {{nm.designation}} (<a href="{% url 'admin:gpao_nm_change' nm.id %}">Edit</a>)</h4>
+		<p>Plan d'assemblé lié:</p>
+
+		<table class="table table-striped table-bordered table-condensed">
+			<caption>NMs et Pièces liés</caption>
+			<thead>
+				<tr>
+					<th>N° sur PE</th>
+					<th>Référence</th>
+					<th>Désignation</th>
+					<th>Qt.</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for lien in nm.get_liensnm %}
+					<tr>
+						<td><a href="">{{lien.numero_pe}}</a></td>
+						<td><a href="">{{lien.to_nm.reference}}</a></td>
+						<td><a href="">{{lien.to_nm.designation}}</a></td>
+						<td><a href="">{{lien.quantite}}</a></td>
+					</tr>
+				{% endfor %}
+				{% for piece in nm.get_lienspiece %}
+					<tr>
+						<td><a href="">{{piece.numero_pe}}</a></td>
+						<td><a href="">{{piece.to_piece.reference}}</a></td>
+						<td><a href="">{{piece.to_piece.designation}}</a></td>
+						<td><a href="">{{piece.quantite}}</a></td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	</div>
+</div>
+{% endblock %}

@@ -75,6 +75,12 @@ class Nm(models.Model):
     def __unicode__(self):
         return u"%s - %s" % (self.reference,self.designation)
         
+    def get_liensnm(self):
+        return LienNM.objects.filter(from_nm=self)
+        
+    def get_lienspiece(self):
+        return LienPiece.objects.filter(from_nm=self)
+        
 class LienNM(models.Model):
     from_nm = models.ForeignKey(Nm, related_name='from_nm')
     to_nm = models.ForeignKey(Nm, related_name='to_nm',verbose_name=u"Lié à NM:")

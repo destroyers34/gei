@@ -1,0 +1,31 @@
+﻿{% extends "base.html" %}
+{% block title %}GPAO{% endblock title %}
+{% block nav-gpao %}<li class="dropdown active">{% endblock nav-gpao %}
+{% block content %}
+<div class="row-fluid well">
+	<div class="span12">		
+		<h4>GPAO</h4>
+		<h4>RÉFÉRENCEMENT DES NOMENCLATURES</h4>
+		<table class="table table-striped table-bordered table-condensed">
+			<thead>
+				<tr>
+					<th>Référence & Révision</th>
+					<th>Plan d'assemblé liés</th>
+					<th>Désignation</th>
+					<th>Référence</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for nm in liste_nm %}
+					<tr>
+						<td><a href="">{{nm.reference}}</a></td>
+						<td><a href="">{{nm.pe}}</a></td>
+						<td><a href="">{{nm.designation}}</a></td>
+						<td><a href="">{{nm.get_categorie_display}}</a></td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	</div>
+</div>
+{% endblock %}
