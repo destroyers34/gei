@@ -18,7 +18,7 @@
 			<tbody>
 				{% for nm in liste_nm %}
 					<tr>
-						<td><a href="">{{nm.reference}}</a></td>
+						<td><a href="{% url 'details_nm' nm.reference %}">{{nm.reference}}</a></td>
 						<td><a href="">{{nm.pe}}</a></td>
 						<td><a href="">{{nm.designation}}</a></td>
 						<td><a href="">{{nm.get_categorie_display}}</a></td>

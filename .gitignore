@@ -6,3 +6,15 @@ Thumbs.db
 *.pyc
 local_settings.py
 wsgi.py
+intranet/.idea/.name
+intranet/.idea/dataSources.ids
+intranet/.idea/dataSources.xml
+intranet/.idea/encodings.xml
+intranet/.idea/intranet.iml
+intranet/.idea/misc.xml
+intranet/.idea/modules.xml
+intranet/.idea/other.xml
+intranet/.idea/scopes/scope_settings.xml
+intranet/.idea/testrunner.xml
+intranet/.idea/vcs.xml
+intranet/.idea/workspace.xml

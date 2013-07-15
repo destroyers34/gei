@@ -1,6 +1,8 @@
-﻿from django.db import models
+﻿#-*- coding: utf-8 -*-
+from django.db import models
 import datetime
-# Create your models here.
+
+
 class Piece(models.Model):
     LETTER = 'LT'
     LEDGER = 'LD'
@@ -42,8 +44,16 @@ class Piece(models.Model):
     commentaires = models.CharField(max_length=200, verbose_name=u"Commentaires:",null=True,blank=True)
     
     def __unicode__(self):
-        return u"%s - %s" % (self.reference,self.designation)
-    
+        return u"%s - %s" % (self.reference, self.designation)
+
+
+class Pe(models.Model):
+    reference = models.CharField(max_length=30, unique=True, verbose_name=u"# Référence:")
+    plan = models.FileField(upload_to='PE')
+
+    def __unicode__(self):
+        return u"%s" % self.reference
+
 
 class Nm(models.Model):
     ASSY_SYSTEM = 'AS'
@@ -67,6 +77,7 @@ class Nm(models.Model):
         (SETUP_CLAMP, 'Setup Clamp'),
     )
     reference = models.CharField(max_length=30, unique=True, verbose_name=u"# Référence:")
+    pe = models.ForeignKey(Pe)
     designation = models.CharField(max_length=100, verbose_name=u"Désignation:")
     categorie = models.CharField(max_length=2,choices=CATEGORIE_NM,default=ASSY_SYSTEM,verbose_name=u"Catégorie de NM:")
     liens = models.ManyToManyField('self', through='LienNM', symmetrical=False, related_name='related_to')
@@ -80,16 +91,18 @@ class Nm(models.Model):
         
     def get_lienspiece(self):
         return LienPiece.objects.filter(from_nm=self)
-        
+
+
 class LienNM(models.Model):
     from_nm = models.ForeignKey(Nm, related_name='from_nm')
-    to_nm = models.ForeignKey(Nm, related_name='to_nm',verbose_name=u"Lié à NM:")
-    numero_pe = models.IntegerField(max_length=6,verbose_name=u"# sur le PE:")
-    quantite = models.IntegerField(max_length=6,verbose_name=u"Quantité:")
+    to_nm = models.ForeignKey(Nm, related_name='to_nm', verbose_name=u"Lié à NM:")
+    numero_pe = models.IntegerField(max_length=6, verbose_name=u"# sur le PE:")
+    quantite = models.IntegerField(max_length=6, verbose_name=u"Quantité:")
     
     def __unicode__(self):
         return u"%s linkto %s" % (self.from_nm,self.to_nm)
-        
+
+
 class LienPiece(models.Model):
     from_nm = models.ForeignKey(Nm, related_name='from_nm_p')
     to_piece = models.ForeignKey(Piece, related_name='to_piece',verbose_name=u"Lié à Pièce:")
