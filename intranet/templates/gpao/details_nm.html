@@ -7,7 +7,7 @@
 	<div class="span12">		
 		<h4>GPAO</h4>
 		<h4>{{nm.reference}} {{nm.designation}} (<a href="{% url 'admin:gpao_nm_change' nm.id %}">Edit</a>)</h4>
-		<p>Plan d'assemblé lié:</p>
+		<p>Plan d'ensemble lié: <a href="{{ nm.pe.plan.url }}">{{nm.pe}}</a></p>
 
 		<table class="table table-striped table-bordered table-condensed">
 			<caption>NMs et Pièces liés</caption>
@@ -22,18 +22,18 @@
 			<tbody>
 				{% for lien in nm.get_liensnm %}
 					<tr>
-						<td><a href="">{{lien.numero_pe}}</a></td>
+						<td>{{lien.numero_pe}}</td>
 						<td><a href="">{{lien.to_nm.reference}}</a></td>
-						<td><a href="">{{lien.to_nm.designation}}</a></td>
-						<td><a href="">{{lien.quantite}}</a></td>
+						<td>{{lien.to_nm.designation}}</td>
+						<td>{{lien.quantite}}</td>
 					</tr>
 				{% endfor %}
 				{% for piece in nm.get_lienspiece %}
 					<tr>
-						<td><a href="">{{piece.numero_pe}}</a></td>
+						<td>{{piece.numero_pe}}</td>
 						<td><a href="">{{piece.to_piece.reference}}</a></td>
-						<td><a href="">{{piece.to_piece.designation}}</a></td>
-						<td><a href="">{{piece.quantite}}</a></td>
+						<td>{{piece.to_piece.designation}}</td>
+						<td>{{piece.quantite}}</td>
 					</tr>
 				{% endfor %}
 			</tbody>
