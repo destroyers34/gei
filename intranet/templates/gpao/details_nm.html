@@ -23,7 +23,7 @@
 				{% for lien in nm.get_liensnm %}
 					<tr>
 						<td>{{lien.numero_pe}}</td>
-						<td><a href="">{{lien.to_nm.reference}}</a></td>
+						<td><a href="{% url 'details_nm' lien.to_nm.reference %}">{{lien.to_nm.reference}}</a></td>
 						<td>{{lien.to_nm.designation}}</td>
 						<td>{{lien.quantite}}</td>
 					</tr>
