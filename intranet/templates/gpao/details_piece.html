@@ -1,0 +1,40 @@
+﻿{% extends "base.html" %}
+{% load admin_urls %}
+{% block title %}GPAO{% endblock title %}
+{% block nav-gpao %}<li class="dropdown active">{% endblock nav-gpao %}
+{% block content %}
+<div class="row-fluid well">
+	<div class="span12">		
+		<h4>GPAO</h4>
+		<h4>{{piece.reference}} {{piece.designation}} (<a href="{% url 'admin:gpao_piece_change' piece.id %}">Edit</a>)</h4>
+		<p>Plan de définition lié: <a href="{{ piece.plan.url }}">{{piece.plan}}</a></p>
+
+        <p>Date: {{piece.date}}</p>
+        <p>Format papier: {{piece.get_format_papier_display}}</p>
+        <p>Réf. commerciale: {{piece.ref_commercial}}</p>
+        <p>Réf. mécanique: {{piece.ref_mecanique}}</p>
+        <p>Brute: {{piece.brute}}</p>
+        <p>Soudure: {% if piece.soudure %}Oui{% else %}Non{% endif %}</p>
+        <p>Finition: {{piece.get_finition_display}}</p>
+        <p>Commentaires: {{piece.commentaires}}</p>
+
+		<table class="table table-striped table-bordered table-condensed">
+			<caption>Cette pièce se retrouve dans les NMs suivant:</caption>
+			<thead>
+				<tr>
+					<th>Référence</th>
+					<th>Désignation</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for lien in piece.get_nm %}
+					<tr>
+						<td><a href="">{{lien.from_nm.reference}}</a></td>
+						<td>{{lien.from_nm.designation}}</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	</div>
+</div>
+{% endblock %}

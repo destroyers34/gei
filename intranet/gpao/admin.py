@@ -1,6 +1,6 @@
 ﻿# admin.py
 from django.contrib import admin
-from gpao.models import Nm, LienNM, LienPiece, Piece,Pe
+from gpao.models import Nm, LienNM, LienPiece, Piece, Pe, Famille
 
 
 class LienNMInline(admin.TabularInline):
@@ -29,7 +29,13 @@ class PieceAdmin(admin.ModelAdmin):
 
 class PeAdmin(admin.ModelAdmin):
     list_display = ('reference', 'plan')
-    
+
+
+class FamilleAdmin(admin.ModelAdmin):
+    list_display = ('reference', 'designation')
+
+
 admin.site.register(Nm, NmAdmin)
 admin.site.register(Piece, PieceAdmin)
 admin.site.register(Pe, PeAdmin)
+admin.site.register(Famille, FamilleAdmin)

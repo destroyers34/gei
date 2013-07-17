@@ -1,7 +1,18 @@
 ﻿#-*- coding: utf-8 -*-
 from django.db import models
 import datetime
-from django.utils.translation.trans_real import blankout
+
+
+class Famille(models.Model):
+    reference = models.CharField(max_length=30, unique=True, verbose_name=u"# Référence:")
+    designation = models.CharField(max_length=100, verbose_name=u"Désignation:")
+
+    def __unicode__(self):
+        return u"%s: %s" % (self.reference, self.designation)
+
+    class Meta:
+        verbose_name = "Famille"
+        verbose_name_plural = "Familles"
 
 
 class Piece(models.Model):
@@ -33,6 +44,7 @@ class Piece(models.Model):
         (BROSSE, 'Brossé'),
         (AUTRE, 'Autre'),
     )
+    famille = models.ForeignKey(Famille, verbose_name=u"Famille:")
     reference = models.CharField(max_length=30, unique=True, verbose_name=u"# Référence:")
     plan = models.FileField(upload_to="PLANS DE DEFINITION (X__-XXXX)", null=True, blank=True)
     designation = models.CharField(max_length=100, verbose_name=u"Désignation:")
@@ -48,6 +60,9 @@ class Piece(models.Model):
     
     def __unicode__(self):
         return u"%s - %s" % (self.reference, self.designation)
+
+    def get_nm(self):
+        return LienPiece.objects.filter(to_piece=self)
 
     class Meta:
         verbose_name = "Pièce"
@@ -88,12 +103,14 @@ class Nm(models.Model):
         (SETUP_CLAMP, 'Setup Clamp'),
     )
     reference = models.CharField(max_length=30, unique=True, verbose_name=u"# Référence:")
-    pe = models.ForeignKey(Pe, null=True, blank=True)
+    pe = models.ForeignKey(Pe, null=True, blank=True, verbose_name=u"Plan d'ensemble:")
     designation = models.CharField(max_length=100, verbose_name=u"Désignation:")
     categorie = models.CharField(max_length=2, choices=CATEGORIE_NM, default=ASSY_SYSTEM,
                                  verbose_name=u"Catégorie de NM:")
-    liens = models.ManyToManyField('self', through='LienNM', symmetrical=False, related_name='related_to')
-    liens_piece = models.ManyToManyField(Piece, through='LienPiece', symmetrical=False, related_name='related_piece')
+    liens = models.ManyToManyField('self', through='LienNM', symmetrical=False, related_name='related_to',
+                                   verbose_name=u"Contient les NMs suivant:")
+    liens_piece = models.ManyToManyField(Piece, through='LienPiece', symmetrical=False, related_name='related_piece',
+                                         verbose_name=u"Contient les Pièces suivante:")
     
     def __unicode__(self):
         return u"%s - %s" % (self.reference,self.designation)

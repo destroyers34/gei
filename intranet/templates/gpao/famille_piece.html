@@ -8,23 +8,23 @@
 <div class="row-fluid well">
 	<div class="span12">		
 		<h4>GPAO</h4>
-		<h4>RÉFÉRENCEMENT DES NOMENCLATURES</h4>
+		<h4>LISTE DES PIÈCES DE LA FAMILLE {{pieces.0.famille}}</h4>
 		<table id="table1" class="filterable table table-striped table-bordered table-condensed">
 			<thead>
 				<tr>
 					<th>Référence & Révision</th>
-					<th>Plan d'ensemble liés</th>
 					<th>Désignation</th>
-					<th>Référence</th>
+					<th>Réf. commerciale</th>
+					<th>Réf. mécanique</th>
 				</tr>
 			</thead>
 			<tbody>
-				{% for nm in liste_nm %}
+				{% for piece in pieces %}
 					<tr>
-						<td><a href="{% url 'details_nm' nm.reference %}">{{nm.reference}}</a></td>
-						<td><a href="{{nm.pe.plan.url}}">{{nm.pe}}</a></td>
-						<td>{{nm.designation}}</td>
-						<td>{{nm.get_categorie_display}}</td>
+						<td><a href="">{{piece.reference}}</a> <a href="{{ piece.plan.url }}">(Plan de déf.)</a></td>
+						<td>{{piece.designation}}</td>
+						<td>{{piece.ref_commercial}}</td>
+						<td>{{piece.ref_mecanique}}</td>
 					</tr>
 				{% endfor %}
 			</tbody>
