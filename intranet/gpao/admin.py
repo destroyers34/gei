@@ -19,20 +19,24 @@ class NmAdmin(admin.ModelAdmin):
     inlines = [LienNMInline, LienPieceInline]
     list_display = ('reference', 'pe', 'designation', 'categorie',)
     list_filter = ('categorie',)
+    ordering = ['reference', ]
 
 
 class PieceAdmin(admin.ModelAdmin):
     list_display = ('reference', 'plan', 'designation', 'date', 'format_papier', 'ref_commercial', 'ref_mecanique',
                     'brute',
                     'soudure', 'finition', 'commentaires')
+    ordering = ['reference', ]
 
 
 class PeAdmin(admin.ModelAdmin):
     list_display = ('reference', 'plan')
+    ordering = ['reference', ]
 
 
 class FamilleAdmin(admin.ModelAdmin):
     list_display = ('reference', 'designation')
+    ordering = ['reference', ]
 
 
 admin.site.register(Nm, NmAdmin)
