@@ -11,6 +11,7 @@ class Famille(models.Model):
         return u"%s: %s" % (self.reference, self.designation)
 
     class Meta:
+        ordering = ['reference']
         verbose_name = "Famille"
         verbose_name_plural = "Familles"
 
@@ -65,6 +66,7 @@ class Piece(models.Model):
         return LienPiece.objects.filter(to_piece=self)
 
     class Meta:
+        ordering = ['reference']
         verbose_name = "Pièce"
         verbose_name_plural = "Pièces"
 
@@ -77,6 +79,7 @@ class Pe(models.Model):
         return u"%s" % self.reference
 
     class Meta:
+        ordering = ['reference']
         verbose_name = "Plan d'ensemble"
         verbose_name_plural = "Plan d'ensembles"
 
@@ -122,6 +125,7 @@ class Nm(models.Model):
         return LienPiece.objects.filter(from_nm=self)
 
     class Meta:
+        ordering = ['reference']
         verbose_name = "Nomenclature"
         verbose_name_plural = "Nomenclatures"
 
