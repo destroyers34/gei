@@ -1,5 +1,6 @@
 ﻿#-*- coding: utf-8 -*-
 from django.db import models
+from collections import Counter
 import datetime
 
 
@@ -116,13 +117,30 @@ class Nm(models.Model):
                                          verbose_name=u"Contient les Pièces suivante:")
     
     def __unicode__(self):
-        return u"%s - %s" % (self.reference,self.designation)
+        return u"%s - %s" % (self.reference, self.designation)
         
     def get_liensnm(self):
         return LienNM.objects.filter(from_nm=self)
         
     def get_lienspiece(self):
         return LienPiece.objects.filter(from_nm=self)
+
+    def get_pieces(self):
+        pieces = []
+
+        for p in self.get_lienspiece():
+            pieces.append({'piece': p.to_piece, 'qt': p.quantite, })
+
+        if self.get_liensnm() is not None:
+            for nm in self.get_liensnm():
+                for p in nm.to_nm.get_lienspiece():
+                    temp = next((item for item in pieces if item['piece'] == p.to_piece), None)
+                    if temp is not None:
+                        temp['qt'] += p.quantite
+                    else:
+                        pieces.append({'piece': p.to_piece, 'qt': p.quantite, })
+
+        return pieces
 
     class Meta:
         ordering = ['reference']
@@ -137,7 +155,7 @@ class LienNM(models.Model):
     quantite = models.IntegerField(max_length=6, verbose_name=u"Quantité:")
     
     def __unicode__(self):
-        return u"%s linkto %s" % (self.from_nm,self.to_nm)
+        return u"%s linkto %s" % (self.from_nm, self.to_nm)
 
 
 class LienPiece(models.Model):

@@ -38,6 +38,21 @@
 				{% endfor %}
 			</tbody>
 		</table>
+
+    <p>Test liste</p>
+
+    <table class="table table-striped table-bordered table-condensed">
+    <tr>
+        <th>Pièces</th>
+        <th>Quantité</th>
+    </tr>
+    {% for pieces in nm.get_pieces %}
+        <tr>
+            <td>{{ pieces.piece }}</td>
+            <td>{{ pieces.qt }}</td>
+        </tr>
+    {% endfor %}
+    </table>
 	</div>
 </div>
 {% endblock %}
