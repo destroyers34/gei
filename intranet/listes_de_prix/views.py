@@ -6,19 +6,23 @@ from decimal import *
 from listes_de_prix.models import Fournisseur, Machine, Option
 from listes_de_prix.forms import *
 
+
 def liste_fournisseurs(request):
     liste_fournisseurs = Fournisseur.objects.all().order_by('-actif','nom')
     return render(request, 'listesdeprix/liste_fournisseurs.html', {'liste_fournisseurs': liste_fournisseurs})
 
+
 def detail_fournisseur(request, fournisseur_id):
     fournisseur = Fournisseur.objects.get(id=fournisseur_id)
     return render(request, 'listesdeprix/detail_fournisseur.html', {'fournisseur': fournisseur})        
-    
+
+
 @permission_required('listes_de_prix.afficher_listes_prix')
 def liste_machines(request, fournisseur_id):
     fournisseur = Fournisseur.objects.get(id=fournisseur_id)
     liste_machines = Machine.objects.filter(fournisseur = fournisseur).order_by('categorie','numero')
     return render(request, 'listesdeprix/liste_machines.html', {'liste_machines': liste_machines, 'fournisseur':fournisseur})
+
 
 @permission_required('listes_de_prix.afficher_listes_prix')
 def details_machine(request, fournisseur_id, machine_id):

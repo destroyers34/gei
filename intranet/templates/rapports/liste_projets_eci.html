@@ -1,4 +1,5 @@
 ﻿{% extends "base.html" %}
+{% load admin_urls %}
 {% block title %}Rapports{% endblock title %}
 {% block extrahead %}
 <link rel="stylesheet" href="{{STATIC_URL}}css\datepicker.css" />
@@ -17,8 +18,8 @@ $('#myTab a').click(function (e) {
 {% block content %}
 <div class="row-fluid well">
 	<div class="span12"> 
-		<h4>EuGénie Canada Inc.</h4>
-		<h4>Rapport de temps de chacun des projets</h3>
+		<h4>EuGénie Canada Inc. (<a href="{% url 'admin:projets_projet_eugenie_add' %}">Ajouter un projet</a>)</h4>
+		<h4>Rapport de temps de chacun des projets</h4>
 		<ul class="nav nav-tabs" id="myTab">
 		  <li><a href="#attente">En Attente</a></li>
 		  <li class="active"><a href="#actif">En Cours</a></li>
