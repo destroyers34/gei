@@ -1,6 +1,6 @@
 ﻿# admin.py
 from django.contrib import admin
-from gpao.models import Nm, LienNM, LienPiece, Piece, Pe, Famille
+from gpao.models import Nm, LienNM, LienPiece, Piece, Pe, Famille, Fournisseur
 
 
 class LienNMInline(admin.TabularInline):
@@ -39,7 +39,12 @@ class FamilleAdmin(admin.ModelAdmin):
     ordering = ['reference', ]
 
 
+class FournisseurAdmin(admin.ModelAdmin):
+    list_display = ('nom',)
+    ordering = ['nom', ]
+
 admin.site.register(Nm, NmAdmin)
 admin.site.register(Piece, PieceAdmin)
 admin.site.register(Pe, PeAdmin)
 admin.site.register(Famille, FamilleAdmin)
+admin.site.register(Fournisseur, FournisseurAdmin)

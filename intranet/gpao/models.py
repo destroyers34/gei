@@ -17,6 +17,13 @@ class Famille(models.Model):
         verbose_name_plural = "Familles"
 
 
+class Fournisseur(models.Model):
+    nom = models.CharField(max_length=100, verbose_name=u"Nom:")
+
+    def __unicode__(self):
+        return u"%s" % self.nom
+
+
 class Piece(models.Model):
     LETTER = 'LT'
     LEDGER = 'LD'
@@ -46,6 +53,7 @@ class Piece(models.Model):
         (BROSSE, 'Brossé'),
         (AUTRE, 'Autre'),
     )
+    fournisseur = models.ForeignKey(Fournisseur, verbose_name=u"Fournisseur:", null=True, blank=True)
     famille = models.ForeignKey(Famille, verbose_name=u"Famille:")
     reference = models.CharField(max_length=30, unique=True, verbose_name=u"# Référence:")
     plan = models.FileField(upload_to="PLANS DE DEFINITION (X__-XXXX)", null=True, blank=True)
@@ -128,7 +136,8 @@ class Nm(models.Model):
     def get_pieces(self):
         pieces = []
         for p in self.get_lienspiece():
-            pieces.append({'ref': p.to_piece.reference, 'piece': p.to_piece, 'qt': p.quantite, })
+            pieces.append({'ref': p.to_piece.reference, 'piece': p.to_piece, 'qt': p.quantite,
+                           'fournisseur': p.to_piece.fournisseur.nom})
 
         if self.get_liensnm() is not None:
             for nm in self.get_liensnm():
@@ -149,8 +158,9 @@ class Nm(models.Model):
                         if temp:
                             temp['qt'] += (p.quantite * multi)
                         else:
-                            pieces.append({'ref': p.to_piece.reference, 'piece': p.to_piece, 'qt': (p.quantite * multi), })
-        return sorted(pieces, key=itemgetter('ref'))
+                            pieces.append({'ref': p.to_piece.reference, 'piece': p.to_piece,
+                                           'qt': (p.quantite * multi), 'fournisseur': p.to_piece.fournisseur.nom})
+        return sorted(pieces, key=itemgetter('fournisseur', 'ref'))
 
     class Meta:
         ordering = ['reference']
