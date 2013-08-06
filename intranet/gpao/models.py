@@ -1,6 +1,5 @@
 ﻿#-*- coding: utf-8 -*-
 from django.db import models
-from collections import Counter
 import datetime
 
 
@@ -123,7 +122,7 @@ class Nm(models.Model):
         return LienNM.objects.filter(from_nm=self)
         
     def get_lienspiece(self):
-        return LienPiece.objects.filter(from_nm=self)
+        return LienPiece.objects.filter(from_nm=self).order_by('to_piece')
 
     def get_pieces(self):
         pieces = []
@@ -150,7 +149,6 @@ class Nm(models.Model):
                             temp['qt'] += (p.quantite * multi)
                         else:
                             pieces.append({'piece': p.to_piece, 'qt': (p.quantite * multi), })
-
         return pieces
 
     class Meta:
