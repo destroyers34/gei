@@ -141,7 +141,6 @@ class Nm(models.Model):
 
         if self.get_liensnm() is not None:
             for nm in self.get_liensnm():
-                #assert False, nm
                 multi = nm.quantite
                 if nm.to_nm.get_liensnm():
                     pieces_temp = nm.to_nm.get_pieces()

@@ -20,7 +20,7 @@ $('.date').datepicker({format: 'yyyy-mm-dd', autoclose: true});
 				<tr>
 					<th>Employé</th>
 					<th>Date</th>
-					<th>Projet</th>
+					<th>Projet {% if user.is_superuser %}(<a href="{% url 'admin:projets_projet_eugenie_add' %}">+</a>){% endif %}</th>
 					<th>Tache</th>
 					<th>Temps</th>
 				</tr>
