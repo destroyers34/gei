@@ -67,7 +67,8 @@ class Piece(models.Model):
     soudure = models.BooleanField(verbose_name=u"Soudure:")
     finition = models.CharField(max_length=2, choices=FINITIONS, default=NONE, verbose_name=u"Finition:")
     commentaires = models.CharField(max_length=200, verbose_name=u"Commentaires:", null=True, blank=True)
-    
+    prix = models.DecimalField(max_digits=6, decimal_places=2, verbose_name=u"Prix:", default=0.00)
+
     def __unicode__(self):
         return u"%s - %s" % (self.reference, self.designation)
 
