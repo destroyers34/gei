@@ -1,6 +1,7 @@
 ﻿#-*- coding: utf-8 -*-
 from django.db import models
 import datetime
+from operator import itemgetter
 
 
 class Famille(models.Model):
@@ -127,7 +128,7 @@ class Nm(models.Model):
     def get_pieces(self):
         pieces = []
         for p in self.get_lienspiece():
-            pieces.append({'piece': p.to_piece, 'qt': p.quantite, })
+            pieces.append({'ref': p.to_piece.reference, 'piece': p.to_piece, 'qt': p.quantite, })
 
         if self.get_liensnm() is not None:
             for nm in self.get_liensnm():
@@ -138,18 +139,18 @@ class Nm(models.Model):
                     for piece in pieces_temp:
                         piece['qt'] *= multi
                         temp = next((item for item in pieces if item['piece'] == piece['piece']), None)
-                        if temp is not None:
+                        if temp:
                             temp['qt'] += piece['qt']
                         else:
                             pieces.append(piece)
                 else:
                     for p in nm.to_nm.get_lienspiece():
                         temp = next((item for item in pieces if item['piece'] == p.to_piece), None)
-                        if temp is not None:
+                        if temp:
                             temp['qt'] += (p.quantite * multi)
                         else:
-                            pieces.append({'piece': p.to_piece, 'qt': (p.quantite * multi), })
-        return pieces
+                            pieces.append({'ref': p.to_piece.reference, 'piece': p.to_piece, 'qt': (p.quantite * multi), })
+        return sorted(pieces, key=itemgetter('ref'))
 
     class Meta:
         ordering = ['reference']
