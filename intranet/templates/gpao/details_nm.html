@@ -1,5 +1,6 @@
 ﻿{% extends "base.html" %}
 {% load admin_urls %}
+{% load humanize %}
 {% block title %}GPAO{% endblock title %}
 {% block nav-gpao %}<li class="dropdown active">{% endblock nav-gpao %}
 {% block content %}
@@ -45,12 +46,14 @@
         <th>Pièces</th>
         <th>Quantité</th>
         <th>Fournisseur</th>
+        <th>Prix</th>
     </tr>
     {% for pieces in nm.get_pieces %}
         <tr>
             <td>{{ pieces.piece }}</td>
             <td>{{ pieces.qt }}</td>
             <td>{{ pieces.fournisseur }}</td>
+            <td>{{ pieces.piece.prix }}&nbsp;$</td>
         </tr>
     {% endfor %}
     </table>
