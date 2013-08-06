@@ -135,7 +135,9 @@
 					</ul>
 				</li>
 				{% endif %}
-				{% block nav-gpao %}<li>{% endblock nav-gpao %}<a href="{% url 'main_gpao' %}">GPAO</a></li>	
+                {% if user.is_superuser %}
+				{% block nav-gpao %}<li>{% endblock nav-gpao %}<a href="{% url 'main_gpao' %}">GPAO</a></li>
+                {% endif %}
 			</ul>
 			<ul class="nav pull-right">
 			<li class="dropdown">
