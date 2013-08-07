@@ -136,9 +136,11 @@ class Nm(models.Model):
 
     def get_pieces(self):
         pieces = []
+        total = 0
         for p in self.get_lienspiece():
             pieces.append({'ref': p.to_piece.reference, 'piece': p.to_piece, 'qt': p.quantite,
-                           'fournisseur': p.to_piece.fournisseur.nom})
+                           'fournisseur': p.to_piece.fournisseur.nom, 'prix': p.to_piece.prix * p.quantite,
+                           'total': total})
 
         if self.get_liensnm() is not None:
             for nm in self.get_liensnm():
@@ -150,6 +152,7 @@ class Nm(models.Model):
                         temp = next((item for item in pieces if item['piece'] == piece['piece']), None)
                         if temp:
                             temp['qt'] += piece['qt']
+                            temp['prix'] += piece['prix']
                         else:
                             pieces.append(piece)
                 else:
@@ -157,9 +160,15 @@ class Nm(models.Model):
                         temp = next((item for item in pieces if item['piece'] == p.to_piece), None)
                         if temp:
                             temp['qt'] += (p.quantite * multi)
+                            temp['prix'] += p.to_piece.prix * p.quantite
                         else:
+                            total += p.to_piece.prix * p.quantite
                             pieces.append({'ref': p.to_piece.reference, 'piece': p.to_piece,
-                                           'qt': (p.quantite * multi), 'fournisseur': p.to_piece.fournisseur.nom})
+                                           'qt': (p.quantite * multi), 'fournisseur': p.to_piece.fournisseur.nom,
+                                           'prix': p.to_piece.prix * p.quantite, 'total': total})
+        for piece in pieces:
+            total += piece['prix']
+            piece['total'] = total
         return sorted(pieces, key=itemgetter('fournisseur', 'ref'))
 
     class Meta:

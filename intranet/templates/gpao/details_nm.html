@@ -44,17 +44,22 @@
     <table class="table table-striped table-bordered table-condensed">
     <tr>
         <th>Pièces</th>
-        <th>Quantité</th>
         <th>Fournisseur</th>
+        <th>Prix unitaire</th>
+        <th>Quantité</th>
         <th>Prix</th>
     </tr>
     {% for pieces in nm.get_pieces %}
         <tr>
             <td>{{ pieces.piece }}</td>
-            <td>{{ pieces.qt }}</td>
             <td>{{ pieces.fournisseur }}</td>
             <td>{{ pieces.piece.prix }}&nbsp;$</td>
+            <td>{{ pieces.qt }}</td>
+            <td>{{ pieces.prix }}&nbsp;$</td>
         </tr>
+        {% if forloop.last %}
+            <tr><th colspan="3"></th><th>Total:</th><td>{{pieces.total}}&nbsp;$</td></tr>
+        {% endif %}
     {% endfor %}
     </table>
 	</div>
