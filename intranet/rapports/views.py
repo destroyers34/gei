@@ -1,16 +1,14 @@
 ﻿from __future__ import division
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponseRedirect
 from django.shortcuts import render, render_to_response
-from django.db.models import Sum, Avg
-from django.contrib.auth.decorators import permission_required, login_required
-from decimal import *
-import csv
-from datetime import time, datetime, date
+from django.db.models import Sum
+from django.contrib.auth.decorators import permission_required
+from datetime import datetime, date
 from clients.models import Compagnie
 from projets.models import Projet_Eugenie, Projet_TPE
 from feuilles_de_temps.models import Bloc_Eugenie, Bloc_TPE
 from ressources.models import Tache, Employe
-from rapports.forms import FilterForm, DateRangeForm
+from rapports.forms import DateRangeForm
 
 @permission_required('feuilles_de_temps.afficher_rapport_temps_eugenie')    
 def base_liste_clients_eci(request):
