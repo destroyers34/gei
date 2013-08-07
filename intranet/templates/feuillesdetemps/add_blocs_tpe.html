@@ -18,7 +18,7 @@ $('.date').datepicker({format: 'yyyy-mm-dd', autoclose: true});
 			<table>
 			<thead>
 				<tr>
-					<th>Employé</th>
+					<th>Employé {% if user.is_superuser %}(<a href="{% url 'admin:auth_user_add' %}">+</a>){% endif %}</th>
 					<th>Date</th>
 					<th>Projet {% if user.is_superuser %}(<a href="{% url 'admin:projets_projet_tpe_add' %}">+</a>){% endif %}</th>
 					<th>Tache</th>

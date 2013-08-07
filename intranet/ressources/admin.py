@@ -45,7 +45,11 @@ class UserAdmin(AuthUserAdmin):
     inlines = [EmployeInline]
     list_display = ('username', 'email', 'first_name', 'last_name', 'compagnie', 'banque_heure', 'hire_date',
                     'is_staff')
-
+    add_fieldsets = (
+        (None, {
+            'classes': ('wide',),
+            'fields': ('username', 'password1', 'password2', 'first_name', 'last_name', 'email')}),
+    )
 
 # unregister old user admin
 admin.site.unregister(User)
