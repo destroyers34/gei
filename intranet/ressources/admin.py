@@ -41,10 +41,10 @@ class UserAdmin(AuthUserAdmin):
     def banque_heure(self, instance):
         return instance.get_profile().banque_heure
     banque_heure.short_description = 'Banque d\'heure'
-
+    ordering = ['-is_active', 'first_name', ]
     inlines = [EmployeInline]
     list_display = ('username', 'email', 'first_name', 'last_name', 'compagnie', 'banque_heure', 'hire_date',
-                    'is_staff')
+                    'is_staff', 'is_active')
     add_fieldsets = (
         (None, {
             'classes': ('wide',),
