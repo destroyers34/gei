@@ -6,9 +6,9 @@ class ProjetEugnieAdmin(admin.ModelAdmin):
     list_display = ('numero', 'nom', 'modele', 'serial_number', 'budget_mat', 'budget_mo', 'client', 'date_soumission',
                     'date_debut', 'date_fin', 'actif', 'en_attente', 'priority')
     list_filter = ('nom', 'modele', 'date_soumission', 'date_debut', 'date_fin', 'priority')
-    ordering = ('-actif', '-numero', 'priority')
+    ordering = ('-en_attente', '-actif', 'priority', '-numero')
     raw_id_fields = ('client',)
-    fields = ('numero', ('nom','modele'), 'serial_number', ('budget_mat', 'budget_mo'), 'client',
+    fields = ('numero', ('nom', 'modele'), 'serial_number', ('budget_mat', 'budget_mo'), 'client',
               ('date_soumission', 'date_debut', 'date_fin'), ('en_attente', 'actif', 'priority'))
 
 
