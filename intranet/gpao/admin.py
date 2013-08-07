@@ -1,5 +1,4 @@
-﻿# admin.py
-from django.contrib import admin
+﻿from django.contrib import admin
 from gpao.models import Nm, LienNM, LienPiece, Piece, Pe, Famille, Fournisseur
 
 
