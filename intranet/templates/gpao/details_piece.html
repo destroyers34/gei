@@ -3,8 +3,9 @@
 {% block title %}GPAO{% endblock title %}
 {% block nav-gpao %}<li class="dropdown active">{% endblock nav-gpao %}
 {% block content %}
-<div class="row-fluid well">
-	<div class="span12">		
+<div class="row-fluid">
+	<div class="span12">
+    <div class="well">
 		<h4>GPAO</h4>
 		<h4>{{piece.reference}} {{piece.designation}} (<a href="{% url 'admin:gpao_piece_change' piece.id %}">Edit</a>)</h4>
 		<p>Plan de définition lié: <a href="{{ piece.plan.url }}">{{piece.plan}}</a></p>
@@ -35,6 +36,6 @@
 				{% endfor %}
 			</tbody>
 		</table>
-	</div>
+	</div></div>
 </div>
 {% endblock %}

@@ -1,6 +1,8 @@
 ﻿from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from gpao.models import Nm, Pe, Piece, Famille
+from gpao.forms import *
+from operator import itemgetter
 
 
 def main_gpao(request):
@@ -40,3 +42,21 @@ def famille_piece(request, famille):
 def details_piece(request, no_piece):
     piece = Piece.objects.get(reference=no_piece)
     return render(request, "gpao/details_piece.html", {'piece': piece})
+
+
+def soumission(request, no_nm):
+    nm = Nm.objects.get(reference=no_nm)
+    formset_init = []
+    liste_qt = nm.get_pieces()
+    liste_qt = sorted(liste_qt, key=itemgetter('ref'))
+    for piece in liste_qt:
+        formset_init.append({'choix': False, 'piece': piece['piece'].id, 'qt': piece['qt']})
+
+    if request.method == 'POST':  # If the form has been submitted...
+        formset = SoumissionFormset(request.POST)
+        if formset.is_valid():  # All validation rules pass
+            return render(request, 'gpao/demandesoumission.html', {'formset': formset, 'no_nm': no_nm, })
+    else:
+        formset = SoumissionFormset(initial=formset_init)
+
+    return render(request, 'gpao/soumission.html', {'formset':formset, 'no_nm': no_nm, })

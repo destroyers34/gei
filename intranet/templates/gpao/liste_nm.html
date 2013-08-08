@@ -5,8 +5,9 @@
 {% endblock extrahead %}
 {% block nav-gpao %}<li class="dropdown active">{% endblock nav-gpao %}
 {% block content %}
-<div class="row-fluid well">
-	<div class="span12">		
+<div class="row-fluid">
+	<div class="span12">
+    <div class="well">
 		<h4>GPAO</h4>
 		<h4>RÉFÉRENCEMENT DES NOMENCLATURES (<a href="{% url 'admin:gpao_nm_add' %}">+</a>)</h4>
 		<table id="table1" class="filterable table table-striped table-bordered table-condensed">
@@ -29,6 +30,6 @@
 				{% endfor %}
 			</tbody>
 		</table>
-	</div>
+	</div></div>
 </div>
 {% endblock %}
