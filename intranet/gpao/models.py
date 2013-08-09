@@ -134,6 +134,41 @@ class Nm(models.Model):
     def get_lienspiece(self):
         return LienPiece.objects.filter(from_nm=self).order_by('to_piece')
 
+    def get_liste_nm(self):
+        liste_nm = []
+
+        for nm in self.get_liensnm():
+            liste_nm.append({'nm': nm.to_nm, 'qt': nm.quantite, })
+            if nm.to_nm.get_liensnm():
+                nms_temp = nm.to_nm.get_liste_nm()
+                for nm in nms_temp:
+                    temp = next((item for item in liste_nm if item == liste_nm), None)
+                    if not temp:
+                        liste_nm.append({'nm': nm['nm'], 'qt': nm['qt'], })
+                    else:
+                        temp['qt'] += nm['qt']
+        return liste_nm
+
+    def get_liste_piece_self(self):
+        liste_piece = []
+        for piece in self.get_lienspiece():
+            liste_piece.append({'piece': piece.to_piece, 'qt': piece.quantite, })
+
+        return liste_piece
+
+    def test(self):
+        liste_nm = self.get_liste_nm()
+        part_list = self.get_liste_piece_self()
+        for nm in liste_nm:
+            liste_piece = nm['nm'].get_liste_piece_self()
+            for piece in liste_piece:
+                temp = next((item for item in part_list if item['piece'] == piece['piece']), None)
+                if not temp:
+                    part_list.append(piece)
+                else:
+                    temp['qt'] += piece['qt']
+        return sorted(part_list, key=itemgetter('piece'))
+
     def get_pieces_list(self):
         pieces = []
 
