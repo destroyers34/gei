@@ -152,11 +152,11 @@ class Nm(models.Model):
     def get_liste_piece_self(self):
         liste_piece = []
         for piece in self.get_lienspiece():
-            liste_piece.append({'piece': piece.to_piece, 'qt': piece.quantite, })
+            liste_piece.append({'ref': piece.to_piece.reference, 'piece': piece.to_piece, 'qt': piece.quantite, })
 
         return liste_piece
 
-    def test(self):
+    def get_pieces_list(self):
         liste_nm = self.get_liste_nm()
         part_list = self.get_liste_piece_self()
         for nm in liste_nm:
@@ -167,28 +167,28 @@ class Nm(models.Model):
                     part_list.append(piece)
                 else:
                     temp['qt'] += piece['qt']
-        return sorted(part_list, key=itemgetter('piece'))
+        return sorted(part_list, key=itemgetter('ref'))
 
-    def get_pieces_list(self):
-        pieces = []
-
-        for p in self.get_lienspiece():
-            pieces.append(p.to_piece.reference)
-
-        if self.get_liensnm() is not None:
-            for nm in self.get_liensnm():
-                if nm.to_nm.get_liensnm():
-                    pieces_temp = nm.to_nm.get_pieces_list()
-                    for piece in pieces_temp:
-                        temp = next((item for item in pieces if item == piece), None)
-                        if not temp:
-                            pieces.append(piece)
-                else:
-                    for p in nm.to_nm.get_lienspiece():
-                        temp = next((item for item in pieces if item == p.to_piece.reference), None)
-                        if not temp:
-                            pieces.append(p.to_piece.reference)
-        return pieces
+    # def get_pieces_list(self):
+    #     pieces = []
+    #
+    #     for p in self.get_lienspiece():
+    #         pieces.append(p.to_piece.reference)
+    #
+    #     if self.get_liensnm() is not None:
+    #         for nm in self.get_liensnm():
+    #             if nm.to_nm.get_liensnm():
+    #                 pieces_temp = nm.to_nm.get_pieces_list()
+    #                 for piece in pieces_temp:
+    #                     temp = next((item for item in pieces if item == piece), None)
+    #                     if not temp:
+    #                         pieces.append(piece)
+    #             else:
+    #                 for p in nm.to_nm.get_lienspiece():
+    #                     temp = next((item for item in pieces if item == p.to_piece.reference), None)
+    #                     if not temp:
+    #                         pieces.append(p.to_piece.reference)
+    #     return pieces
 
     def get_pieces(self):
         pieces = []
