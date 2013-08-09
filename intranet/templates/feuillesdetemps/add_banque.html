@@ -11,7 +11,9 @@ $('.date').datepicker({format: 'yyyy-mm-dd', autoclose: true});
 {% endblock jquery %}
 {% block nav-feuille %}<li class="dropdown active">{% endblock nav-feuille %}
 {% block content %}
-<div class="row-fluid well">
+<div class="well">
+<div class="row-fluid">
+
 	<div class="span12">
 		<h4>Formulaire d'ajout de temps dans la banque d'heure</h4>
 		<form id="blocForm" class="form-inline" method="post" autocomplete="off" action="">{% csrf_token %}
@@ -40,6 +42,6 @@ $('.date').datepicker({format: 'yyyy-mm-dd', autoclose: true});
 			<br />
 			<p><input class="btn" type="submit" value="Sauvegarder" /></p>
 		</form>
-	</div>
+	</div></div>
 </div>
 {% endblock %}

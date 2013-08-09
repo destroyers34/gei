@@ -10,7 +10,8 @@ $( "#datepicker2" ).datepicker({format: 'yyyy-mm-dd', autoclose: true});
 {% endblock jquery %}
 {% block nav-feuille %}<li class="dropdown active">{% endblock nav-feuille %}
 {% block content %}
-<div class="row-fluid well">
+<div class="well"><div class="row-fluid">
+
 	<div class="span12">	
 	<form class="form-inline" action="" method="post">{% csrf_token %}
 			<p>Affichez les blocs de l'employé choisi durant cette periode :</p>
@@ -23,9 +24,10 @@ $( "#datepicker2" ).datepicker({format: 'yyyy-mm-dd', autoclose: true});
 			<p>Vous n'avez pas remplie les champs correctement</p>
 			{% endif %}
 		</form>
-	</div>
+	</div></div>
 </div>	
-<div class="row-fluid well">
+<div class="well"><div class="row-fluid">
+
 	<div class="span12">		
 		<h4>EuGénie Canada Inc.</h4>
 		<h4>Derniers 20 blocs de temps ajouter</h4>
@@ -51,6 +53,6 @@ $( "#datepicker2" ).datepicker({format: 'yyyy-mm-dd', autoclose: true});
 			{% endfor %}
 			</tbody>
 			</table>
-	</div>
+	</div></div>
 </div>
 {% endblock %}

@@ -16,7 +16,7 @@ $('#myTab a').click(function (e) {
 {% endblock jquery %}
 {% block nav-rapport %}<li class="dropdown active">{% endblock nav-rapport %}
 {% block content %}
-<div class="row-fluid well">
+<div class="well"><div class="row-fluid">
 	<div class="span12"> 
 		<h4>EuGénie Canada Inc. (<a href="{% url 'admin:projets_projet_eugenie_add' %}">Ajouter un projet</a>)</h4>
 		<h4>Rapport de temps de chacun des projets</h4>
@@ -192,5 +192,5 @@ $('#myTab a').click(function (e) {
 		</div>
   </div>
 </div>
-
+</div>
 {% endblock %}

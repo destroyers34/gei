@@ -10,7 +10,7 @@ $( "#datepicker2" ).datepicker({format: 'yyyy-mm-dd', autoclose: true});
 {% endblock jquery %}
 {% block nav-rapport %}<li class="dropdown active">{% endblock nav-rapport %}
 {% block content %}
-<div class="row-fluid well">
+<div class="well"><div class="row-fluid">
 	<div class="span12">
 		<form class="form-inline" action="" method="post">{% csrf_token %}
 			<p>Affichez les blocs de temps de l'intervalle suivant:</p>
@@ -23,9 +23,9 @@ $( "#datepicker2" ).datepicker({format: 'yyyy-mm-dd', autoclose: true});
 			<p>Vous n'avez pas remplie les champs correctement</p>
 			{% endif %}
 		</form>
-	</div>
+	</div></div>
 </div>		
-<div class="row-fluid well">
+<div class="well"><div class="row-fluid">
 	<div class="span12">
 	<h4>EuGénie Canada Inc.</h4>
 	<h4>Rapport de temps {% if date_debut != null %}du {{date_debut}} au {{date_fin}}{% endif %}</h4>
@@ -68,6 +68,6 @@ $( "#datepicker2" ).datepicker({format: 'yyyy-mm-dd', autoclose: true});
 		{% endfor %}
 		</tbody>
 		</table>
-	</div>
+	</div></div>
 </div>	
 {% endblock content %}
