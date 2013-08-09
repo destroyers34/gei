@@ -46,11 +46,11 @@ def details_piece(request, no_piece):
 
 def soumission(request, no_nm):
     nm = Nm.objects.get(reference=no_nm)
-    formset_init = nm.get_pieces_list()
-    #liste_qt = nm.get_pieces()
-    #liste_qt = sorted(liste_qt, key=itemgetter('ref'))
-    #for piece in liste_qt:
-        #formset_init.append({'choix': False, 'piece': piece['piece'].id, 'qt': piece['qt']})
+    formset_init = []
+    liste_qt = nm.get_pieces()
+    liste_qt = sorted(liste_qt, key=itemgetter('ref'))
+    for piece in liste_qt:
+        formset_init.append({'choix': False, 'piece': piece['piece'].id, 'qt': piece['qt']})
 
     if request.method == 'POST':  # If the form has been submitted...
         formset = SoumissionFormset(request.POST)

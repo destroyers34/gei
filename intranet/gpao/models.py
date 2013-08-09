@@ -136,29 +136,23 @@ class Nm(models.Model):
 
     def get_pieces_list(self):
         pieces = []
+
         for p in self.get_lienspiece():
-            pieces.append({'choix': False, 'piece': p.to_piece.id, 'qt': p.quantite})
+            pieces.append(p.to_piece.reference)
 
         if self.get_liensnm() is not None:
             for nm in self.get_liensnm():
-                multi = nm.quantite
                 if nm.to_nm.get_liensnm():
                     pieces_temp = nm.to_nm.get_pieces_list()
                     for piece in pieces_temp:
-                        piece['qt'] *= multi
-                        temp = next((item for item in pieces if item['piece'] == piece['piece']), None)
-                        if temp:
-                            temp['qt'] += piece['qt']
-                        else:
+                        temp = next((item for item in pieces if item == piece), None)
+                        if not temp:
                             pieces.append(piece)
                 else:
                     for p in nm.to_nm.get_lienspiece():
-                        temp = next((item for item in pieces if item['piece'] == p.to_piece.id), None)
-                        if temp:
-                            temp['qt'] += (p.quantite * multi)
-                        else:
-                            pieces.append({'choix': False, 'piece': p.to_piece.id, 'qt': p.quantite})
-
+                        temp = next((item for item in pieces if item == p.to_piece.reference), None)
+                        if not temp:
+                            pieces.append(p.to_piece.reference)
         return pieces
 
     def get_pieces(self):
