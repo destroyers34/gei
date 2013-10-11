@@ -81,6 +81,7 @@
 							<td>{{ option.profit | intcomma }}&nbsp;$</td>
 							<td>{{ option.profit_pourcent }}&nbsp;%</td>
 							{% endif %}
+                            {% if option.details %}<tr><td colspan='2'></td><td colspan='{% if user.is_superuser %}6{% else %}2{% endif %}'>{{option.details}}</td></tr>{% endif %}
 						</tr>
 					{% endfor %}
 				</tbody>
