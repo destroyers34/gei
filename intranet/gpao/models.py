@@ -167,7 +167,7 @@ class Nm(models.Model):
                     part_list.append(piece)
                 else:
                     temp['qt'] += piece['qt']
-        return sorted(part_list, key=itemgetter('ref'))
+        return part_list
 
     # def get_pieces_list(self):
     #     pieces = []
