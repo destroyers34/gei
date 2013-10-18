@@ -6,7 +6,7 @@ from datetime import datetime
 
 class Projet(models.Model):
     numero = models.CharField(max_length=30,unique=True,verbose_name=u"Numéro du projet")
-    nom = models.CharField(max_length=30,verbose_name=u"Nom du projet")
+    nom = models.CharField(max_length=30,verbose_name=u"Nom du projet", default='X')
     client = models.ForeignKey(Compagnie,verbose_name=u"Client", null=True, blank=True)
     date_soumission = models.DateField(verbose_name=u"Date de soumission", null=True, blank=True)
     date_debut = models.DateField(verbose_name=u"Date de début", default=datetime.now())
@@ -57,10 +57,10 @@ class Projet_Eugenie(Projet):
 
 
 class Projet_TPE(Projet):
-    description = models.CharField(max_length=30,verbose_name=u"Description")
+    description = models.CharField(max_length=30,verbose_name=u"Description", default='X')
     serial_number = models.CharField(max_length=30,verbose_name=u"Numéro de série", blank=True, null=True)
-    budget_mat = models.DecimalField(max_digits=11,decimal_places=2,verbose_name=u"Budget MAT ($)",)
-    budget_mo = models.DecimalField(max_digits=11,decimal_places=2,verbose_name=u"Budget MO (H)",)
+    budget_mat = models.DecimalField(max_digits=11,decimal_places=2,verbose_name=u"Budget MAT ($)",default=0)
+    budget_mo = models.DecimalField(max_digits=11,decimal_places=2,verbose_name=u"Budget MO (H)",default=0)
 
     def __unicode__(self):
         return u'%s : %s - %s' % (self.numero, self.nom, self.description)
