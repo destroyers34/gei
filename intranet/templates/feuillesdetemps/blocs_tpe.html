@@ -1,0 +1,60 @@
+﻿{% extends "base.html" %}
+{% block title %}Rapports{% endblock title %}
+{% block extrahead %}
+<link rel="stylesheet" href="{{STATIC_URL}}css\datepicker.css" />
+<script type="text/javascript" src="{{STATIC_URL}}js/bootstrap-datepicker.js"></script>
+{% endblock extrahead %}
+{% block jquery %}
+$( "#datepicker1" ).datepicker({format: 'yyyy-mm-dd', autoclose: true});
+$( "#datepicker2" ).datepicker({format: 'yyyy-mm-dd', autoclose: true});
+{% endblock jquery %}
+{% block nav-feuille %}<li class="dropdown active">{% endblock nav-feuille %}
+{% block content %}
+<div class="well"><div class="row-fluid">
+
+	<div class="span12">	
+	<form class="form-inline" action="" method="post">{% csrf_token %}
+			<p>Affichez les blocs de l'employé choisi durant cette periode :</p>
+			<p>{{form.employe}}<label for="datepicker1"> Date début:</label>
+			<input class="input-small" id="datepicker1" type="text" name="date_debut" />
+			<label for="datepicker2"> Date fin:</label>
+			<input class="input-small" type="text" name="date_fin" id="datepicker2" value="{{ date }}" />
+			<input class="btn" type="submit" value="Rechercher" /></p>
+			{% if form.errors %}
+			<p>Vous n'avez pas remplie les champs correctement</p>
+			{% endif %}
+		</form>
+	</div></div>
+</div>	
+<div class="well"><div class="row-fluid">
+
+	<div class="span12">		
+		<h4>Techno-Pro Expert Inc.</h4>
+		<h4>Derniers 20 blocs de temps ajouter</h4>
+    {% if last_blocs %}
+			<table class="table table-bordered table-striped">
+			<thead>
+				<tr>
+					<th>Employé</th>
+					<th>Date</th>
+					<th>Projet</th>
+					<th>Tache</th>
+					<th>Temps</th>
+				</tr>
+			</thead>
+			<tbody>
+			{% for blocs in last_blocs %}
+				<tr>
+					<td>{{ blocs.employe }}</td>
+					<td>{{ blocs.date }}</td>
+					<td>{{ blocs.projet }}</td>
+					<td>{{ blocs.tache }}</td>
+					<td>{{ blocs.temps }}</td>
+				</tr>
+			{% endfor %}
+			</tbody>
+			</table>
+    {% endif %}
+	</div></div>
+</div>
+{% endblock %}

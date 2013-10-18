@@ -44,3 +44,13 @@ class ConsultationBlocEugenieForm(forms.ModelForm):
     class Meta:
         model = Bloc_Eugenie
         fields = ['employe', 'date_debut', 'date_fin']
+
+
+class ConsultationBlocTPEForm(forms.ModelForm):
+    employe = forms.ModelChoiceField(queryset=Employe.objects.filter(user__is_active=True).order_by('user__first_name'))
+    date_debut = forms.DateField()
+    date_fin = forms.DateField()
+
+    class Meta:
+        model = Bloc_TPE
+        fields = ['employe', 'date_debut', 'date_fin']
