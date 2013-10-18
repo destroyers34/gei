@@ -31,10 +31,10 @@ class Projet(models.Model):
 
 
 class Projet_Eugenie(Projet):
-    modele = models.CharField(max_length=30,verbose_name=u"Modèle")
+    modele = models.CharField(max_length=30,verbose_name=u"Modèle", default='X')
     serial_number = models.CharField(max_length=30,verbose_name=u"Numéro de série", blank=True, null=True)
-    budget_mat = models.DecimalField(max_digits=11,decimal_places=2,verbose_name=u"Budget MAT ($)",)
-    budget_mo = models.DecimalField(max_digits=11,decimal_places=2,verbose_name=u"Budget MO (H)",)
+    budget_mat = models.DecimalField(max_digits=11,decimal_places=2,verbose_name=u"Budget MAT ($)",default=0)
+    budget_mo = models.DecimalField(max_digits=11,decimal_places=2,verbose_name=u"Budget MO (H)",default=0)
     priority = models.DecimalField(max_digits=1,decimal_places=0,verbose_name=u"Priorité",default='9')
 
     def __unicode__(self):
