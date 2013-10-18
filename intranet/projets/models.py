@@ -7,7 +7,7 @@ from datetime import datetime
 class Projet(models.Model):
     numero = models.CharField(max_length=30,unique=True,verbose_name=u"Numéro du projet")
     nom = models.CharField(max_length=30,verbose_name=u"Nom du projet")
-    client = models.ForeignKey(Compagnie,verbose_name=u"Client")
+    client = models.ForeignKey(Compagnie,verbose_name=u"Client", null=True, blank=True)
     date_soumission = models.DateField(verbose_name=u"Date de soumission", null=True, blank=True)
     date_debut = models.DateField(verbose_name=u"Date de début", default=datetime.now())
     date_fin = models.DateField(verbose_name=u"Date de fin", default=datetime.now())
