@@ -20,7 +20,7 @@ def detail_fournisseur(request, fournisseur_id):
 @permission_required('listes_de_prix.afficher_listes_prix')
 def liste_machines(request, fournisseur_id):
     fournisseur = Fournisseur.objects.get(id=fournisseur_id)
-    liste_machines = Machine.objects.filter(fournisseur = fournisseur).order_by('categorie','numero')
+    liste_machines = Machine.objects.filter(fournisseur=fournisseur, actif=True).order_by('categorie','numero')
     return render(request, 'listesdeprix/liste_machines.html', {'liste_machines': liste_machines, 'fournisseur':fournisseur})
 
 
