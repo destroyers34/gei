@@ -8,7 +8,7 @@ from listes_de_prix.forms import *
 
 
 def liste_fournisseurs(request):
-    liste_fournisseurs = Fournisseur.objects.all().order_by('-actif','nom')
+    liste_fournisseurs = Fournisseur.objects.all().order_by('-actif', 'nom')
     return render(request, 'listesdeprix/liste_fournisseurs.html', {'liste_fournisseurs': liste_fournisseurs})
 
 

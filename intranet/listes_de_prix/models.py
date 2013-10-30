@@ -4,7 +4,8 @@ from decimal import *
 
 
 class Categorie(models.Model):
-    nom = models.CharField(verbose_name=u"Nom",max_length=30, unique=True)
+    nom = models.CharField(verbose_name=u"Nom", max_length=30, unique=True)
+    nom_en = models.CharField(verbose_name=u"Nom Anglais", max_length=30, unique=True)
 
     def __unicode__(self):
         return u"%s" % self.nom
