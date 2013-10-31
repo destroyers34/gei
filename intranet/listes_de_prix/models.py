@@ -55,7 +55,7 @@ class Machinerie(models.Model):
             return self.fournisseur.devise.toCAD(self.prix_fournisseur) * taux.taux_inverse
         else:
             return 0
-    prixCAD.short_description = 'Price ($ US)'
+    prixUS.short_description = 'Price ($ US)'
     
     def cost(self):
         taux = Devise.objects.get(code_iso='CAD')
@@ -80,7 +80,7 @@ class Machinerie(models.Model):
         else:
             ratio = self.ratio_us
         return ratio
-    ratioEffectif.short_description = 'Ratio Effectif US'
+    ratioEffectifUs.short_description = 'Ratio Effectif US'
 
     def plMin(self):
         return self.prixCAD() * self.ratioEffectif()
@@ -91,7 +91,7 @@ class Machinerie(models.Model):
             return self.prixUS() * self.ratioEffectif() * self.ratioEffectifUs()
         else:
             return 'Inconnu'
-    plMin.short_description = 'Prix Vente ($ US)'
+    plMinUS.short_description = 'Prix Vente ($ US)'
 
     def profit(self):
         return self.plMin() - Decimal(self.cost())
@@ -103,7 +103,7 @@ class Machinerie(models.Model):
             return self.plMinUS() * taux.taux_toCAD - self.cost()
         else:
             return 0
-    profit.short_description = 'Profit ($ CAD)'
+    profitUs.short_description = 'Profit ($ CAD)'
 
     def profit_pourcent(self):
         return self.profit() / self.cost() * 100
@@ -111,7 +111,7 @@ class Machinerie(models.Model):
 
     def profit_pourcentUs(self):
         return self.profitUs() / self.cost() * 100
-    profit_pourcent.short_description = 'Profit (% Brute)'
+    profit_pourcentUs.short_description = 'Profit (% Brute)'
 
 
 class Machine(Machinerie):
