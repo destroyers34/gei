@@ -35,13 +35,13 @@
 						<td rowspan='{% if machine.details_en or machine.details %}2{% else %}1{% endif %}'><a href="{% url 'details_machine' fournisseur.id machine.id %}">{{ machine.numero }}</a></td>
 						<td>{% if machine.description_en %}{{ machine.description_en }}{% else %}{{ machine.description }}{% endif %}</td>
 						{% if user.is_superuser %}
-						<td>{{ machine.prix_fournisseur | intcomma }}&nbsp;{{ machine.fournisseur.devise.symbole }}</td>
-						<td>{{ machine.cost | intcomma }}&nbsp;$</td>
+						<td>{{ machine.prix_fournisseur |floatformat:2|intcomma }}&nbsp;{{ machine.fournisseur.devise.symbole }}</td>
+						<td>{{ machine.cost |floatformat:2|intcomma }}&nbsp;$</td>
 						{% endif %}
-						<td>$&nbsp;{{ machine.plMinUS | intcomma }}</td>
+						<td>$&nbsp;{{ machine.plMinUS |floatformat:2|intcomma }}</td>
 						{% if user.is_superuser %}
-						<td>{{ machine.profitUs | intcomma }}&nbsp;$</td>
-						<td>{{ machine.profit_pourcentUs | intcomma }}&nbsp;%</td>
+						<td>{{ machine.profitUs |floatformat:2|intcomma }}&nbsp;$</td>
+						<td>{{ machine.profit_pourcentUs |floatformat:2|intcomma }}&nbsp;%</td>
 						{% endif %}
 						{% if machine.details_en or machine.details %}<tr><td colspan='{% if user.is_superuser %}6{% else %}2{% endif %}'>{% if machine.details_en %}{{ machine.details_en }}{% else %}{{ machine.details }}{% endif %}</td></tr>{% endif %}
 					</tr>

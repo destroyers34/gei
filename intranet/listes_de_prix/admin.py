@@ -14,7 +14,7 @@ class CategorieAdmin(admin.ModelAdmin):
 
 
 class FournisseurAdmin(admin.ModelAdmin):
-    list_display = ('nom','telephonne','fax','siteweb','devise','ratio','actif')
+    list_display = ('nom', 'telephonne', 'fax', 'siteweb', 'devise', 'ratio', 'ratio_us', 'actif')
     list_filter = ('devise',)
     ordering = ('nom',)
 

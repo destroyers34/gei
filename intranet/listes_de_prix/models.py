@@ -59,8 +59,8 @@ class Machinerie(models.Model):
     
     def cost(self):
         pourcentage = (self.escompte / 100)
-        escompte = Decimal(self.prixCAD()) * pourcentage
-        return Decimal(self.prixCAD()) - escompte
+        escompte = self.prixCAD() * pourcentage
+        return self.prixCAD() - escompte
     cost.short_description = 'Cost ($ CAD)'
     
     def ratioEffectif(self):
@@ -80,35 +80,36 @@ class Machinerie(models.Model):
     ratioEffectif.short_description = 'Ratio Effectif US'
 
     def plMin(self):
-        return Decimal(self.prixCAD()) * self.ratioEffectif()
+        return self.prixCAD() * self.ratioEffectif()
     plMin.short_description = 'Prix Vente ($ CAD)'
 
     def plMinUS(self):
         if self.prixUS() != 0:
-            return Decimal(self.prixUS()) * self.ratioEffectif() * self.ratioEffectifUs()
+            return self.prixUS() * self.ratioEffectif() * self.ratioEffectifUs()
         else:
             return 'Inconnu'
     plMin.short_description = 'Prix Vente ($ US)'
 
     def profit(self):
-        return Decimal(self.plMin()) - Decimal(self.cost())
+        return self.plMin() - Decimal(self.cost())
     profit.short_description = 'Profit ($ CAD)'
 
     def profitUs(self):
         taux = Devise.objects.get(code_iso='USD')
         if taux:
-            return Decimal(self.plMinUS()) * taux.taux_toCAD - Decimal(self.cost())
+            return self.plMinUS() * taux.taux_toCAD - self.cost()
         else:
             return 0
     profit.short_description = 'Profit ($ CAD)'
 
     def profit_pourcent(self):
-        return Decimal(self.profit()) / Decimal(self.cost()) * 100
+        return self.profit() / self.cost() * 100
     profit_pourcent.short_description = 'Profit (% Brute)'
 
     def profit_pourcentUs(self):
-        return Decimal(self.profitUs()) / Decimal(self.cost()) * 100
+        return self.profitUs() / self.cost() * 100
     profit_pourcent.short_description = 'Profit (% Brute)'
+
 
 class Machine(Machinerie):
     categorie = models.ForeignKey(Categorie, verbose_name=u"Catégorie")

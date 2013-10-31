@@ -35,13 +35,13 @@
 						<td rowspan='{% if machine.details %}2{% else %}1{% endif %}'><a href="{% url 'details_machine' fournisseur.id machine.id %}">{{ machine.numero }}</a></td>
 						<td>{{ machine.description }}</td>
 						{% if user.is_superuser %}
-						<td>{{ machine.prix_fournisseur | intcomma }}&nbsp;{{ machine.fournisseur.devise.symbole }}</td>
-						<td>{{ machine.cost | intcomma }}&nbsp;$</td>
+						<td>{{ machine.prix_fournisseur |floatformat:2|intcomma }}&nbsp;{{ machine.fournisseur.devise.symbole }}</td>
+						<td>{{ machine.cost |floatformat:2|intcomma }}&nbsp;$</td>
 						{% endif %}
-						<td>{{ machine.plMin | intcomma }}&nbsp;$</td>
+						<td>{{ machine.plMin |floatformat:2|intcomma }}&nbsp;$</td>
 						{% if user.is_superuser %}
-						<td>{{ machine.profit | intcomma }}&nbsp;$</td>
-						<td>{{ machine.profit_pourcent }}&nbsp;%</td>
+						<td>{{ machine.profit |floatformat:2|intcomma }}&nbsp;$</td>
+						<td>{{ machine.profit_pourcent |floatformat:2|intcomma }}&nbsp;%</td>
 						{% endif %}
 						{% if machine.details %}<tr><td colspan='{% if user.is_superuser %}6{% else %}2{% endif %}'>{{machine.details}}</td></tr>{% endif %}
 					</tr>
