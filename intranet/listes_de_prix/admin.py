@@ -20,11 +20,11 @@ class FournisseurAdmin(admin.ModelAdmin):
 
 
 class MachineAdmin(admin.ModelAdmin):
-    list_display   = ('numero', 'description','categorie', 'fournisseur', 'prix_fournisseur', 'prixCAD', 'dateprix',
-                      'escompte', 'cost', 'ratioEffectif', 'plMin', 'profit', 'profit_pourcent')
+    list_display   = ('numero', 'description', 'categorie', 'fournisseur', 'prix_fournisseur', 'prixCAD', 'dateprix',
+                      'escompte', 'cost', 'ratioEffectif', 'plMin', 'profit', 'profit_pourcent', 'actif')
     search_fields = ['numero', 'description']
     list_filter    = ('categorie', 'fournisseur')
-    ordering       = ('numero', )
+    ordering       = ('actif', 'numero', )
     inlines = [
         MachinerieInline,
     ]
