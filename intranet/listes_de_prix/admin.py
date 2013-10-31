@@ -20,8 +20,9 @@ class FournisseurAdmin(admin.ModelAdmin):
 
 
 class MachineAdmin(admin.ModelAdmin):
-    list_display   = ('numero', 'description','categorie', 'fournisseur', 'prix_fournisseur', 'prixCAD', 'dateprix', 'escompte', 'cost', 'ratioEffectif', 'plMin', 'profit', 'profit_pourcent')
-    search_fields = ['numero', 'description','categorie', 'fournisseur']
+    list_display   = ('numero', 'description','categorie', 'fournisseur', 'prix_fournisseur', 'prixCAD', 'dateprix',
+                      'escompte', 'cost', 'ratioEffectif', 'plMin', 'profit', 'profit_pourcent')
+    search_fields = ['numero', 'description']
     list_filter    = ('categorie', 'fournisseur')
     ordering       = ('numero', )
     inlines = [
@@ -31,8 +32,9 @@ class MachineAdmin(admin.ModelAdmin):
 
 class OptionAdmin(admin.ModelAdmin):
     actions = None
-    list_display   = ('numero', 'description', 'fournisseur', 'prix_fournisseur', 'prixCAD', 'dateprix', 'escompte', 'cost', 'ratioEffectif', 'plMin', 'profit', 'profit_pourcent')
-    search_fields = ['numero', 'description', 'fournisseur']
+    list_display   = ('numero', 'description', 'fournisseur', 'prix_fournisseur', 'prixCAD', 'dateprix', 'escompte',
+                      'cost', 'ratioEffectif', 'plMin', 'profit', 'profit_pourcent')
+    search_fields = ['numero', 'description']
     list_filter    = ('fournisseur',)
     ordering       = ('numero', )
     inlines = [
@@ -40,7 +42,7 @@ class OptionAdmin(admin.ModelAdmin):
     ]
     exclude = ('machines',)
     
-admin.site.register(Categorie,CategorieAdmin)
-admin.site.register(Option,OptionAdmin)
+admin.site.register(Categorie, CategorieAdmin)
+admin.site.register(Option, OptionAdmin)
 admin.site.register(Machine, MachineAdmin)
-admin.site.register(Fournisseur,FournisseurAdmin)
+admin.site.register(Fournisseur, FournisseurAdmin)
