@@ -58,9 +58,12 @@ class Machinerie(models.Model):
     prixCAD.short_description = 'Price ($ US)'
     
     def cost(self):
-        pourcentage = (self.escompte / 100)
-        escompte = self.prixCAD() * pourcentage
-        return self.prixCAD() - escompte
+        taux = Devise.objects.get(code_iso='CAD')
+        if taux:
+            pourcentage = 1 - (self.escompte / 100)
+            return self.prix_fournisseur * pourcentage * taux.taux_toCAD
+        else:
+            return 0
     cost.short_description = 'Cost ($ CAD)'
     
     def ratioEffectif(self):
