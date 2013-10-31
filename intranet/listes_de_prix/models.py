@@ -29,6 +29,7 @@ class Machinerie(models.Model):
     description = models.TextField(verbose_name=u"Description")
     description_en = models.TextField(verbose_name=u"Description Anglais", blank=True, null=True)
     details = models.TextField(verbose_name=u"Détails", blank=True, null=True)
+    details_en = models.TextField(verbose_name=u"Détails Anglais", blank=True, null=True)
     fournisseur = models.ForeignKey(Fournisseur, verbose_name=u"Fournisseur")
     prix_fournisseur = models.DecimalField(verbose_name=u"Prix du fournisseur", max_digits=9, decimal_places=2)
     dateprix = models.DateField(verbose_name=u"Date du prix", null=True, blank=True)
@@ -69,7 +70,7 @@ class Machinerie(models.Model):
     profit.short_description = 'Profit ($ CAD)'
 
     def profit_pourcent(self):
-        return format(Decimal(self.profit()) / Decimal(self.plMin())*100, '.2f')
+        return format(Decimal(self.profit()) / Decimal(self.plMin()) * 100, '.2f')
     profit_pourcent.short_description = 'Profit (% Brute)'
 
 
