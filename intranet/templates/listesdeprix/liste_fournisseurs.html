@@ -11,8 +11,9 @@
 			<caption>Actifs</caption>
 			<thead>
 				<tr>
-					<th width='50%'>Nom</th>
-					<th width='50%'>Liste de prix</th>
+					<th width='34%'>Nom</th>
+					<th width='33%'>Liste de prix (CAD)</th>
+					<th width='33%'>Liste de prix (US)</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -22,6 +23,7 @@
 							<tr>
 								<td><a href="{% url 'detail_fournisseur' fournisseur_id=fournisseur.id %}">{{fournisseur.nom}}</a></td>
 								<td><a href="{% url 'liste_machines' fournisseur_id=fournisseur.id %}" class='btn btn-small btn-primary'><i class='icon-list icon-white'></i> Afficher</a></td>
+								<td><a href="{% url 'liste_machines_en' fournisseur_id=fournisseur.id %}" class='btn btn-small btn-primary'><i class='icon-list icon-white'></i> Afficher</a></td>
 							</tr>
 						{% else %}
 							</tbody>
@@ -30,8 +32,9 @@
 							<caption>Inactifs</caption>
 							<thead>
 								<tr>
-									<th width='50%'>Nom</th>
-									<th width='50%'>Liste de prix</th>
+									<th width='34%'>Nom</th>
+									<th width='33%'>Liste de prix (CAD)</th>
+					                <th width='33%'>Liste de prix (US)</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -40,6 +43,7 @@
 						<tr>
 							<td><a href="{% url 'detail_fournisseur' fournisseur_id=fournisseur.id %}">{{fournisseur.nom}}</a></td>
 							<td><a href="{% url 'liste_machines' fournisseur_id=fournisseur.id %}" class='btn btn-small btn-primary'><i class='icon-list icon-white'></i> Afficher</a></td>
+							<td><a href="{% url 'liste_machines_en' fournisseur_id=fournisseur.id %}" class='btn btn-small btn-primary'><i class='icon-list icon-white'></i> Afficher</a></td>
 						</tr>
 					{% endifchanged %}
 				{% endfor %}

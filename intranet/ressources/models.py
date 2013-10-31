@@ -35,8 +35,8 @@ class Devise(models.Model):
     nom = models.CharField(verbose_name=u"Nom", max_length=100)
     code_iso = models.CharField(verbose_name=u"Code ISO", max_length=3)
     symbole = models.CharField(verbose_name=u"Symbole", max_length=3)
-    taux_toCAD = models.DecimalField(verbose_name=u"Taux vers ($CA)", max_digits=8, decimal_places=5, default='1')
-    taux_inverse = models.DecimalField(verbose_name=u"Taux inverse", max_digits=8, decimal_places=5, default='1')
+    taux_toCAD = models.DecimalField(verbose_name=u"Taux vers ($CA)", max_digits=13, decimal_places=10, default='1')
+    taux_inverse = models.DecimalField(verbose_name=u"Taux inverse", max_digits=13, decimal_places=10, default='1')
     date_taux = models.DateField(verbose_name=u"Date des taux")
 
     def __unicode__(self):

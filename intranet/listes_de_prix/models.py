@@ -18,6 +18,7 @@ class Fournisseur(models.Model):
     siteweb = models.CharField(verbose_name=u"Site web", max_length=100, blank=True, null=True)
     devise = models.ForeignKey(Devise,verbose_name=u"Devise")
     ratio = models.DecimalField(verbose_name=u"Ratio", max_digits=5, decimal_places=2, default='1')
+    ratio_us = models.DecimalField(verbose_name=u"Ratio US", max_digits=5, decimal_places=2, default='1')
     actif = models.BooleanField(verbose_name=u"Actif")
 
     def __unicode__(self):
@@ -33,8 +34,9 @@ class Machinerie(models.Model):
     fournisseur = models.ForeignKey(Fournisseur, verbose_name=u"Fournisseur")
     prix_fournisseur = models.DecimalField(verbose_name=u"Prix du fournisseur", max_digits=9, decimal_places=2)
     dateprix = models.DateField(verbose_name=u"Date du prix", null=True, blank=True)
-    escompte = models.DecimalField(verbose_name=u"Escompte (%)", max_digits=5, decimal_places=2,default='0')
+    escompte = models.DecimalField(verbose_name=u"Escompte (%)", max_digits=5, decimal_places=2, default='0')
     ratio = models.DecimalField(verbose_name=u"Ratio", max_digits=5, decimal_places=2, default='0')
+    ratio_us = models.DecimalField(verbose_name=u"Ratio US", max_digits=5, decimal_places=2, default='0')
 
     class Meta:
         abstract = True
@@ -44,13 +46,21 @@ class Machinerie(models.Model):
         return u"%s %s" % (self.numero, self.description)
     
     def prixCAD(self):
-        return format(self.fournisseur.devise.toCAD(self.prix_fournisseur), '.2f')
+        return self.fournisseur.devise.toCAD(self.prix_fournisseur)
     prixCAD.short_description = 'Prix ($ CAD)'
+
+    def prixUS(self):
+        taux = Devise.objects.get(code_iso='USD')
+        if taux:
+            return self.fournisseur.devise.toCAD(self.prix_fournisseur) * taux.taux_inverse
+        else:
+            return 0
+    prixCAD.short_description = 'Price ($ US)'
     
     def cost(self):
         pourcentage = (self.escompte / 100)
         escompte = Decimal(self.prixCAD()) * pourcentage
-        return format(Decimal(self.prixCAD()) - escompte, '.2f')
+        return Decimal(self.prixCAD()) - escompte
     cost.short_description = 'Cost ($ CAD)'
     
     def ratioEffectif(self):
@@ -60,19 +70,45 @@ class Machinerie(models.Model):
             ratio = self.ratio
         return ratio
     ratioEffectif.short_description = 'Ratio Effectif'
-    
+
+    def ratioEffectifUs(self):
+        if self.ratio_us == 0:
+            ratio = self.fournisseur.ratio_us
+        else:
+            ratio = self.ratio_us
+        return ratio
+    ratioEffectif.short_description = 'Ratio Effectif US'
+
     def plMin(self):
-        return format(Decimal(self.prixCAD()) * self.ratioEffectif(), '.2f')
+        return Decimal(self.prixCAD()) * self.ratioEffectif()
     plMin.short_description = 'Prix Vente ($ CAD)'
 
+    def plMinUS(self):
+        if self.prixUS() != 0:
+            return Decimal(self.prixUS()) * self.ratioEffectif() * self.ratioEffectifUs()
+        else:
+            return 'Inconnu'
+    plMin.short_description = 'Prix Vente ($ US)'
+
     def profit(self):
-        return format(Decimal(self.plMin()) - Decimal(self.cost()), '.2f')
+        return Decimal(self.plMin()) - Decimal(self.cost())
+    profit.short_description = 'Profit ($ CAD)'
+
+    def profitUs(self):
+        taux = Devise.objects.get(code_iso='USD')
+        if taux:
+            return Decimal(self.plMinUS()) * taux.taux_toCAD - Decimal(self.cost())
+        else:
+            return 0
     profit.short_description = 'Profit ($ CAD)'
 
     def profit_pourcent(self):
-        return format(Decimal(self.profit()) / Decimal(self.plMin()) * 100, '.2f')
+        return Decimal(self.profit()) / Decimal(self.cost()) * 100
     profit_pourcent.short_description = 'Profit (% Brute)'
 
+    def profit_pourcentUs(self):
+        return Decimal(self.profitUs()) / Decimal(self.cost()) * 100
+    profit_pourcent.short_description = 'Profit (% Brute)'
 
 class Machine(Machinerie):
     categorie = models.ForeignKey(Categorie, verbose_name=u"Catégorie")
