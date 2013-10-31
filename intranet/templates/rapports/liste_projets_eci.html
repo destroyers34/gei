@@ -61,7 +61,7 @@ $('#myTab a').click(function (e) {
 			{% for projet in projets_attente %}
 				<tr>
 				<td>{{projet.numero}} {{projet.nom}} {{projet.modele}}</td>
-				<td><a href="{% url 'client_details_eci' projet.client.id %}">{{projet.client.nom}}</a></td>
+				<td>{% if projet.client %}<a href="{% url 'client_details_eci' projet.client.id %}">{{projet.client.nom}}</a>{% else %}-{% endif %}</td>
 				<td class='center-text'>{{projet.budget_mo}}</td>
 				</tr>
 			{% endfor %}
@@ -118,7 +118,7 @@ $('#myTab a').click(function (e) {
 				{% else %}
 				<td>{{projet.numero}} {{projet.nom}} {{projet.modele}}</td>
 				{% endif %}
-				<td><a href="{% url 'client_details_eci' projet.client.id %}">{{projet.client.nom}}</a></td>
+				<td>{% if projet.client %}<a href="{% url 'client_details_eci' projet.client.id %}">{{projet.client.nom}}</a>{% else %}-{% endif %}</td>
 				<td class='center-text'>{{projet.budget_mo|default_if_none:"0,00"}}</td>
 				<td class='center-text'>{{projet.heure|default_if_none:"0,00"}}</td>
 				<td class='center-text'>{{projet.pourcent|default_if_none:"0,00"}} %</td>
@@ -177,7 +177,7 @@ $('#myTab a').click(function (e) {
 				<td>{{projet.nom}}</td>
 				<td>{{projet.modele}}</td>
 				{% endif %}
-				<td><a href="{% url 'client_details_eci' projet.client.id %}">{{projet.client.nom}}</a></td>
+				<td>{% if projet.client %}<a href="{% url 'client_details_eci' projet.client.id %}">{{projet.client.nom}}</a>{% else %}-{% endif %}</td>
 				<td class='center-text'>{{projet.budget_mo|default_if_none:"0,00"}}</td>
 				<td class='center-text'>{{projet.heure|default_if_none:"0,00"}}</td>
 				<td class='center-text'>{{projet.pourcent|default_if_none:"0,00"}} %</td>
