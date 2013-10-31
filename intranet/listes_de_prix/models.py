@@ -27,6 +27,7 @@ class Fournisseur(models.Model):
 class Machinerie(models.Model):
     numero = models.CharField(verbose_name=u"Numéro", max_length=100, unique=True)
     description = models.TextField(verbose_name=u"Description")
+    description_en = models.TextField(verbose_name=u"Description Anglais", blank=True, null=True)
     details = models.TextField(verbose_name=u"Détails", blank=True, null=True)
     fournisseur = models.ForeignKey(Fournisseur, verbose_name=u"Fournisseur")
     prix_fournisseur = models.DecimalField(verbose_name=u"Prix du fournisseur", max_digits=9, decimal_places=2)
