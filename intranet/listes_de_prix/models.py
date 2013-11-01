@@ -106,11 +106,15 @@ class Machinerie(models.Model):
     profitUs.short_description = 'Profit ($ CAD)'
 
     def profit_pourcent(self):
-        return self.profit() / self.cost() * 100
+        return self.profit() / self.plMin() * 100
     profit_pourcent.short_description = 'Profit (% Brute)'
 
     def profit_pourcentUs(self):
-        return self.profitUs() / self.cost() * 100
+        taux = Devise.objects.get(code_iso='USD')
+        if taux:
+            return self.profitUs() / (self.plMinUS() * taux.taux_toCAD) * 100
+        else:
+            return 0
     profit_pourcentUs.short_description = 'Profit (% Brute)'
 
 
