@@ -27,6 +27,14 @@
 						<td style="text-align: right;">{{ machine.numero }}</td>
 						<td style="text-align: right;">$&nbsp;{{ machine.plMinUS |floatformat:2|intcomma }}</td>
 					</tr>
+                    {% for option in machine.options_machine.all %}
+                        <tr>
+                            <th style="text-align: right;">{% if forloop.first %}Options:{% else %}{% endif %}</th>
+                            <td>{% if option.description_en %}{{ option.description_en }}{% else %}{{ option.description }}{% endif %}</td>
+                            <td style="text-align: right;">{{ option.numero }}</td>
+                            <td style="text-align: right;">$&nbsp;{{ option.plMinUS |floatformat:2|intcomma }}</td>
+                        </tr>
+                    {% endfor %}
 				{% endfor %}
 			</tbody>
 		</table>
