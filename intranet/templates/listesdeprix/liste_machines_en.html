@@ -8,6 +8,7 @@
 	<div class="span12">
 		<h3>{{ fournisseur.nom }}</h3>	
 		<h4>Price List</h4>
+        <a target="_blank" href="{% url 'print_liste_machines_en' fournisseur_id=fournisseur.id %}" class='btn btn-small btn-primary'><i class='icon-print icon-white'></i> Print</a>
 		<table class="table table-striped table-bordered table-condensed">
 			<thead>
 				<tr>

@@ -21,7 +21,7 @@
                         {% if machine.categorie.nom_en %}{{ machine.categorie.nom_en }}{% else %}{{ machine.categorie }}{% endif %}</th>
 					</tr>
 					{% endifchanged %}
-					<tr>
+					<tr style="border-bottom: 1px solid #000;">
 						<th style="text-align: left;">{% if machine.description_en %}{{ machine.description_en }}{% else %}{{ machine.description }}{% endif %}</th>
                         <td style="text-align: left;">{% if machine.details_en %}{{ machine.details_en }}{% else %}{{ machine.details }}{% endif %}</td>
 						<td style="text-align: right;">{{ machine.numero }}</td>
@@ -29,7 +29,7 @@
 					</tr>
                     {% for option in machine.options_machine.all %}
                         <tr>
-                            <th style="text-align: right;">{% if forloop.first %}Options:{% else %}{% endif %}</th>
+                            <th style="text-align: right;">{% if forloop.first %}Options{% else %}{% endif %}</th>
                             <td>{% if option.description_en %}{{ option.description_en }}{% else %}{{ option.description }}{% endif %}</td>
                             <td style="text-align: right;">{{ option.numero }}</td>
                             <td style="text-align: right;">$&nbsp;{{ option.plMinUS |floatformat:2|intcomma }}</td>
