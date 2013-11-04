@@ -1,0 +1,32 @@
+{% extends "print_base.html" %}
+{% load humanize %}
+{% block title %}Listes de prix{% endblock title %}
+{% block content %}
+		<h1>{{ fournisseur.nom }}</h1>
+		<h4>Price List</h4>
+		<table>
+			<thead>
+				<tr>
+					<th></th>
+					<th></th>
+					<th>MODEL</th>
+					<th>PRICE&nbsp;(US$)</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for machine in liste_machines %}
+					{% ifchanged machine.categorie %}
+					<tr>
+						<th></th><th colspan='3'>{% if machine.categorie.nom_en %}{{ machine.categorie.nom_en }}{% else %}{{ machine.categorie }}{% endif %}</th>
+					</tr>
+					{% endifchanged %}
+					<tr>
+						<td>{% if machine.description_en %}{{ machine.description_en }}{% else %}{{ machine.description }}{% endif %}</td>
+                        <td>{% if machine.details_en %}{{ machine.details_en }}{% else %}{{ machine.details }}{% endif %}</td>
+						<td>{{ machine.numero }}</td>
+						<td>$&nbsp;{{ machine.plMinUS |floatformat:2|intcomma }}</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+{% endblock %}

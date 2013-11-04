@@ -60,3 +60,11 @@ def liste_machines_en(request, fournisseur_id):
     liste_machines = Machine.objects.filter(fournisseur=fournisseur, actif=True).order_by('categorie', 'numero')
     return render(request, 'listesdeprix/liste_machines_en.html', {'liste_machines': liste_machines,
                                                                    'fournisseur':fournisseur})
+
+
+@permission_required('listes_de_prix.afficher_listes_prix_en')
+def print_liste_machines_en(request, fournisseur_id):
+    fournisseur = Fournisseur.objects.get(id=fournisseur_id)
+    liste_machines = Machine.objects.filter(fournisseur=fournisseur, actif=True).order_by('categorie', 'numero')
+    return render(request, 'listesdeprix/print_liste_machines_en.html', {'liste_machines': liste_machines,
+                                                                   'fournisseur':fournisseur})

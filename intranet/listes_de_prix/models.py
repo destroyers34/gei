@@ -40,7 +40,8 @@ class Machinerie(models.Model):
 
     class Meta:
         abstract = True
-        permissions = (("afficher_listes_prix", "Afficher les listes de prix"),)
+        permissions = (("afficher_listes_prix", "Afficher les listes de prix"),
+                       ("afficher_listes_prix_en", "Afficher les listes de prix US"),)
         
     def __unicode__(self):
         return u"%s %s" % (self.numero, self.description)
