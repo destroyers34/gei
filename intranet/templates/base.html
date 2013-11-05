@@ -50,7 +50,8 @@
 		  <a class="brand" href="/">GEI</a>
 		  <div class="nav-collapse">
 			<ul class="nav">
-			  {% block nav-feuille %}<li class="dropdown">{% endblock nav-feuille  %}
+			  {% if perms.feuilles_de_temps.add_bloc_eugenie or perms.feuilles_de_temps.add_bloc_tpe or perms.feuilles_de_temps.add_bloc_jrc or perms.feuilles_de_temps.add_banque %}
+                {% block nav-feuille %}<li class="dropdown">{% endblock nav-feuille  %}
 				  <a data-toggle="dropdown" class="dropdown-toggle" href="#">Feuilles de temps <b class="caret"></b></a>
 				  <ul class="dropdown-menu">
 					{% if perms.feuilles_de_temps.add_bloc_eugenie %}
@@ -79,7 +80,7 @@
 					  </ul>
 					</li>
 					{% endif %}
-					{% if perms.feuilledetemps.add_banque %}
+					{% if perms.feuilles_de_temps.add_banque %}
 					<li class="dropdown-submenu">
 					  <a href="{% url 'add_banque' %}">Banque d'heures</a>
 					  <ul class="dropdown-menu">
@@ -88,11 +89,12 @@
 					</li>
 					{% endif %}
 				  </ul>
-			  </li>
+			  </li>{% endif %}
+              {% if perms.feuilles_de_temps.afficher_rapport_temps_eugenie or perms.feuilles_de_temps.afficher_rapport_temps_tpe or perms.feuilles_de_temps.afficher_rapport_temps_jrc %}
 			  {% block nav-rapport %}<li class="dropdown">{% endblock nav-rapport  %}
 				  <a data-toggle="dropdown" class="dropdown-toggle" href="#">Rapports <b class="caret"></b></a>
 				  <ul class="dropdown-menu">
-					{% if perms.feuilledetemps.afficher_rapport_temps_eugenie %}
+					{% if perms.feuilles_de_temps.afficher_rapport_temps_eugenie %}
 					<li class="dropdown-submenu">
 					  <a href="{% url 'liste_projets_eci' %}">ECI</a>
 					  <ul class="dropdown-menu">
@@ -103,7 +105,7 @@
 					  </ul>
 					</li>
 					{% endif %}
-					{% if perms.feuilledetemps.afficher_rapport_temps_tpe %}
+					{% if perms.feuilles_de_temps.afficher_rapport_temps_tpe %}
 					<li class="dropdown-submenu">
 					  <a href="{% url 'liste_projets_tpe' %}">TPE</a>
 					  <ul class="dropdown-menu">
@@ -114,7 +116,7 @@
 					  </ul>
 					</li>
 					{% endif %}
-					{% if perms.feuilledetemps.afficher_rapport_temps_jrc %}
+					{% if perms.feuilles_de_temps.afficher_rapport_temps_jrc %}
 					<li class="dropdown-submenu">
 					  <a href="#">JRC</a>
 					  <ul class="dropdown-menu">
@@ -127,6 +129,7 @@
 					{% endif %}
 				  </ul>
 				</li>
+                {% endif %}
 				{% if perms.listes_de_prix.afficher_listes_prix %}
 				{% block nav-liste %}<li class="dropdown">{% endblock nav-liste  %}
 					<a data-toggle="dropdown" class="dropdown-toggle" href="#">Listes de prix <b class="caret"></b></a>
@@ -168,6 +171,7 @@
 
     <div class="container-fluid">
     {% block content %}
+
     {% endblock content %}
     </div> <!-- /container -->
 </body>
