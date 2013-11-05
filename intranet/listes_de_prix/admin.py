@@ -26,7 +26,7 @@ class MachineAdmin(admin.ModelAdmin):
                       'profitUS_f', 'profit_pourcent_f', 'profitUS_pourcent_f', 'actif')
     search_fields = ['numero', 'description']
     list_filter    = ('categorie', 'fournisseur')
-    ordering       = ('-actif', 'numero', '-categorie',)
+    ordering       = ('-actif', '-categorie', 'numero')
     inlines = [
         MachinerieInline,
     ]
