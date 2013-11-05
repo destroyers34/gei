@@ -44,7 +44,7 @@ class MachineAdmin(admin.ModelAdmin):
     pl_f.short_description = 'PL ($CA)'
 
     def plUS_f(self, obj):
-        return "%.2f" % obj.plMin()
+        return "%.2f" % obj.plMinUS()
     plUS_f.short_description = 'PL (US$)'
 
     def profit_f(self, obj):
@@ -56,11 +56,11 @@ class MachineAdmin(admin.ModelAdmin):
     profit_pourcent_f.short_description = 'Profit (% Brute)'
 
     def profitUS_f(self, obj):
-        return "%.2f" % obj.profit()
+        return "%.2f" % obj.profitUs()
     profitUS_f.short_description = 'Profit US ($CA)'
 
     def profitUS_pourcent_f(self, obj):
-        return "%.2f" % obj.profit_pourcent()
+        return "%.2f" % obj.profit_pourcentUs()
     profitUS_pourcent_f.short_description = 'Profit US (% Brute)'
 
 
