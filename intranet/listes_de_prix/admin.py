@@ -66,8 +66,8 @@ class MachineAdmin(admin.ModelAdmin):
 
 class OptionAdmin(admin.ModelAdmin):
     actions = None
-    list_display   = ('numero', 'description', 'fournisseur', 'prix_fournisseur', 'prixCAD', 'dateprix', 'escompte',
-                      'cost', 'ratioEffectif', 'plMin', 'profit', 'profit_pourcent')
+    list_display   = ('numero', 'description', 'fournisseur', 'prix_fournisseur', 'prixCAD_f', 'dateprix', 'escompte',
+                      'costCAD_f', 'ratioEffectif', 'pl_f', 'profit_f', 'profit_pourcent_f')
     search_fields = ['numero', 'description']
     list_filter    = ('fournisseur',)
     ordering       = ('numero', )
@@ -75,7 +75,27 @@ class OptionAdmin(admin.ModelAdmin):
         MachinerieInline,
     ]
     exclude = ('machines',)
-    
+
+    def prixCAD_f(self, obj):
+        return "%.2f" % obj.prixCAD()
+    prixCAD_f.short_description = 'Prix ($CA)'
+
+    def costCAD_f(self, obj):
+        return "%.2f" % obj.cost()
+    costCAD_f.short_description = 'Cost ($CA)'
+
+    def pl_f(self, obj):
+        return "%.2f" % obj.plMin()
+    pl_f.short_description = 'PL ($CA)'
+
+    def profit_f(self, obj):
+        return "%.2f" % obj.profit()
+    profit_f.short_description = 'Profit ($CA)'
+
+    def profit_pourcent_f(self, obj):
+        return "%.2f" % obj.profit_pourcent()
+    profit_pourcent_f.short_description = 'Profit (% Brute)'
+
 admin.site.register(Categorie, CategorieAdmin)
 admin.site.register(Option, OptionAdmin)
 admin.site.register(Machine, MachineAdmin)
