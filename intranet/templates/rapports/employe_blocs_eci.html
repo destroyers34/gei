@@ -10,6 +10,7 @@ $( "#datepicker2" ).datepicker({format: 'yyyy-mm-dd', autoclose: true});
 {% endblock jquery %}
 {% block nav-rapport %}<li class="dropdown active">{% endblock nav-rapport %}
 {% block content %}
+<div style="text-align: center"><img src="{{ STATIC_URL }}img/logo_eugenie.png"></div>
 <div class="well"><div class="row-fluid">
 	<div class="span12">
 		<form class="form-inline" action="" method="post">{% csrf_token %}

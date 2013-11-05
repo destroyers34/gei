@@ -1,21 +1,16 @@
-﻿{% extends "accounts/base.html" %}
-{% block content %}
-<section class="loginform cf">
-{% if form.errors %}
-<p>Erreur d'authentification</p>
-{% endif %}
-<form name="login" action="{% url 'django.contrib.auth.views.login' %}" method="post" ">
-	<ul>
-	{% csrf_token %}
-  {% for field in form %}
-		<li><label>{{ field.label }}</label>   {{ field }}</li>
-		{% endfor %}
-		<li>
-		<input type="submit" value="Login"></li>
-	</ul>
-	<input type="hidden" name="next" value="/" />
-</form>
-</section>
-{% endblock %}
-
-
+﻿	{% extends "base.html" %}
+	{% block title %}Connexion{% endblock %}
+    {% block content %}
+        <div style="text-align: center">
+            <img style="margin-top: 50px;margin-bottom: 70px" src="{{STATIC_URL}}img/main.png">
+            {% if form.errors %}
+                <h1 class="text-error">Erreur d'authentification</h1>
+                {% if form.username.errors %}
+                    <p class="text-error">Vous devez entrer un nom d'utilisateur</p>
+                {% endif %}
+                {% if form.password.errors %}
+                    <p class="text-error">Votre mot de passe est incorrect</p>
+                {% endif %}
+            {% endif %}
+        </div>
+	{% endblock %}

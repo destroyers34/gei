@@ -142,8 +142,9 @@
 				{% block nav-gpao %}<li>{% endblock nav-gpao %}<a href="{% url 'main_gpao' %}">GPAO</a></li>
                 {% endif %}
 			</ul>
+          	{% if user.is_authenticated %}
 			<ul class="nav pull-right">
-			<li class="dropdown">
+            <li class="dropdown">
 				<a href="#" class="dropdown-toggle" data-toggle="dropdown">{% filter force_escape %}{% firstof user.first_name user.username user.get_short_name user.get_username %}{% endfilter %} <b class="caret"></b></a>
 				<ul class="dropdown-menu">
 				  {% if user.is_staff %}<li><a href="/admin">Administration</a></li>{% endif %}
@@ -151,7 +152,16 @@
 				  <li><a href="/accounts/logout">Déconnecter</a></li>
 				</ul>
 			</li>
-			</ul>
+            </ul>
+            {% else %}
+            <form class="navbar-form pull-right" name="login" action="{% url 'django.contrib.auth.views.login' %}" method="post">
+            {% csrf_token %}
+              <input class="span2" id="id_username" maxlength="254" name="username" type="text" placeholder="Nom d'utilisateur">
+              <input class="span2" id="id_password" name="password" type="password" placeholder="Mot de passe">
+              <button type="submit" class="btn">Connexion</button>
+              <input type="hidden" name="next" value="/" />
+            </form>
+            {% endif %}
 		  </div><!-- /.nav-collapse -->
 		</div><!-- /.container -->
 	  </div><!-- /.navbar-inner -->

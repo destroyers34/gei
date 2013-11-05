@@ -1,8 +1,7 @@
-{% extends "accounts/base.html" %}
-
+{% extends "index.html" %}
 {% block content %}
-<section class="loginform cf">
-<p>You have been logged out.</p>
-<a href="{% url 'django.contrib.auth.views.login' %}">Login again</a>
-<section>
+    <div style="text-align: center">
+        <img style="margin-top: 50px;margin-bottom: 70px" src="{{STATIC_URL}}img/main.png">
+        <h1 class="text-success">Vous avez été déconnecter</h1>
+    </div>
 {% endblock %}
