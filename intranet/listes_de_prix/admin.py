@@ -22,7 +22,8 @@ class FournisseurAdmin(admin.ModelAdmin):
 
 class MachineAdmin(admin.ModelAdmin):
     list_display   = ('numero', 'description', 'categorie', 'fournisseur', 'prix_fournisseur', 'prixCAD_f', 'dateprix',
-                      'escompte', 'costCAD_f', 'ratioEffectif', 'pl_f', 'profit_f', 'profit_pourcent_f', 'actif')
+                      'escompte', 'costCAD_f', 'ratioEffectif', 'pl_f', 'ratioEffectifUs', 'plUS_f', 'profit_f',
+                      'profitUS_f', 'profit_pourcent_f', 'profitUS_pourcent_f', 'actif')
     search_fields = ['numero', 'description']
     list_filter    = ('categorie', 'fournisseur')
     ordering       = ('-actif', 'numero', '-categorie',)
@@ -42,6 +43,10 @@ class MachineAdmin(admin.ModelAdmin):
         return "%.2f" % obj.plMin()
     pl_f.short_description = 'PL ($CA)'
 
+    def plUS_f(self, obj):
+        return "%.2f" % obj.plMin()
+    plUS_f.short_description = 'PL (US$)'
+
     def profit_f(self, obj):
         return "%.2f" % obj.profit()
     profit_f.short_description = 'Profit ($CA)'
@@ -49,6 +54,14 @@ class MachineAdmin(admin.ModelAdmin):
     def profit_pourcent_f(self, obj):
         return "%.2f" % obj.profit_pourcent()
     profit_pourcent_f.short_description = 'Profit (% Brute)'
+
+    def profitUS_f(self, obj):
+        return "%.2f" % obj.profit()
+    profitUS_f.short_description = 'Profit US ($CA)'
+
+    def profitUS_pourcent_f(self, obj):
+        return "%.2f" % obj.profit_pourcent()
+    profitUS_pourcent_f.short_description = 'Profit US (% Brute)'
 
 
 class OptionAdmin(admin.ModelAdmin):

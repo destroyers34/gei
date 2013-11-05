@@ -73,7 +73,7 @@ class Machinerie(models.Model):
         else:
             ratio = self.ratio
         return ratio
-    ratioEffectif.short_description = 'Ratio Effectif'
+    ratioEffectif.short_description = 'Ratio'
 
     def ratioEffectifUs(self):
         if self.ratio_us == 0:
@@ -81,7 +81,7 @@ class Machinerie(models.Model):
         else:
             ratio = self.ratio_us
         return ratio
-    ratioEffectifUs.short_description = 'Ratio Effectif US'
+    ratioEffectifUs.short_description = 'Ratio US'
 
     def plMin(self):
         return self.prixCAD() * self.ratioEffectif()
