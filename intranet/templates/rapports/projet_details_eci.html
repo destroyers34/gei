@@ -1,7 +1,6 @@
 ﻿{% extends "base.html" %}
 {% block title %}Rapports{% endblock title %}
 {% block extrahead %}
-<div style="text-align: center"><img src="{{ STATIC_URL }}img/logo_eugenie.png"></div>
 <link rel="stylesheet" href="{{STATIC_URL}}css\datepicker.css" />
 <script type="text/javascript" src="{{STATIC_URL}}js/bootstrap-datepicker.js"></script>
 {% endblock extrahead %}
@@ -13,6 +12,7 @@ $( "#datepicker2" ).datepicker({format: 'yyyy-mm-dd', autoclose: true});
 {% block content %}
 <div class="well"><div class="row-fluid">
 	<div class="span12">
+        <img width="200" style="float:right" src="{{ STATIC_URL }}img/logo_eugenie.png">
 		<h4>EuGénie Canada Inc.</h4>
 		<h4>Rapport de temps des tâches du projet</h4>
 		<h3>{{ numero_projet }} <a href="{% url 'rapport_complet_eci' numero_projet %}">+</a></h3>

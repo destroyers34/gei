@@ -12,6 +12,7 @@ $( "#datepicker2" ).datepicker({format: 'yyyy-mm-dd', autoclose: true});
 {% block content %}
 <div class="well"><div class="row-fluid">
 	<div class="span12">
+    <img width="160" style="float:right" src="{{ STATIC_URL }}img/logo_tpe.png">
 		<h4>Techno-Pro Experts Inc.</h4>
 		<h4>Rapport de temps des tâches du projet</h4>
 		<h3>{{ numero_projet }} <a href="{% url 'rapport_complet_tpe' numero_projet %}">+</a></h3>

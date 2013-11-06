@@ -16,7 +16,8 @@ $('#myTab a').click(function (e) {
 {% block nav-rapport %}<li class="dropdown active">{% endblock nav-rapport %}
 {% block content %}
 <div class="well"><div class="row-fluid">
-	<div class="span12"> 
+	<div class="span12">
+        <img width="160" style="float:right" src="{{ STATIC_URL }}img/logo_tpe.png">
 		<h4>Techno-Pro Experts Inc. (<a href="{% url 'admin:projets_projet_tpe_add' %}">Ajouter un projet</a>)</h4>
 		<h4>Rapport de temps de chacun des projets</h3>
 		<ul class="nav nav-tabs" id="myTab">

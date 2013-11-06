@@ -16,9 +16,9 @@ $('#myTab a').click(function (e) {
 {% endblock jquery %}
 {% block nav-rapport %}<li class="dropdown active">{% endblock nav-rapport %}
 {% block content %}
-<div style="text-align: center"><img src="{{ STATIC_URL }}img/logo_eugenie.png"></div>
 <div class="well"><div class="row-fluid">
-	<div class="span12"> 
+	<div class="span12">
+        <img width="200" style="float:right" src="{{ STATIC_URL }}img/logo_eugenie.png">
 		<h4>EuGénie Canada Inc. {% if user.is_superuser %}(<a href="{% url 'admin:projets_projet_eugenie_add' %}">Ajouter un projet</a>){% endif %}</h4>
 		<h4>Rapport de temps de chacun des projets</h4>
 		<ul class="nav nav-tabs" id="myTab">
@@ -75,7 +75,7 @@ $('#myTab a').click(function (e) {
 		  
 		  <div class="tab-pane active" id="actif">
 			  <h4>Projets actif</h4>
-			  <a class='btn btn-primary' href="{% url 'projets_gantt_eci' %}">Diagramme de Gantt</a> 
+			  <a class='btn btn-primary' href="{% url 'projets_gantt_eci' %}">Diagramme de Gantt</a>
 			  {% if projets_actif|length > 0 %}
 			  <table class="table table-striped table-bordered table-condensed">
 				<thead>
