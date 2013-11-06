@@ -39,7 +39,24 @@ class Projet_Eugenie(Projet):
 
     def __unicode__(self):
         return u'%s : %s %s' % (self.numero, self.nom, self.modele)
-        
+
+    def temps_total(self):
+        projet = Projet_Eugenie.objects.filter(numero=self.numero).aggregate(total=Sum('bloc_eugenie__temps'))
+        if projet["total"]:
+            return projet["total"]
+        else:
+            return 0
+
+    def pourcent_tache(self, tache):
+        tache_total = Projet_Eugenie.objects.filter(numero=self.numero, bloc_eugenie__tache__numero=tache).aggregate(total=Sum('bloc_eugenie__temps'))
+        if tache_total['total']:
+            return tache_total['total'] / self.temps_total() * 100
+        else:
+            return 0
+
+    def test(self):
+        return self.pourcent_tache('P05')
+
     def pourcent(self):
         projets = Projet_Eugenie.objects.filter(numero=self.numero).aggregate(total=Sum('bloc_eugenie__temps'))
         if projets['total']:

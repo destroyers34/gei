@@ -1,0 +1,19 @@
+﻿{% extends "base.html" %}
+{% block title %}Rapports{% endblock title %}
+{% block nav-rapport %}<li class="dropdown active">{% endblock nav-rapport %}
+{% block content %}
+<div class="well">
+    <div class="row-fluid">
+        <div class="span12">
+            <img width="200" style="float:right" src="{{ STATIC_URL }}img/logo_eugenie.png">
+            <h4>EuGénie Canada Inc.</h4>
+            <h4>Liste des machines</h4>
+        </div>
+        <div style="text-align: center" class="span12">
+            {% for machine in machines %}
+                <p><a href="{% url 'rapport_production_eci' machine.nom machine.modele %}">{{ machine.nom }} {{ machine.modele }}</a></p>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}

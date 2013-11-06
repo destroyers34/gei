@@ -1,7 +1,7 @@
 ﻿from __future__ import division
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, render_to_response
-from django.db.models import Sum
+from django.db.models import Sum, Count
 from django.contrib.auth.decorators import permission_required
 from datetime import datetime, date
 from clients.models import Compagnie
@@ -568,8 +568,17 @@ def employe_blocs_periode_tpe(request, username, date_debut, date_fin):
         form = DateRangeForm()
     variables.update({'form':form,'date':datetime.now().strftime("%Y-%m-%d")})
     return render(request, 'rapports/employe_blocs_eci.html', variables)
-    
-    
+
+@permission_required('feuilles_de_temps.afficher_rapport_temps_eugenie')
+def liste_machines_eci(request):
+    machines = Projet_Eugenie.objects.values('nom', 'modele').annotate(Count('modele')).order_by('nom','modele')
+    return render(request, 'rapports/liste_machines_eci.html', {'machines': machines})
+
+@permission_required('feuilles_de_temps.afficher_rapport_temps_eugenie')
+def rapport_production_eci(request, nom_projet, modele_projet):
+    projets = Projet_Eugenie.objects.filter(nom=nom_projet, modele=modele_projet).order_by('numero')
+    return render(request, 'rapports/rapport_production_eci.html', {'projets': projets, 'machine': nom_projet + ' ' + modele_projet})
+
 @permission_required('feuilles_de_temps.afficher_rapport_temps_eugenie')    
 def print_liste_clients_eci(request):
     return render(request, 'rapports/print_liste_clients_eci.html', base_liste_clients_eci(request))
