@@ -54,8 +54,12 @@ class Projet_Eugenie(Projet):
         else:
             return 0
 
-    def test(self):
-        return self.pourcent_tache('P05')
+    def heure_tache(self, tache):
+        tache_total = Projet_Eugenie.objects.filter(numero=self.numero, bloc_eugenie__tache__numero=tache).aggregate(total=Sum('bloc_eugenie__temps'))
+        if tache_total['total']:
+            return tache_total['total']
+        else:
+            return 0
 
     def pourcent(self):
         projets = Projet_Eugenie.objects.filter(numero=self.numero).aggregate(total=Sum('bloc_eugenie__temps'))

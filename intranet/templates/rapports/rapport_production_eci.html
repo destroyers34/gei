@@ -2,6 +2,14 @@
 {% load humanize %}
 {% load rapports_extras %}
 {% block title %}Rapports{% endblock title %}
+{% block extrahead %}
+<style type="text/css">
+      .table-center th, .table-center td{
+          text-align: center;
+      }
+
+</style>
+{% endblock extrahead %}
 {% block nav-rapport %}<li class="dropdown active">{% endblock nav-rapport %}
 {% block content %}
 <div class="well">
@@ -10,45 +18,108 @@
             <img width="200" style="float:right" src="{{ STATIC_URL }}img/logo_eugenie.png">
             <h4>EuGénie Canada Inc.</h4>
             <h4>Liste des machines</h4>
-            <table class="table table-striped table-bordered table-condensed"
+            <table class="table table-striped table-bordered table-condensed table-center"
                 <tr>
                     <th>{{ machine }}</th>
                     <th>T-Prod</th>
-                    <th>Perte temps</th>
-                    <th>Conception</th>
-                    <th>Lancement</th>
-                    <th>Programmation</th>
-                    <th>Support Technique</th>
-                    <th>Emballage</th>
-                    <th>Appel service</th>
-                    <th>Usinage</th>
-                    <th>Assemblage</th>
-                    <th>Câblage</th>
-                    <th>Raccordement électrique</th>
-                    <th>REWORK</th>
-                    <th>Panneaux contrôle</th>
-                    <th>Panneau pneumatique</th>
-                    <th>Essai</th>
+                    <th colspan="2">Perte temps</th>
+                    <th colspan="2">Conception</th>
+                    <th colspan="2">Lancement</th>
+                    <th colspan="2">Programmation</th>
+                    <th colspan="2">Support Technique</th>
+                    <th colspan="2">Emballage</th>
+                    <th colspan="2">Appel service</th>
+                    <th colspan="2">Usinage</th>
+                    <th colspan="2">Assemblage</th>
+                    <th colspan="2">Câblage</th>
+                    <th colspan="2">Raccordement électrique</th>
+                    <th colspan="2">REWORK</th>
+                    <th colspan="2">Panneaux contrôle</th>
+                    <th colspan="2">Panneau pneumatique</th>
+                    <th colspan="2">Essai</th>
+                </tr>
+                <tr>
+                    <th></th>
+                    <th>H</th>
+                    <th>H</th>
+                    <th>%</th>
+                    <th>H</th>
+                    <th>%</th>
+                    <th>H</th>
+                    <th>%</th>
+                    <th>H</th>
+                    <th>%</th>
+                    <th>H</th>
+                    <th>%</th>
+                    <th>H</th>
+                    <th>%</th>
+                    <th>H</th>
+                    <th>%</th>
+                    <th>H</th>
+                    <th>%</th>
+                    <th>H</th>
+                    <th>%</th>
+                    <th>H</th>
+                    <th>%</th>
+                    <th>H</th>
+                    <th>%</th>
+                    <th>H</th>
+                    <th>%</th>
+                    <th>H</th>
+                    <th>%</th>
+                    <th>H</th>
+                    <th>%</th>
+                    <th>H</th>
+                    <th>%</th>
                 </tr>
                 {% for projet in projets %}
                     <tr>
                         <th>{{ projet.numero }}</th>
-                        <td>{{ projet.temps_total }} H</td>
-                        <td>{{ projet|prod_pourcent:'A05'|floatformat:2|intcomma }} %</td>
-                        <td>{{ projet|prod_pourcent:'C01'|floatformat:2|intcomma }} %</td>
-                        <td>{{ projet|prod_pourcent:'C03'|floatformat:2|intcomma }} %</td>
-                        <td>{{ projet|prod_pourcent:'C05'|floatformat:2|intcomma }} %</td>
-                        <td>{{ projet|prod_pourcent:'C07'|floatformat:2|intcomma }} %</td>
-                        <td>{{ projet|prod_pourcent:'L02'|floatformat:2|intcomma }} %</td>
-                        <td>{{ projet|prod_pourcent:'L06'|floatformat:2|intcomma }} %</td>
-                        <td>{{ projet|prod_pourcent:'P04'|floatformat:2|intcomma }} %</td>
-                        <td>{{ projet|prod_pourcent:'P05'|floatformat:2|intcomma }} %</td>
-                        <td>{{ projet|prod_pourcent:'P06'|floatformat:2|intcomma }} %</td>
-                        <td>{{ projet|prod_pourcent:'P07'|floatformat:2|intcomma }} %</td>
-                        <td>{{ projet|prod_pourcent:'P011'|floatformat:2|intcomma }} %</td>
-                        <td>{{ projet|prod_pourcent:'P013'|floatformat:2|intcomma }} %</td>
-                        <td>{{ projet|prod_pourcent:'P014'|floatformat:2|intcomma }} %</td>
-                        <td>{{ projet|prod_pourcent:'P017'|floatformat:2|intcomma }} %</td>
+                        <td>{{ projet.temps_total }}</td>
+                        <td>{{ projet|prod_heure:'A05'|floatformat:2|intcomma }}</td>
+                        <td>{{ projet|prod_pourcent:'A05'|floatformat:2|intcomma }}</td>
+
+                        <td>{{ projet|prod_heure:'C01'|floatformat:2|intcomma }}</td>
+                        <td>{{ projet|prod_pourcent:'C01'|floatformat:2|intcomma }}</td>
+
+                        <td>{{ projet|prod_heure:'C03'|floatformat:2|intcomma }}</td>
+                        <td>{{ projet|prod_pourcent:'C03'|floatformat:2|intcomma }}</td>
+
+                        <td>{{ projet|prod_heure:'C05'|floatformat:2|intcomma }}</td>
+                        <td>{{ projet|prod_pourcent:'C05'|floatformat:2|intcomma }}</td>
+
+                        <td>{{ projet|prod_heure:'C07'|floatformat:2|intcomma }}</td>
+                        <td>{{ projet|prod_pourcent:'C07'|floatformat:2|intcomma }}</td>
+
+                        <td>{{ projet|prod_heure:'L02'|floatformat:2|intcomma }}</td>
+                        <td>{{ projet|prod_pourcent:'L02'|floatformat:2|intcomma }}</td>
+
+                        <td>{{ projet|prod_heure:'L06'|floatformat:2|intcomma }}</td>
+                        <td>{{ projet|prod_pourcent:'L06'|floatformat:2|intcomma }}</td>
+
+                        <td>{{ projet|prod_heure:'P04'|floatformat:2|intcomma }}</td>
+                        <td>{{ projet|prod_pourcent:'P04'|floatformat:2|intcomma }}</td>
+
+                        <td>{{ projet|prod_heure:'P05'|floatformat:2|intcomma }}</td>
+                        <td>{{ projet|prod_pourcent:'P05'|floatformat:2|intcomma }}</td>
+
+                        <td>{{ projet|prod_heure:'P06'|floatformat:2|intcomma }}</td>
+                        <td>{{ projet|prod_pourcent:'P06'|floatformat:2|intcomma }}</td>
+
+                        <td>{{ projet|prod_heure:'P07'|floatformat:2|intcomma }}</td>
+                        <td>{{ projet|prod_pourcent:'P07'|floatformat:2|intcomma }}</td>
+
+                        <td>{{ projet|prod_heure:'P011'|floatformat:2|intcomma }}</td>
+                        <td>{{ projet|prod_pourcent:'P011'|floatformat:2|intcomma }}</td>
+
+                        <td>{{ projet|prod_heure:'P013'|floatformat:2|intcomma }}</td>
+                        <td>{{ projet|prod_pourcent:'P013'|floatformat:2|intcomma }}</td>
+
+                        <td>{{ projet|prod_heure:'P014'|floatformat:2|intcomma }}</td>
+                        <td>{{ projet|prod_pourcent:'P014'|floatformat:2|intcomma }}</td>
+
+                        <td>{{ projet|prod_heure:'P017'|floatformat:2|intcomma }}</td>
+                        <td>{{ projet|prod_pourcent:'P017'|floatformat:2|intcomma }}</td>
                     </tr>
                 {% endfor %}
             </table>
