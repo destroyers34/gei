@@ -1,16 +1,46 @@
-﻿	{% extends "base.html" %}
-	{% block title %}Connexion{% endblock %}
-    {% block content %}
-        <div style="text-align: center">
-            <img style="margin-top: 50px;margin-bottom: 70px" src="{{STATIC_URL}}img/main.png">
-            {% if form.errors %}
-                <h1 class="text-error">Erreur d'authentification</h1>
-                {% if form.username.errors %}
-                    <p class="text-error">Vous devez entrer un nom d'utilisateur</p>
-                {% endif %}
-                {% if form.password.errors %}
-                    <p class="text-error">Votre mot de passe est incorrect</p>
-                {% endif %}
+﻿{% extends "base.html" %}
+{% block extrahead %}
+<style type="text/css">
+      .form-signin {
+        max-width: 500px;
+        padding: 19px 29px 29px;
+        margin: 0 auto 20px;
+        background-color: #fff;
+        border: 1px solid #e5e5e5;
+        -webkit-border-radius: 5px;
+           -moz-border-radius: 5px;
+                border-radius: 5px;
+        -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.05);
+           -moz-box-shadow: 0 1px 2px rgba(0,0,0,.05);
+                box-shadow: 0 1px 2px rgba(0,0,0,.05);
+      }
+      .form-signin .form-signin-heading,
+      .form-signin .checkbox {
+        margin-bottom: 10px;
+      }
+      .form-signin input[type="text"],
+      .form-signin input[type="password"] {
+        font-size: 16px;
+        height: auto;
+        margin-bottom: 15px;
+        padding: 7px 9px;
+      }
+</style>
+{% endblock extrahead %}
+{% block title %}Connexion{% endblock %}
+{% block content %}
+    <div style="text-align: center">
+        <img style="margin-top: 50px;margin-bottom: 70px" src="{{STATIC_URL}}img/main.png">
+        {% if form.errors %}
+            <div class="form-signin">
+            <h1 class="text-error">Erreur d'authentification</h1>
+            {% if form.username.errors %}
+                <p class="text-error">Vous devez entrer un nom d'utilisateur</p>
             {% endif %}
-        </div>
-	{% endblock %}
+            {% if form.password.errors %}
+                <p class="text-error">Votre mot de passe est incorrect</p>
+            {% endif %}
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}
