@@ -121,7 +121,7 @@ $('#myTab a').click(function (e) {
 				<td>{{projet.numero}}</td>
 				<td>{{projet.nom}}</td>
 				{% endif %}
-				<td>{% if projet.client %}<a href="{% url 'client_details_eci' projet.client.id %}">{{projet.client.nom}}</a>{% else %}-{% endif %}</td>
+				<td>{% if projet.client %}<a href="{% url 'client_details_tpe' projet.client.id %}">{{projet.client.nom}}</a>{% else %}-{% endif %}</td>
 				<td class='center-text'>{{projet.budget_mo}}</td>
 				<td class='center-text'>{{projet.heure}}</td>
 				<td class='center-text'>{{projet.pourcent}} %</td>
