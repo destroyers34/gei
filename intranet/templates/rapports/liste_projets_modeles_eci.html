@@ -1,60 +1,64 @@
 ﻿{% extends "base.html" %}
-{% block title %}Rapports{% endblock title %}
+{% block title %}Liste des projets {{ nom_projet }} {{ modele_projet }}{% endblock title %}
 {% block nav-rapport %}<li class="dropdown active">{% endblock nav-rapport %}
 {% block content %}
-<div class="well"><div class="row-fluid">
-	<div class="span12">
-        <img width="200" style="float:right" src="{{ STATIC_URL }}img/logo_eugenie.png">
-		<h4>EuGénie Canada Inc.</h4>
-		<h4>Liste des projets</h4>
-		<h3>{{ nom_projet }} {{ modele_projet }}</h3>
-		<table class="table table-bordered table-striped">
-		<thead>
-			<tr>
-				<td class="align-right" colspan='3'>
-					<a class='btn btn-primary' href="{% url 'print_liste_projets_modeles_eci' nom_projet modele_projet %}">Imprimer</a> 
-					<a class='btn btn-primary' href="{% url 'xls_liste_projets_modeles_eci' nom_projet modele_projet %}">.xls</a>
-				</td>
-			</tr>
-			<tr>
-				<th>Projets</th>
-				<th>Tâches</th>
-				<th>Temps (H)</th>
-			</tr>
-		</thead>
-		<tfoot>
-			<tr>
-				<td></td><th>Moyenne :</th><th>{{moyenne}}</th>
-			</tr>
-			<tr>
-				<td></td><th>Total :</th><th>{{projets_total.heures}}</th>
-			</tr>
-			<tr>
-				<td class="align-right" colspan='3'>
-					<a class='btn btn-primary' href="{% url 'print_liste_projets_modeles_eci' nom_projet modele_projet %}">Imprimer</a> 
-					<a class='btn btn-primary' href="{% url 'xls_liste_projets_modeles_eci' nom_projet modele_projet %}">.xls</a>
-				</td>
-			</tr>
-		</tfoot>
-		<tbody>
-		{% for projet in projets %}
-			<tr>
-			<td rowspan='{{projet.liste_taches|length}}'><a href="{% url 'projet_details_eci' projet.numero %}">{{projet.numero}}</a></td>
-			{% for tache in projet.liste_taches %}
-				<td><a href="{% url 'tache_details_eci' tache.numero %}">{{ tache.numero }} {{ tache.description }}</a></td>
-				<td>{{ tache.heure }}</td>
-				</tr>
-				<tr>
-				{% if forloop.last %}
-				<td></td>
-				<th>Total {{ projet.numero }} : </th>
-				<th>{{ projet.heure }}</th>
-				{% endif %}
-			{% endfor %}
-		</tr>
-		{% endfor %}
-		</tbody>
-		</table>
-	</div>
-</div></div>
+    <div class="well">
+        <div class="row-fluid">
+            <div class="span12">
+                <div class="pull-left">
+                    <h4>EuGénie Canada Inc.</h4>
+                    <h4>Liste des projets</h4>
+                    <h3>{{ nom_projet }} {{ modele_projet }}</h3>
+                </div>
+                <div class="pull-right text-right">
+                    <img width="200" src="{{ STATIC_URL }}img/logo_eugenie.png"><br />
+                    <a class='btn btn-primary' href="{% url 'print_liste_projets_modeles_eci' nom_projet modele_projet %}">Imprimer</a>
+                    <a class='btn btn-primary' href="{% url 'xls_liste_projets_modeles_eci' nom_projet modele_projet %}">.xls</a>
+                </div>
+                <table class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th>Projets</th>
+                            <th>Tâches</th>
+                            <th>Temps (H)</th>
+                        </tr>
+                    </thead>
+                    <tfoot>
+                        <tr>
+                            <td></td>
+                            <th>Moyenne :</th>
+                            <th>{{moyenne}}</th>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <th>Total :</th>
+                            <th>{{projets_total.heures}}</th>
+                        </tr>
+                    </tfoot>
+                    <tbody>
+                        {% for projet in projets %}
+                            <tr>
+                                <td rowspan='{{projet.liste_taches|length}}'><a href="{% url 'projet_details_eci' projet.numero %}">{{projet.numero}}</a></td>
+                                {% for tache in projet.liste_taches %}
+                                    <td><a href="{% url 'tache_details_eci' tache.numero %}">{{ tache.numero }} {{ tache.description }}</a></td>
+                                    <td>{{ tache.heure }}</td>
+                            </tr>
+                            <tr>
+                                    {% if forloop.last %}
+                                        <td></td>
+                                        <th>Total {{ projet.numero }} : </th>
+                                        <th>{{ projet.heure }}</th>
+                                    {% endif %}
+                                {% endfor %}
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                <div class="pull-right">
+                    <a class='btn btn-primary' href="{% url 'print_liste_projets_modeles_eci' nom_projet modele_projet %}">Imprimer</a>
+                    <a class='btn btn-primary' href="{% url 'xls_liste_projets_modeles_eci' nom_projet modele_projet %}">.xls</a>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}

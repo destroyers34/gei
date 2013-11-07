@@ -72,7 +72,8 @@ def base_projet_details_eci(request, numero_projet):
 def base_tache_details_eci(request, numero_tache):
     projets = Projet_Eugenie.objects.filter(bloc_eugenie__tache__numero=numero_tache).annotate(heure=Sum('bloc_eugenie__temps')).order_by('-numero')
     tache_total = Tache.objects.filter(numero=numero_tache).aggregate(heures=Sum('bloc_eugenie__temps'))
-    return {'projets':projets,'tache_total':tache_total,'numero_tache':numero_tache}
+    tache = Tache.objects.get(numero=numero_tache)
+    return {'projets':projets,'tache_total':tache_total,'tache':tache}
 
 @permission_required('feuilles_de_temps.afficher_rapport_temps_eugenie')
 def base_liste_projets_noms_eci(request, nom_projet):
@@ -84,7 +85,7 @@ def base_liste_projets_noms_eci(request, nom_projet):
         for projet in liste_projets:
             if projet.heure is not None:
                 liste_heures.append(projet.heure)
-        if len(liste_heures)>0 :
+        if len(liste_heures) > 0:
             moyenne = format(reduce(lambda x, y: x + y, liste_heures) / len(liste_heures), '.2f')
             modele.update({'liste_projets':liste_projets,'moyenne':moyenne})
     return {'modeles':modeles,'modeles_total':modeles_total,'nom_projet':nom_projet}

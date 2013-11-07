@@ -157,8 +157,8 @@
             {% else %}
             <form class="navbar-form pull-right" name="login" action="{% url 'django.contrib.auth.views.login' %}" method="post">
             {% csrf_token %}
-              <input class="span2" id="id_username" maxlength="254" name="username" type="text" placeholder="Nom d'utilisateur">
-              <input class="span2" id="id_password" name="password" type="password" placeholder="Mot de passe">
+              <input id="id_username" maxlength="254" name="username" type="text" placeholder="Nom d'utilisateur">
+              <input id="id_password" name="password" type="password" placeholder="Mot de passe">
               <button type="submit" class="btn">Connexion</button>
               <input type="hidden" name="next" value="/" />
             </form>

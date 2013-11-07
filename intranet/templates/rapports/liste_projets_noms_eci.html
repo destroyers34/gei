@@ -2,66 +2,68 @@
 {% block title %}Rapports{% endblock title %}
 {% block nav-rapport %}<li class="dropdown active">{% endblock nav-rapport %}
 {% block content %}
-<div class="well"><div class="row-fluid">
-	<div class="span12">
-        <img width="200" style="float:right" src="{{ STATIC_URL }}img/logo_eugenie.png">
-		<h4>EuGénie Canada Inc.</h4>
-		<h4>Liste des modèles</h4>
-		<h3>{{ nom_projet }}</h3>
-		<table class="table table-bordered table-striped">
-		<thead>
-			<tr>
-				<td class="align-right" colspan='3'>
-					<a class='btn btn-primary' href="{% url 'print_liste_projets_noms_eci' nom_projet %}">Imprimer</a> 
-					<a class='btn btn-primary' href="{% url 'xls_liste_projets_noms_eci' nom_projet %}">.xls</a>
-				</td>
-			</tr>
-			<tr>
-				<th>Modèle</th>
-				<th>Projets</th>
-				<th>Temps</th>
-			</tr>
-		</thead>
-		<tfoot>
-			<tr>
-				<td></td><th>Total:</th><th>{{modeles_total.heures}}</th>
-			</tr>
-			<tr>
-				<td class="align-right" colspan='3'>
-					<a class='btn btn-primary' href="{% url 'print_liste_projets_noms_eci' nom_projet %}">Imprimer</a> 
-					<a class='btn btn-primary' href="{% url 'xls_liste_projets_noms_eci' nom_projet %}">.xls</a>
-				</td>
-			</tr>
-		</tfoot>
-		<tbody>
-		{% for modele in modeles %}
-			{% if modele.liste_projets %}
-			<tr>
-				<td rowspan='{{ modele.liste_projets|length }}'><a href="{% url 'liste_projets_modeles_eci' nom_projet modele.modele %}">{{modele.modele}}</a></td>
-			{% for projet in modele.liste_projets %}
-				<td><a href="{% url 'projet_details_eci' projet.numero %}">{{ projet.numero }}</a></td>
-				<td>{{ projet.heure }}</td>
-			</tr>
-			<tr>
-			{% endfor %}
-				<td></td>
-				<th>Moyenne {{modele.modele}} :</th>
-				<th>{{ modele.moyenne }}</th>
-			</tr>
-			<tr>
-				<td></td>
-				<th>Total {{modele.modele}} :</th>
-				<th>{{ modele.heure }}</th>
-			{% else %}
-				<tr>
-					<td>{{modele.modele}}</td>
-					<td>{{modele.numero}}</td>
-					<td>0</td>
-				</tr>
-			{% endif %}
-		{% endfor %}
-		</tbody>
-		</table>
-	</div>
-</div></div>
+    <div class="well">
+        <div class="row-fluid">
+            <div class="span12">
+                <div class="pull-left">
+                    <h4>EuGénie Canada Inc.</h4>
+                    <h4>Liste des modèles</h4>
+                    <h3>{{ nom_projet }}</h3>
+                </div>
+                <div class="pull-right text-right">
+                    <img width="200" src="{{ STATIC_URL }}img/logo_eugenie.png"><br />
+                    <a class='btn btn-primary' href="{% url 'print_liste_projets_noms_eci' nom_projet %}">Imprimer</a>
+                    <a class='btn btn-primary' href="{% url 'xls_liste_projets_noms_eci' nom_projet %}">.xls</a>
+                </div>
+                <table class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th>Modèle</th>
+                            <th>Projets</th>
+                            <th>Temps</th>
+                        </tr>
+                    </thead>
+                    <tfoot>
+                        <tr>
+                            <td></td>
+                            <th>Total:</th>
+                            <th>{{modeles_total.heures}}</th>
+                        </tr>
+                    </tfoot>
+                    <tbody>
+                        {% for modele in modeles %}
+                            {% if modele.liste_projets %}
+                                <tr>
+                                    <td rowspan='{{ modele.liste_projets|length }}'><a href="{% url 'liste_projets_modeles_eci' nom_projet modele.modele %}">{{modele.modele}}</a></td>
+                                    {% for projet in modele.liste_projets %}
+                                        <td><a href="{% url 'projet_details_eci' projet.numero %}">{{ projet.numero }}</a></td>
+                                        <td>{{ projet.heure }}</td>
+                                </tr>
+                                <tr>
+                                    {% endfor %}
+                                        <td></td>
+                                        <th>Moyenne {{modele.modele}} :</th>
+                                        <th>{{ modele.moyenne }}</th>
+                                </tr>
+                                <tr>
+                                        <td></td>
+                                        <th>Total {{modele.modele}} :</th>
+                                        <th>{{ modele.heure }}</th>
+                            {% else %}
+                                <tr>
+                                        <td>{{modele.modele}}</td>
+                                        <td>{{modele.numero}}</td>
+                                        <td>0</td>
+                                </tr>
+                            {% endif %}
+                        {% endfor %}
+                    </tbody>
+                </table>
+                <div class="pull-right">
+                    <a class='btn btn-primary' href="{% url 'print_liste_projets_noms_eci' nom_projet %}">Imprimer</a>
+                    <a class='btn btn-primary' href="{% url 'xls_liste_projets_noms_eci' nom_projet %}">.xls</a>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}
