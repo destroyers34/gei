@@ -1,4 +1,5 @@
 ﻿{% extends "base.html" %}
+{% load humanize %}
 {% block title %}Rapports{% endblock title %}
 {% block nav-rapport %}<li class="dropdown active">{% endblock nav-rapport %}
 {% block content %}
@@ -15,19 +16,19 @@
                     <a class='btn btn-primary' href="{% url 'print_liste_projets_noms_eci' nom_projet %}">Imprimer</a>
                     <a class='btn btn-primary' href="{% url 'xls_liste_projets_noms_eci' nom_projet %}">.xls</a>
                 </div>
-                <table class="table table-bordered table-striped">
+                <table class="table table-bordered table-condensed">
                     <thead>
                         <tr>
                             <th>Modèle</th>
                             <th>Projets</th>
-                            <th>Temps</th>
+                            <th><div class="text-right">Temps</div></th>
                         </tr>
                     </thead>
                     <tfoot>
                         <tr>
                             <td></td>
-                            <th>Total:</th>
-                            <th>{{modeles_total.heures}}</th>
+                            <th><div class="text-right">Total:</div></th>
+                            <th><div class="text-right">{{modeles_total.heures}} H</div></th>
                         </tr>
                     </tfoot>
                     <tbody>
@@ -37,23 +38,23 @@
                                     <td rowspan='{{ modele.liste_projets|length }}'><a href="{% url 'liste_projets_modeles_eci' nom_projet modele.modele %}">{{modele.modele}}</a></td>
                                     {% for projet in modele.liste_projets %}
                                         <td><a href="{% url 'projet_details_eci' projet.numero %}">{{ projet.numero }}</a></td>
-                                        <td>{{ projet.heure }}</td>
+                                        <td><div class="text-right">{{ projet.heure|floatformat:2|intcomma }} H</div></td>
                                 </tr>
                                 <tr>
                                     {% endfor %}
-                                        <td></td>
-                                        <th>Moyenne {{modele.modele}} :</th>
-                                        <th>{{ modele.moyenne }}</th>
+                                        <td style="background-color: lightgray"></td>
+                                        <th style="background-color: lightgray">Moyenne {{modele.modele}} :</th>
+                                        <th style="background-color: lightgray"><div class="text-right">{{ modele.moyenne|floatformat:2|intcomma }} H</div></th>
                                 </tr>
                                 <tr>
-                                        <td></td>
-                                        <th>Total {{modele.modele}} :</th>
-                                        <th>{{ modele.heure }}</th>
+                                        <td style="background-color: lightgray"></td>
+                                        <th style="background-color: lightgray">Total {{modele.modele}} :</th>
+                                        <th style="background-color: lightgray"><div class="text-right">{{ modele.heure|floatformat:2|intcomma }} H</div></th>
                             {% else %}
                                 <tr>
                                         <td>{{modele.modele}}</td>
-                                        <td>{{modele.numero}}</td>
-                                        <td>0</td>
+                                        <td>-</td>
+                                        <td><div class="text-right">0,00 H</div></td>
                                 </tr>
                             {% endif %}
                         {% endfor %}
