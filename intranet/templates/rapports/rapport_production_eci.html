@@ -28,25 +28,25 @@
                 </tr>
                 <tr>
                     <th>H</th>
-                    <th>%</th>
+                    <th class="text-info">%</th>
                     <th>H</th>
-                    <th>%</th>
+                    <th class="text-info">%</th>
                     <th>H</th>
-                    <th>%</th>
+                    <th class="text-info">%</th>
                 </tr>
                 {% for projet in projets %}
                     <tr>
-                        <th>{{ projet.numero }}</th>
+                        <th><a href="{% url 'projet_details_eci' projet.numero %}">{{ projet.numero }}</a></th>
                         <td>{{ projet.temps_total }}</td>
                         <!--Conception-->
                         <td>{{ projet|prod_heure:'C01'|floatformat:2|intcomma }}</td>
-                        <td>{{ projet|prod_pourcent:'C01'|floatformat:2|intcomma }}</td>
+                        <td class="text-info">{{ projet|prod_pourcent:'C01'|floatformat:2|intcomma }}</td>
                         <!--Lancement-->
                         <td>{{ projet|prod_heure:'C03'|floatformat:2|intcomma }}</td>
-                        <td>{{ projet|prod_pourcent:'C03'|floatformat:2|intcomma }}</td>
+                        <td class="text-info">{{ projet|prod_pourcent:'C03'|floatformat:2|intcomma }}</td>
                         <!--Prog-->
                         <td>{{ projet|prod_heure:'C05'|floatformat:2|intcomma }}</td>
-                        <td>{{ projet|prod_pourcent:'C05'|floatformat:2|intcomma }}</td>
+                        <td class="text-info">{{ projet|prod_pourcent:'C05'|floatformat:2|intcomma }}</td>
                     </tr>
                 {% endfor %}
             </table>
@@ -65,45 +65,45 @@
                 </tr>
                 <tr>
                     <th>H</th>
-                    <th>%</th>
+                    <th class="text-info">%</th>
                     <th>H</th>
-                    <th>%</th>
+                    <th class="text-info">%</th>
                     <th>H</th>
-                    <th>%</th>
+                    <th class="text-info">%</th>
                     <th>H</th>
-                    <th>%</th>
+                    <th class="text-info">%</th>
                     <th>H</th>
-                    <th>%</th>
+                    <th class="text-info">%</th>
                     <th>H</th>
-                    <th>%</th>
+                    <th class="text-info">%</th>
                     <th>H</th>
-                    <th>%</th>
+                    <th class="text-info">%</th>
                 </tr>
                 {% for projet in projets %}
                     <tr>
-                        <th>{{ projet.numero }}</th>
+                        <th><a href="{% url 'projet_details_eci' projet.numero %}">{{ projet.numero }}</a></th>
                         <td>{{ projet.temps_total }}</td>
                         <!--Usinage-->
                         <td>{{ projet|prod_heure:'P04'|floatformat:2|intcomma }}</td>
-                        <td>{{ projet|prod_pourcent:'P04'|floatformat:2|intcomma }}</td>
+                        <td class="text-info">{{ projet|prod_pourcent:'P04'|floatformat:2|intcomma }}</td>
                         <!--Assemblage-->
                         <td>{{ projet|prod_heure:'P05'|floatformat:2|intcomma }}</td>
-                        <td>{{ projet|prod_pourcent:'P05'|floatformat:2|intcomma }}</td>
+                        <td class="text-info">{{ projet|prod_pourcent:'P05'|floatformat:2|intcomma }}</td>
                         <!--Raccordement-->
                         <td>{{ projet|prod_heure:'P07'|floatformat:2|intcomma }}</td>
-                        <td>{{ projet|prod_pourcent:'P07'|floatformat:2|intcomma }}</td>
+                        <td class="text-info">{{ projet|prod_pourcent:'P07'|floatformat:2|intcomma }}</td>
                         <!--P. controle-->
                         <td>{{ projet|prod_heure:'P13'|floatformat:2|intcomma }}</td>
-                        <td>{{ projet|prod_pourcent:'P13'|floatformat:2|intcomma }}</td>
+                        <td class="text-info">{{ projet|prod_pourcent:'P13'|floatformat:2|intcomma }}</td>
                         <!--P. pneumatique-->
                         <td>{{ projet|prod_heure:'P14'|floatformat:2|intcomma }}</td>
-                        <td>{{ projet|prod_pourcent:'P14'|floatformat:2|intcomma }}</td>
+                        <td class="text-info">{{ projet|prod_pourcent:'P14'|floatformat:2|intcomma }}</td>
                         <!--Essai-->
                         <td>{{ projet|prod_heure:'P17'|floatformat:2|intcomma }}</td>
-                        <td>{{ projet|prod_pourcent:'P17'|floatformat:2|intcomma }}</td>
+                        <td class="text-info">{{ projet|prod_pourcent:'P17'|floatformat:2|intcomma }}</td>
                         <!--Emballage-->
                         <td>{{ projet|prod_heure:'L02'|floatformat:2|intcomma }}</td>
-                        <td>{{ projet|prod_pourcent:'L02'|floatformat:2|intcomma }}</td>
+                        <td class="text-info">{{ projet|prod_pourcent:'L02'|floatformat:2|intcomma }}</td>
                     </tr>
                 {% endfor %}
             </table>
@@ -119,30 +119,30 @@
                 </tr>
                 <tr>
                     <th>H</th>
-                    <th>%</th>
+                    <th class="text-info">%</th>
                     <th>H</th>
-                    <th>%</th>
+                    <th class="text-info">%</th>
                     <th>H</th>
-                    <th>%</th>
+                    <th class="text-info">%</th>
                     <th>H</th>
-                    <th>%</th>
+                    <th class="text-info">%</th>
                 </tr>
                 {% for projet in projets %}
                     <tr>
-                        <th>{{ projet.numero }}</th>
+                        <th><a href="{% url 'projet_details_eci' projet.numero %}">{{ projet.numero }}</a></th>
                         <td>{{ projet.temps_total }}</td>
                         <!--Rework-->
                         <td>{{ projet|prod_heure:'P11'|floatformat:2|intcomma }}</td>
-                        <td>{{ projet|prod_pourcent:'P11'|floatformat:2|intcomma }}</td>
+                        <td class="text-info">{{ projet|prod_pourcent:'P11'|floatformat:2|intcomma }}</td>
                         <!--Perte de temps-->
                         <td>{{ projet|prod_heure:'A05'|floatformat:2|intcomma }}</td>
-                        <td>{{ projet|prod_pourcent:'A05'|floatformat:2|intcomma }}</td>
+                        <td class="text-info">{{ projet|prod_pourcent:'A05'|floatformat:2|intcomma }}</td>
                         <!--Support-->
                         <td>{{ projet|prod_heure:'C07'|floatformat:2|intcomma }}</td>
-                        <td>{{ projet|prod_pourcent:'C07'|floatformat:2|intcomma }}</td>
+                        <td class="text-info">{{ projet|prod_pourcent:'C07'|floatformat:2|intcomma }}</td>
                         <!--Appel service-->
                         <td>{{ projet|prod_heure:'L06'|floatformat:2|intcomma }}</td>
-                        <td>{{ projet|prod_pourcent:'L06'|floatformat:2|intcomma }}</td>
+                        <td class="text-info">{{ projet|prod_pourcent:'L06'|floatformat:2|intcomma }}</td>
                     </tr>
                 {% endfor %}
             </table>
