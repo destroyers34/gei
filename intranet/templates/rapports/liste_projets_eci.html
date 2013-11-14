@@ -1,6 +1,6 @@
 ﻿{% extends "base.html" %}
 {% load admin_urls %}
-{% block title %}Liste des projets{% endblock title %}
+{% block title %}Liste des projets EuGénie Canada Inc.{% endblock title %}
 {% block extrahead %}
     <link rel="stylesheet" href="{{STATIC_URL}}css\datepicker.css" />
     <script type="text/javascript" src="{{STATIC_URL}}js/bootstrap-datepicker.js"></script>
@@ -42,14 +42,14 @@
                                     <tr>
                                         <th>Projet</th>
                                         <th>Client</th>
-                                        <th class='center-text'>Budget (H)</th>
+                                        <th>Budget (H)</th>
                                     </tr>
                                 </thead>
                                 <tfoot>
                                     <tr>
-                                        <td></td>
-                                        <th>Total:</th>
-                                        <th class='center-text'>{{ total_attente.total_mo }}</th>
+                                        <td style="text-align: right;background-color: lightgray"></td>
+                                        <th style="text-align: right;background-color: lightgray">Total:</th>
+                                        <th style="text-align: right;background-color: lightgray">{{ total_attente.total_mo }} H</th>
                                     </tr>
                                 </tfoot>
                                 <tbody>
@@ -57,7 +57,7 @@
                                     <tr>
                                         <td>{{projet.numero}} {{projet.nom}} {{projet.modele}}</td>
                                         <td>{% if projet.client %}<a href="{% url 'client_details_eci' projet.client.id %}">{{projet.client.nom}}</a>{% else %}-{% endif %}</td>
-                                        <td class='center-text'>{{projet.budget_mo}}</td>
+                                        <td style="text-align: right;">{{projet.budget_mo}} H</td>
                                     </tr>
                                 {% endfor %}
                                 </tbody>
@@ -67,7 +67,7 @@
                                 <a class='btn btn-primary' href="{% url 'xls_liste_projets_eci' %}">.xls</a>
                             </div>
                         {% else %}
-                            <p>Il n'y a aucun projets en attente</p>
+                            <h5>Il n'y a aucun projets en attente</h5>
                         {% endif %}
                     </div>
                     <div class="tab-pane active" id="actif">
@@ -88,21 +88,21 @@
                                     <tr>
                                         <th>Projet</th>
                                         <th>Client</th>
-                                        <th class='center-text'>Budget (H)</th>
-                                        <th class='center-text'>Temps (H)</th>
-                                        <th class='center-text'>% MO</th>
-                                        <th class='center-text'>Restant (J)</th>
+                                        <th>Budget</th>
+                                        <th>Temps</th>
+                                        <th>% MO</th>
+                                        <th>Restant (J)</th>
                                         <th class='center-text'>Priorité</th>
                                     </tr>
                                 </thead>
                                 <tfoot>
                                     <tr>
-                                        <td></td>
-                                        <th>Total:</th>
-                                        <th class='center-text'>{{total_actif.total_mo}}</th>
-                                        <th class='center-text'>{{total_actif.total_heure}}</th>
-                                        <th class='center-text'>{{total_actif.total_pourcent}} %</th>
-                                        <td colspan='4'></td>
+                                        <td style="text-align: right;background-color: lightgray"></td>
+                                        <th style="text-align: right;background-color: lightgray">Total:</th>
+                                        <th style="text-align: right;background-color: lightgray">{{total_actif.total_mo}} H</th>
+                                        <th style="text-align: right;background-color: lightgray">{{total_actif.total_heure}} H</th>
+                                        <th style="text-align: right;background-color: lightgray">{{total_actif.total_pourcent}} %</th>
+                                        <td style="text-align: right;background-color: lightgray" colspan='4'></td>
                                     </tr>
                                 </tfoot>
                                 <tbody>
@@ -124,10 +124,10 @@
                                                     -
                                                 {% endif %}
                                             </td>
-                                            <td class='center-text'>{{projet.budget_mo|default_if_none:"0,00"}}</td>
-                                            <td class='center-text'>{{projet.heure|default_if_none:"0,00"}}</td>
-                                            <td class='center-text'>{{projet.pourcent|default_if_none:"0,00"}} %</td>
-                                            <td class='center-text'>{{projet.jours_restant}}</td>
+                                            <td style="text-align: right;">{{projet.budget_mo|default_if_none:"0,00"}} H</td>
+                                            <td style="text-align: right;">{{projet.heure|default_if_none:"0,00"}} H</td>
+                                            <td style="text-align: right;">{{projet.pourcent|default_if_none:"0,00"}} %</td>
+                                            <td style="text-align: right;">{{projet.jours_restant}}</td>
                                             <td class='center-text'>{{projet.priority}}</td>
                                         </tr>
                                     {% endfor %}
@@ -138,7 +138,7 @@
                                 <a class='btn btn-primary' href="{% url 'xls_liste_projets_eci' %}">.xls</a>
                             </div>
                         {% else %}
-                            <p>Il n'y a aucun projets actif</p>
+                            <h5>Il n'y a aucun projets actif</h5>
                         {% endif %}
                     </div>
                     <div class="tab-pane" id="inactif">
@@ -160,14 +160,17 @@
                                         <th>Nom</th>
                                         <th>Modèle</th>
                                         <th>Client</th>
-                                        <th class='center-text'>Budget (H)</th>
-                                        <th class='center-text'>Temps (H)</th>
-                                        <th class='center-text'>% MO</th>
+                                        <th>Budget</th>
+                                        <th>Temps</th>
+                                        <th>% MO</th>
                                     </tr>
                                 </thead>
                                 <tfoot>
                                     <tr>
-                                        <td colspan='4'></td><th>Total:</th><th class='center-text'>{{total_inactif.total_heure}}</th><td></td>
+                                        <td style="text-align: right;background-color: lightgray" colspan='4'></td>
+                                        <th style="text-align: right;background-color: lightgray">Total:</th>
+                                        <th style="text-align: right;background-color: lightgray">{{total_inactif.total_heure}} H</th>
+                                        <td style="text-align: right;background-color: lightgray"></td>
                                     </tr>
                                 </tfoot>
                                 <tbody>
@@ -189,9 +192,9 @@
                                                     -
                                                 {% endif %}
                                             </td>
-                                            <td class='center-text'>{{projet.budget_mo|default_if_none:"0,00"}}</td>
-                                            <td class='center-text'>{{projet.heure|default_if_none:"0,00"}}</td>
-                                            <td class='center-text'>{{projet.pourcent|default_if_none:"0,00"}} %</td>
+                                            <td style="text-align: right;">{{projet.budget_mo|default_if_none:"0,00"}} H</td>
+                                            <td style="text-align: right;">{{projet.heure|default_if_none:"0,00"}} H</td>
+                                            <td style="text-align: right;">{{projet.pourcent|default_if_none:"0,00"}} %</td>
                                         </tr>
                                     {% endfor %}
                                 </tbody>
@@ -201,7 +204,7 @@
                                 <a class='btn btn-primary' href="{% url 'xls_liste_projets_eci' %}">.xls</a>
                             </div>
                         {% else %}
-                            <p>Il n'y a aucun projets inactif</p>
+                            <h5>Il n'y a aucun projets inactif</h5>
                         {% endif %}
                     </div>
                 </div>

@@ -1,5 +1,5 @@
 ﻿{% extends "base.html" %}
-{% block title %}Rapports de temps de la tâche{% endblock title %}
+{% block title %}Rapports de temps de la tâche {{ tache }}{% endblock title %}
 {% block extrahead %}
     <link rel="stylesheet" href="{{STATIC_URL}}css\datepicker.css" />
     <script type="text/javascript" src="{{STATIC_URL}}js/bootstrap-datepicker.js"></script>
@@ -64,7 +64,7 @@
                             <input class="btn btn-primary" type="submit" value="Rechercher" />
                         </p>
                         {% if form.errors %}
-                            <p>Vous n'avez pas remplie les champs correctement</p>
+                            <h5 class="text-error">Vous n'avez pas remplie les champs correctement</h5>
                         {% endif %}
                     </form>
                 </div>

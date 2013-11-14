@@ -34,7 +34,7 @@
                                 <input class="btn btn-primary" type="submit" value="Rechercher" />
                             </p>
                             {% if form.errors %}
-                                <p>Vous n'avez pas remplie les champs correctement</p>
+                                <h5 class="text-error">Vous n'avez pas remplie les champs correctement</h5>
                             {% endif %}
                         </form>
                     </div>
@@ -57,7 +57,9 @@
                         </thead>
                         <tfoot>
                             <tr>
-                                <td style="background-color: lightgray;" colspan='3'></td><th  style="background-color: lightgray;text-align: right">Total:</th><th  style="background-color: lightgray;text-align: right">{{total_bloc.heures}} H</th>
+                                <td style="background-color: lightgray;" colspan='3'></td>
+                                <th style="background-color: lightgray;text-align: right">Total:</th>
+                                <th style="background-color: lightgray;text-align: right">{{total_bloc.heures|default:"0,00"}} H</th>
                             </tr>
                         </tfoot>
                         <tbody>

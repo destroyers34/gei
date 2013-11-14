@@ -23,7 +23,7 @@
                             <th>Modèles</th>
                             <th>Budget MAT</th>
                             <th>Budget MO</th>
-                            <th>Temps (H)</th>
+                            <th>Temps</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -34,7 +34,7 @@
                                 <td><a href="{% url 'liste_projets_modeles_eci' p.projet.nom p.projet.modele %}">{{ p.projet.modele }}</a></td>
                                 <td>{{ p.projet.budget_mat }}</td>
                                 <td>{{ p.projet.budget_mo }}</td>
-                                <td>{{ p.heures.total }}</td>
+                                <td style="text-align: right;">{{ p.heures.total }} H</td>
                             </tr>
                         {% endfor %}
                     </tbody>

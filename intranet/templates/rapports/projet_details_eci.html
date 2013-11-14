@@ -19,7 +19,7 @@
                     <h3>{{ numero_projet }}</h3>
                 </div>
                 <div class="pull-right text-right">
-                    <img width="200" class="pull-right" src="{{ STATIC_URL }}img/logo_eugenie.png"><br />
+                    <img width="200" src="{{ STATIC_URL }}img/logo_eugenie.png"><br />
                     <a class='btn btn-primary' href="{% url 'rapport_complet_eci' numero_projet %}">Rapport complet</a>
                     <a class='btn btn-primary' href="{% url 'print_projet_details_eci' numero_projet %}">Imprimer</a>
                     <a class='btn btn-primary' href="{% url 'xls_projet_details_eci' numero_projet %}">.xls</a>
@@ -61,7 +61,7 @@
                             <input class="btn btn-primary" type="submit" value="Rechercher" />
                         </p>
                         {% if form.errors %}
-                            <p>Vous n'avez pas remplie les champs correctement</p>
+                            <h5 class="text-error">Vous n'avez pas remplie les champs correctement</h5>
                         {% endif %}
                     </form>
                 </div>

@@ -25,7 +25,9 @@
                     </thead>
                     <tfoot>
                         <tr>
-                            <td></td><th style="text-align:right;">Total:</th><th style="text-align:right;">{{total_projet.heures}} H</th>
+                            <td></td>
+                            <th style="text-align:right;">Total:</th>
+                            <th style="text-align:right;">{{total_projet.heures}} H</th>
                         </tr>
                     </tfoot>
                     <tbody>
@@ -49,6 +51,7 @@
                     <a class='btn btn-primary' href="{% url 'print_employe_details_eci' employe.user.username %}">Imprimer</a>
                     <a class='btn btn-primary' href="{% url 'xls_employe_details_eci' employe.user.username %}">.xls</a>
                 </div>
+                <br />
             </div>
         </div>
     </div>

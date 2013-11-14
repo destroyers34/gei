@@ -250,7 +250,8 @@ def base_client_details_tpe(request, client_id):
 def base_tache_details_tpe(request, numero_tache):
     projets = Projet_TPE.objects.filter(bloc_tpe__tache__numero=numero_tache).annotate(heure=Sum('bloc_tpe__temps')).order_by('-numero')
     tache_total = Tache.objects.filter(numero=numero_tache).aggregate(heures=Sum('bloc_tpe__temps'))
-    return {'projets':projets,'tache_total':tache_total,'numero_tache':numero_tache}
+    tache = Tache.objects.get(numero=numero_tache)
+    return {'projets':projets,'tache_total':tache_total,'tache':tache}
 
 @permission_required('feuilles_de_temps.afficher_rapport_temps_tpe')
 def base_liste_projets_noms_tpe(request, nom_projet):
@@ -568,7 +569,7 @@ def employe_blocs_periode_tpe(request, username, date_debut, date_fin):
     else: 
         form = DateRangeForm()
     variables.update({'form':form,'date':datetime.now().strftime("%Y-%m-%d")})
-    return render(request, 'rapports/employe_blocs_eci.html', variables)
+    return render(request, 'rapports/employe_blocs_tpe.html', variables)
 
 @permission_required('feuilles_de_temps.afficher_rapport_temps_eugenie')
 def liste_machines_eci(request):
