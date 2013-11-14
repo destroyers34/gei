@@ -2,22 +2,24 @@
 {% block title %}Rapports{% endblock title %}
 {% block nav-rapport %}<li class="dropdown active">{% endblock nav-rapport %}
 {% block content %}
-<div class="well">
     <div class="row-fluid">
-        <div class="span12">
-            <img width="200" class='pull-right' src="{{ STATIC_URL }}img/logo_eugenie.png">
-            <h4>EuGénie Canada Inc.</h4>
-            <h4>Liste des machines</h4>
-        </div>
-        <div class="span2 offset5 text-center">
-            <table class="table table-striped table-bordered table-condensed table-center">
-                {% for machine in machines %}
-                    <tr>
-                        <td><a href="{% url 'rapport_production_eci' machine.nom machine.modele %}">{{ machine.nom }} {{ machine.modele }}</a></td>
-                    </tr>
-                {% endfor %}
-            </table>
+        <div class="span4 offset4">
+            <div class="well">
+                <div class="pull-left">
+                    <h4>EuGénie Canada Inc.</h4>
+                    <h4>Liste des machines</h4>
+                </div>
+                <div class="pull-right">
+                    <img width="200" src="{{ STATIC_URL }}img/logo_eugenie.png"><br />
+                </div>
+                <table class="table table-striped table-bordered table-condensed table-center">
+                    {% for machine in machines %}
+                        <tr>
+                            <td style="text-align: center"><a href="{% url 'rapport_production_eci' machine.nom machine.modele %}">{{ machine.nom }} {{ machine.modele }}</a></td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            </div>
         </div>
     </div>
-</div>
 {% endblock %}

@@ -2,9 +2,9 @@
 {% block title %}Liste des projets {{ client.nom }}{% endblock title %}
 {% block nav-rapport %}<li class="dropdown active">{% endblock nav-rapport %}
 {% block content %}
-    <div class="well">
-        <div class="row-fluid">
-            <div class="span12">
+    <div class="row-fluid">
+        <div class="span8 offset2">
+            <div class="well">
                 <div class="pull-left">
                     <h4>EuGénie Canada Inc.</h4>
                     <h4>Liste des projets</h4>
@@ -43,6 +43,7 @@
                     <a class='btn btn-primary' href="{% url 'print_client_details_eci' client.id %}">Imprimer</a>
                     <a class='btn btn-primary' href="{% url 'xls_client_details_eci' client.id %}">.xls</a>
                 </div>
+                <br />
             </div>
         </div>
     </div>

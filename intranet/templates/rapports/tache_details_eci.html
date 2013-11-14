@@ -10,9 +10,9 @@
 {% endblock jquery %}
 {% block nav-rapport %}<li class="dropdown active">{% endblock nav-rapport %}
 {% block content %}
-    <div class="well">
-        <div class="row-fluid">
-            <div class="span12">
+    <div class="row-fluid">
+        <div class="span6 offset3">
+            <div class="well">
                 <div class="pull-left">
                     <h4>EuGénie Canada Inc.</h4>
                     <h4>Rapport de temps de la tâche</h4>
@@ -30,12 +30,14 @@
                             <th>Machine</th>
                             <th>Modèle</th>
                             <th>Détails</th>
-                            <th>Temps (H)</th>
+                            <th>Temps</th>
                         </tr>
                     </thead>
                     <tfoot>
                         <tr>
-                            <td colspan='3'></td><th>Total:</th><th>{{tache_total.heures}}</th>
+                            <td style="text-align: right;background-color: lightgray" colspan='3'></td>
+                            <th style="text-align: right;background-color: lightgray">Total:</th>
+                            <th style="text-align: right;background-color: lightgray">{{tache_total.heures}} H</th>
                         </tr>
                     </tfoot>
                     <tbody>
@@ -45,7 +47,7 @@
                                 <td><a href="{% url 'liste_projets_noms_eci' projet.nom %}">{{projet.nom}}</a></td>
                                 <td><a href="{% url 'liste_projets_modeles_eci' projet.nom projet.modele %}">{{projet.modele}}</a></td>
                                 <td><a href="{% url 'projet_tache_details_eci' projet.numero tache.numero %}"><i class="icon-user"></i></a></td>
-                                <td>{{projet.heure}}</td>
+                                <td style="text-align: right;">{{projet.heure}} H</td>
                             </tr>
                         {% endfor %}
                     </tbody>
@@ -70,6 +72,7 @@
                     <a class='btn btn-primary' href="{% url 'print_tache_details_eci' tache.numero %}">Imprimer</a>
                     <a class='btn btn-primary' href="{% url 'xls_tache_details_eci' tache.numero %}">.xls</a>
                 </div>
+                <br /><br /><br /><br /><br />
             </div>
         </div>
     </div>

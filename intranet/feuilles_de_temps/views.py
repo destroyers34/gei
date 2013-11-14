@@ -86,7 +86,7 @@ def add_blocs_eci(request):
         formset = BlocFormSet(request.POST, request.FILES)
         if formset.is_valid():
             formset.save()
-            return HttpResponseRedirect("success")
+            return HttpResponseRedirect("../success/")
     else:
         formset = BlocFormSet(queryset=Bloc_Eugenie.objects.none())
     return render(request,"feuillesdetemps/add_blocs_eci.html", {"formset": formset,})
@@ -98,7 +98,7 @@ def add_blocs_tpe(request):
         formset = BlocFormSet(request.POST, request.FILES)
         if formset.is_valid():
             formset.save()
-            return HttpResponseRedirect("success")
+            return HttpResponseRedirect("../success/")
     else:
         formset = BlocFormSet(queryset=Bloc_TPE.objects.none())
     return render(request,"feuillesdetemps/add_blocs_tpe.html", {"formset": formset,})    
@@ -114,7 +114,7 @@ def add_banque(request):
         formset = BanqueFormSet(request.POST, request.FILES)
         if formset.is_valid():
             formset.save()
-            return HttpResponseRedirect("success")
+            return HttpResponseRedirect("../success/")
     else:
         formset = BanqueFormSet(queryset=Banque.objects.none())
     return render(request,"feuillesdetemps/add_banque.html", {"formset": formset,})   
