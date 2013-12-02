@@ -44,7 +44,7 @@
                             {% endifchanged %}
                             <tr>
                                 <td rowspan='{% if machine.details_en or machine.details %}2{% else %}1{% endif %}'>
-                                    <a href="{% url 'details_machine' fournisseur.id machine.id %}">{{ machine.numero }}</a>
+                                    <a href="{% url 'details_machine_en' fournisseur.id machine.id %}">{{ machine.numero }}</a>
                                 </td>
                                 <td>
                                     {% if machine.description_en %}
