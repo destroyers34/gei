@@ -10,6 +10,9 @@ class Categorie(models.Model):
     def __unicode__(self):
         return u"%s" % self.nom
 
+    class Meta:
+        ordering = ['nom', 'nom_en']
+
 
 class Fournisseur(models.Model):
     nom = models.CharField(verbose_name=u"Nom", max_length=100)
@@ -23,6 +26,9 @@ class Fournisseur(models.Model):
 
     def __unicode__(self):
         return u"%s" % self.nom
+
+    class Meta:
+        ordering = ['nom']
 
 
 class Machinerie(models.Model):
@@ -42,6 +48,7 @@ class Machinerie(models.Model):
         abstract = True
         permissions = (("afficher_listes_prix", "Afficher les listes de prix"),
                        ("afficher_listes_prix_en", "Afficher les listes de prix US"))
+        ordering = ['numero']
         
     def __unicode__(self):
         if self.description:
