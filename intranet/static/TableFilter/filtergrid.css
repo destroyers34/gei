@@ -117,7 +117,7 @@ input.reset:hover{ background:#CAD1D6 url(TF_Themes/btn_clear_filters.png) cente
 .rdiv{ /* right div */
 	float:right; width:30%; position:inherit; text-align:right; 
 }
-select.pgSlc{ width:45px; height:30px; vertical-align:middle; font-size:10px; }/*paging drop-down list*/
+select.pgSlc{ width:50px; height:30px; vertical-align:middle; font-size:14px; }/*paging drop-down list*/
 input.pgNbInp{/*paging text-box*/ 
 	width:25px; height:16px; margin:1px;
 	font-size:11px; vertical-align:middle; 
