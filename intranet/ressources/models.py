@@ -25,6 +25,7 @@ class Employe(models.Model):
             
     class Meta:
         verbose_name = u"Employé"
+        ordering = ['user__first_name']
 
     def get_Name(self):
         return u'%s %s' % (self.user.first_name, self.user.last_name)
@@ -58,3 +59,4 @@ class Tache(models.Model):
 
     class Meta:
         verbose_name = u"Tâche"
+        ordering = ['numero']
