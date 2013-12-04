@@ -27,7 +27,7 @@ class Fournisseur(models.Model):
 
 class Machinerie(models.Model):
     numero = models.CharField(verbose_name=u"Numéro", max_length=100, unique=True)
-    description = models.TextField(verbose_name=u"Description")
+    description = models.TextField(verbose_name=u"Description", blank=True, null=True)
     description_en = models.TextField(verbose_name=u"Description Anglais", blank=True, null=True)
     details = models.TextField(verbose_name=u"Détails", blank=True, null=True)
     details_en = models.TextField(verbose_name=u"Détails Anglais", blank=True, null=True)
@@ -44,7 +44,10 @@ class Machinerie(models.Model):
                        ("afficher_listes_prix_en", "Afficher les listes de prix US"))
         
     def __unicode__(self):
-        return u"%s - %s" % (self.numero, self.description)
+        if self.description:
+            return u"%s - %s" % (self.numero, self.description)
+        else:
+            return u"%s" % self.numero
     
     def prixCAD(self):
         return self.fournisseur.devise.toCAD(self.prix_fournisseur)

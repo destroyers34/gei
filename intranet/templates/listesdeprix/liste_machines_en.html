@@ -53,7 +53,7 @@
                                     {% if machine.details_en %}
                                         {{ machine.details_en }}
                                     {% else %}
-                                        {{ machine.details }}
+                                        {{ machine.details|default:"Aucun" }}
                                     {% endif %}
                                 </td>
                                 {% if user.is_superuser %}

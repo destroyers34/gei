@@ -32,7 +32,7 @@
                                 <td>
                                     <a href="{% url 'details_machine' fournisseur.id machine.id %}">{{ machine }}</a>
                                 </td>
-                                <td>{{machine.details}}</td>
+                                <td>{{machine.details|default:"Aucun"}}</td>
                                 {% if user.is_superuser %}
                                     <td style="text-align: right;">{{ machine.prix_fournisseur |floatformat:2|intcomma }}&nbsp;{{ machine.fournisseur.devise.symbole }}</td>
                                     <td style="text-align: right;">{{ machine.cost |floatformat:2|intcomma }}&nbsp;$</td>
