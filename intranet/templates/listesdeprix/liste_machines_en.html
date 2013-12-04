@@ -16,7 +16,8 @@
                 <table id="table1" class="table table-bordered table-condensed">
                     <thead>
                         <tr>
-                            <th>Code</th>
+                            <th>Categorie</th>
+                            <th>Machine</th>
                             <th>Description</th>
                             {% if user.is_superuser %}
                                 <th>List Price</th>
@@ -31,26 +32,28 @@
                     </thead>
                     <tbody>
                         {% for machine in liste_machines %}
-                            {% ifchanged machine.categorie %}
-                                <tr>
-                                    <th style="background-color: lightgray" colspan='{% if user.is_superuser %}7{% else %}3{% endif %}'>
-                                        {% if machine.categorie.nom_en %}
-                                            {{ machine.categorie.nom_en }}
-                                        {% else %}
-                                            {{ machine.categorie }}
-                                        {% endif %}
-                                    </th>
-                                </tr>
-                            {% endifchanged %}
                             <tr>
                                 <td>
-                                    <a href="{% url 'details_machine_en' fournisseur.id machine.id %}">{{ machine.numero }}</a>
+                                    {% if machine.categorie.nom_en %}
+                                        {{ machine.categorie.nom_en }}
+                                    {% else %}
+                                        {{ machine.categorie }}
+                                    {% endif %}
                                 </td>
                                 <td>
-                                    {% if machine.description_en %}
-                                        {{ machine.description_en }}
+                                    <a href="{% url 'details_machine_en' fournisseur.id machine.id %}">{{ machine.numero }} -
+                                        {% if machine.description_en %}
+                                            {{ machine.description_en }}
+                                        {% else %}
+                                            {{ machine.description }}
+                                        {% endif %}
+                                    </a>
+                                </td>
+                                <td>
+                                    {% if machine.details_en %}
+                                        {{ machine.details_en }}
                                     {% else %}
-                                        {{ machine.description }}
+                                        {{ machine.details }}
                                     {% endif %}
                                 </td>
                                 {% if user.is_superuser %}
@@ -62,22 +65,31 @@
                                     <td>{{ machine.profitUs |floatformat:2|intcomma }}&nbsp;$</td>
                                     <td>{{ machine.profit_pourcentUs |floatformat:2|intcomma }}&nbsp;%</td>
                                 {% endif %}
-                                {% if machine.details_en or machine.details %}
-                                    <tr>
-                                        <td></td>
-                                        <td colspan='{% if user.is_superuser %}6{% else %}2{% endif %}'>
-                                            {% if machine.details_en %}
-                                                {{ machine.details_en }}
-                                            {% else %}
-                                                {{ machine.details }}
-                                            {% endif %}
-                                        </td>
-                                    </tr>
-                                {% endif %}
                             </tr>
                         {% endfor %}
                     </tbody>
                 </table>
+                <script type="text/javascript" language="javascript" src="{{STATIC_URL}}TableFilter/tablefilter.js"></script>
+                <script language="javascript" type="text/javascript">
+                    var tf_table1  = {
+                        col_0: "select",
+                        col_3: "none",
+                        col_4: "none",
+                        col_5: "none",
+                        col_6: "none",
+                        col_7: "none",
+                        col_8: "none",
+                        btn_reset: true,
+                        paging: true,
+                        paging_length: 25 ,
+                        results_per_page: ['Machines par page',[25,50,100]],
+                        display_all_text: "Tout Afficher",
+                        rows_counter: true,
+                        rows_counter_text: "Machines: ",
+                        popup_filters: true
+                    };
+                    setFilterGrid("table1",1,tf_table1);
+                </script>
             </div>
         </div>
     </div>
