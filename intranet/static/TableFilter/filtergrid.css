@@ -23,7 +23,7 @@ table.TF td{ padding:5px 5px 5px 5px; border-bottom:1px solid #D0D0D0; border-ri
 /* FILTERS BAR
 =====================================================*/
 .fltrow{ /* filter grid row appearance */
-	height:20px;
+	height:30px;
 	background-color:#f4f4f4;
 }
 .fltrow td, .fltrow th{ padding:2px !important; } 
@@ -102,7 +102,7 @@ input.reset:hover{ background:#CAD1D6 url(TF_Themes/btn_clear_filters.png) cente
 /* PAGING ELEMENTS
 =====================================================*/
 .inf{ /* div containing left, middle and right divs */
-	clear:both; width:auto; height:25px; 
+	clear:both; width:auto; height:30px; 
 	background:#f4f4f4; font-size:12px; 
 	margin:0; padding:1px 3px 1px 3px; 
 	border:1px solid #ccc; overflow:hidden;
@@ -117,7 +117,7 @@ input.reset:hover{ background:#CAD1D6 url(TF_Themes/btn_clear_filters.png) cente
 .rdiv{ /* right div */
 	float:right; width:30%; position:inherit; text-align:right; 
 }
-select.pgSlc{ height:20px; vertical-align:middle; font-size:10px; }/*paging drop-down list*/
+select.pgSlc{ width:45px; height:30px; vertical-align:middle; font-size:10px; }/*paging drop-down list*/
 input.pgNbInp{/*paging text-box*/ 
 	width:25px; height:16px; margin:1px;
 	font-size:11px; vertical-align:middle; 
@@ -138,13 +138,13 @@ div.inf a{ color:#333; text-decoration:none; font-weight:bold; }/*link appearenc
 div.inf a:hover{ text-decoration:underline; }/*link appearence in .inf div*/
 div.tot{ /* rows counter appearance */
 	float:left; overflow:hidden;
-	width:150px; height:15px;
+	width:150px; height:30px;
 	border-right:1px solid #ccc;
 	margin:0 5px 0 2px;
 	padding:0 2px 0 2px;
 }
 div.tot span{ font-weight:bold; font-size:11px; }
-select.rspg{ width:50px; margin:1px 5px 0 5px; vertical-align:middle; }/*results per page select*/
+select.rspg{ width:60px; margin:1px 5px 0 5px; vertical-align:middle; }/*results per page select*/
 span.rspgSpan{ font-size:11px; } /*results per page select label*/
 
 
@@ -165,7 +165,7 @@ span.keyword{ background-color: #ffcc00;}/*highlighted word*/
 
 div.status{ /* status bar appearance */
 	float:left; overflow:hidden;
-	width:150px; height:15px;
+	width:150px; height:30px;
 	border-right:1px solid #ccc;
 	margin:0 5px 0 2px;
 	padding:0 2px 0 2px;
@@ -260,7 +260,7 @@ div.grd_tblCont table td{
 }
 
 .grd_inf{ /* div containing left, middle and right divs */
-	clear:both; width:auto; height:25px; 
+	clear:both; width:auto; height:30px; 
 	background:#C8E0FB; font-size:11px; 
 	margin:0; padding:1px 3px 1px 3px;
 	border-top:1px solid #99BBE8;

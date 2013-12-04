@@ -82,7 +82,7 @@ var TF = function(id)
 		try{ this.nbCells = this.GetCellsNb(this.refRow) }
 		catch(e){ this.nbCells = this.GetCellsNb(0) }
 		
-		this.basePath = f.base_path!=undefined ? f.base_path : 'TableFilter/'; //default script base path
+		this.basePath = f.base_path!=undefined ? f.base_path : '/static/TableFilter/'; //default script base path
 		
 		if(this.enableModules){
 			/*** Modules: features of the script ***/

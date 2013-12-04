@@ -44,7 +44,7 @@ class Machinerie(models.Model):
                        ("afficher_listes_prix_en", "Afficher les listes de prix US"))
         
     def __unicode__(self):
-        return u"%s %s" % (self.numero, self.description)
+        return u"%s - %s" % (self.numero, self.description)
     
     def prixCAD(self):
         return self.fournisseur.devise.toCAD(self.prix_fournisseur)

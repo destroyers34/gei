@@ -1,18 +1,24 @@
 {% extends "base.html" %}
 {% load humanize %}
+{% block extrahead %}
+
+    <link rel="stylesheet" href="{{STATIC_URL}}css/formalize.css" />
+    <script src="{{STATIC_URL}}js/jquery.formalize.js"></script>
+{% endblock extrahead %}
 {% block title %}Listes de prix{% endblock title %}
 {% block nav-liste %}<li class="dropdown active">{% endblock nav-liste %}
 {% block content %}
     <div class="row-fluid">
-	    <div class="span10 offset1">
+	    <div class="span11">
             <div class="well">
                 <h3>{{ fournisseur.nom }}</h3>
                 <h4>Liste de prix</h4>
-                <table class="table table-bordered table-condensed">
+                <table id="table1" class="table">
                     <thead>
                         <tr>
-                            <th>Code</th>
-                            <th>Description</th>
+                            <th>Categorie</th>
+                            <th>Machine</th>
+                            <th>Détails</th>
                             {% if user.is_superuser %}
                                 <th>Prix liste</th>
                                 <th>Cost ($CA)</th>
@@ -26,40 +32,46 @@
                     </thead>
                     <tbody>
                         {% for machine in liste_machines %}
-                            {% ifchanged machine.categorie %}
-                                <tr>
-                                    <th style="background-color: lightgray" colspan='
-                                    {% if user.is_superuser %}
-                                        7
-                                    {% else %}
-                                        3
-                                    {% endif %}
-                                    '>{{ machine.categorie }}</th>
-                                </tr>
-                            {% endifchanged %}
                             <tr>
-                                <td {% if machine.details %}rowspan='2'{% endif %}>
-                                    <a href="{% url 'details_machine' fournisseur.id machine.id %}">{{ machine.numero }}</a>
+                                <td>{{ machine.categorie }}</td>
+                                <td>
+                                    <a href="{% url 'details_machine' fournisseur.id machine.id %}">{{ machine }}</a>
                                 </td>
-                                <td>{{ machine.description }}</td>
+                                <td>{{machine.details}}</td>
                                 {% if user.is_superuser %}
-                                    <td>{{ machine.prix_fournisseur |floatformat:2|intcomma }}&nbsp;{{ machine.fournisseur.devise.symbole }}</td>
-                                    <td>{{ machine.cost |floatformat:2|intcomma }}&nbsp;$</td>
+                                    <td style="text-align: right;">{{ machine.prix_fournisseur |floatformat:2|intcomma }}&nbsp;{{ machine.fournisseur.devise.symbole }}</td>
+                                    <td style="text-align: right;">{{ machine.cost |floatformat:2|intcomma }}&nbsp;$</td>
                                 {% endif %}
-                                    <td>{{ machine.plMin |floatformat:2|intcomma }}&nbsp;$</td>
+                                    <td style="text-align: right;">{{ machine.plMin |floatformat:2|intcomma }}&nbsp;$</td>
                                 {% if user.is_superuser %}
-                                    <td>{{ machine.profit |floatformat:2|intcomma }}&nbsp;$</td>
-                                    <td>{{ machine.profit_pourcent |floatformat:2|intcomma }}&nbsp;%</td>
-                                {% endif %}
-                                {% if machine.details %}
-                                    <tr>
-                                        <td colspan='{% if user.is_superuser %}6{% else %}2{% endif %}'>{{machine.details}}</td>
-                                    </tr>
+                                    <td style="text-align: right;">{{ machine.profit |floatformat:2|intcomma }}&nbsp;$</td>
+                                    <td style="text-align: right;">{{ machine.profit_pourcent |floatformat:2|intcomma }}&nbsp;%</td>
                                 {% endif %}
                             </tr>
                         {% endfor %}
                     </tbody>
                 </table>
+                <script type="text/javascript" language="javascript" src="{{STATIC_URL}}TableFilter/tablefilter.js"></script>
+                <script language="javascript" type="text/javascript">
+                    var tf_table1  = {
+                        col_0: "select",
+                        col_3: "none",
+                        col_4: "none",
+                        col_5: "none",
+                        col_6: "none",
+                        col_7: "none",
+                        col_8: "none",
+                        btn_reset: true,
+                        paging: true,
+                        paging_length: 25 ,
+                        results_per_page: ['Machines par page',[25,50,100]],
+                        display_all_text: "Tout Afficher",
+                        rows_counter: true,
+                        rows_counter_text: "Machines: ",
+                        popup_filters: true
+                    };
+                    setFilterGrid("table1",1,tf_table1);
+                </script>
             </div>
         </div>
     </div>
