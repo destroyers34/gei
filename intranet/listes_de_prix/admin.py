@@ -21,15 +21,25 @@ class FournisseurAdmin(admin.ModelAdmin):
 
 
 class MachineAdmin(admin.ModelAdmin):
-    list_display   = ('numero', 'description', 'categorie', 'fournisseur', 'prix_fournisseur', 'prixCAD_f', 'dateprix',
-                      'escompte', 'costCAD_f', 'ratioEffectif', 'pl_f', 'ratioEffectifUs', 'plUS_f', 'profit_f',
-                      'profitUS_f', 'profit_pourcent_f', 'profitUS_pourcent_f', 'actif')
+    list_display   = ('numero', 'description', 'short_details', 'categorie', 'fournisseur', 'prix_fournisseur', 'prixCAD_f',
+                      'dateprix', 'escompte', 'costCAD_f', 'ratioEffectif', 'pl_f', 'ratioEffectifUs', 'plUS_f',
+                      'profit_f', 'profitUS_f', 'profit_pourcent_f', 'profitUS_pourcent_f', 'actif')
     search_fields = ['numero', 'description']
     list_filter    = ('categorie', 'fournisseur')
     ordering       = ('-actif', '-categorie', 'numero')
     inlines = [
         MachinerieInline,
     ]
+
+    def short_details(self, obj):
+        if obj.details:
+            if len(obj.details) > 15:
+                return obj.details[0:15] + '...'
+            else:
+                return obj.details
+        else:
+            return '-'
+    short_details.short_description = 'Détails'
 
     def prixCAD_f(self, obj):
         return "%.2f" % obj.prixCAD()
