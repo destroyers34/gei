@@ -1,10 +1,10 @@
-from django.http import HttpResponse, HttpResponseRedirect
-from django.shortcuts import render, render_to_response
-from django.contrib.auth.decorators import permission_required, login_required
+from django.shortcuts import render
+from django.contrib.auth.decorators import permission_required
 from django.forms.models import modelformset_factory
 from decimal import *
 from listes_de_prix.models import Fournisseur, Machine, Option
 from listes_de_prix.forms import *
+from ressources.models import Devise
 
 
 def liste_fournisseurs(request):
@@ -58,8 +58,9 @@ def details_machine(request, fournisseur_id, machine_id):
 def liste_machines_en(request, fournisseur_id):
     fournisseur = Fournisseur.objects.get(id=fournisseur_id)
     liste_machines = Machine.objects.filter(fournisseur=fournisseur, actif=True).order_by('categorie', 'numero')
+    taux_us = Devise.objects.get(code_iso="USD")
     return render(request, 'listesdeprix/liste_machines_en.html', {'liste_machines': liste_machines,
-                                                                   'fournisseur': fournisseur})
+                                                                   'fournisseur': fournisseur, 'taux_us':taux_us})
 
 
 @permission_required('listes_de_prix.afficher_listes_prix_en')

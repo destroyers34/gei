@@ -10,8 +10,12 @@
                     <h3>{{ fournisseur.nom }}</h3>
                     <h4>Price List</h4>
                 </div>
-                <div class="pull-right">
+                <div style="text-align: right" class="pull-right">
                     <a target="_blank" href="{% url 'print_liste_machines_en' fournisseur_id=fournisseur.id %}" class='btn btn-small btn-primary'><i class='icon-print icon-white'></i> Print</a>
+                    <a target="_blank" href="{% url 'admin:ressources_devise_change' taux_us.id %}" class='btn btn-small btn-primary'><i class='icon-edit icon-white'></i> Edit Taux</a>
+                    <h6>Taux US: {{ taux_us.taux_toCAD }}</h6>
+                    <h6>Taux Inverse: {{ taux_us.taux_inverse }}</h6>
+                    <h6>Date Taux: {{ taux_us.date_taux }}</h6>
                 </div>
                 <table id="table1" class="table table-bordered table-condensed">
                     <thead>
