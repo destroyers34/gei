@@ -33,8 +33,6 @@ class Fournisseur(models.Model):
 
 class Machinerie(models.Model):
     numero = models.CharField(verbose_name=u"Numéro", max_length=100, unique=True)
-    description = models.TextField(verbose_name=u"Description", blank=True, null=True)
-    description_en = models.TextField(verbose_name=u"Description Anglais", blank=True, null=True)
     details = models.TextField(verbose_name=u"Détails", blank=True, null=True)
     details_en = models.TextField(verbose_name=u"Détails Anglais", blank=True, null=True)
     fournisseur = models.ForeignKey(Fournisseur, verbose_name=u"Fournisseur")
@@ -130,9 +128,12 @@ class Machinerie(models.Model):
 
 
 class Machine(Machinerie):
+    description = models.CharField(max_length=50, verbose_name=u"Nom", blank=True, null=True)
     categorie = models.ForeignKey(Categorie, verbose_name=u"Catégorie")
     actif = models.BooleanField(verbose_name=u"Actif")
 
 
 class Option(Machinerie):
+    description = models.TextField(verbose_name=u"Nom", blank=True, null=True)
+    description_en = models.TextField(verbose_name=u"Nom Anglais", blank=True, null=True)
     machines = models.ManyToManyField(Machine, related_name='options_machine')
