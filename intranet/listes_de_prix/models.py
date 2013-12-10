@@ -47,12 +47,6 @@ class Machinerie(models.Model):
         permissions = (("afficher_listes_prix", "Afficher les listes de prix"),
                        ("afficher_listes_prix_en", "Afficher les listes de prix US"))
         ordering = ['numero']
-        
-    def __unicode__(self):
-        if self.description:
-            return u"%s - %s" % (self.numero, self.description)
-        else:
-            return u"%s" % self.numero
     
     def prixCAD(self):
         return self.fournisseur.devise.toCAD(self.prix_fournisseur)
@@ -132,8 +126,19 @@ class Machine(Machinerie):
     categorie = models.ForeignKey(Categorie, verbose_name=u"Catégorie")
     actif = models.BooleanField(verbose_name=u"Actif")
 
+    def __unicode__(self):
+        if self.description:
+            return u"%s - %s" % (self.numero, self.description)
+        else:
+            return u"%s" % self.numero
+
 
 class Option(Machinerie):
-    description = models.TextField(verbose_name=u"Nom", blank=True, null=True)
-    description_en = models.TextField(verbose_name=u"Nom Anglais", blank=True, null=True)
     machines = models.ManyToManyField(Machine, related_name='options_machine')
+
+    def __unicode__(self):
+        if self.details:
+            if len(self.details) > 50:
+                return u"%s - %s..." % (self.numero, self.details[0:50])
+            else:
+                return u"%s - %s..." % (self.numero, self.details)

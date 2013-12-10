@@ -89,10 +89,10 @@
                                             <input style="width:92%;" readonly='True' id="id_form-{{ forloop.counter0 }}-numero" maxlength="100" name="form-{{ forloop.counter0 }}-numero" type="text" value="{{ option.numero }}">
                                         </td>
                                         <td colspan="{% if user.is_superuser %}6{% else %}2{% endif %}">
-                                            {% if option.description_en %}
-                                                {{ option.description_en }}
+                                            {% if option.details_en %}
+                                                {{ option.details_en }}
                                             {% else %}
-                                                {{ option.description }}
+                                                {{ option.details }}
                                             {% endif %}
                                         </td>
                                     </tr>
@@ -105,18 +105,6 @@
                                         {% if user.is_superuser %}
                                             <td style="text-align: right;border-bottom: 1px solid black;">{{ option.profitUs|floatformat:2|intcomma }}&nbsp;$</td>
                                             <td style="text-align: right;border-bottom: 1px solid black;">{{ option.profit_pourcentUs|floatformat:2|intcomma }}&nbsp;%</td>
-                                        {% endif %}
-                                        {% if option.details %}
-                                            <tr>
-                                                <td colspan='2'></td>
-                                                <td colspan='{% if user.is_superuser %}6{% else %}2{% endif %}'>
-                                                    {% if option.details_en %}
-                                                        {{ option.details_en }}
-                                                    {% else %}
-                                                        {{ option.details }}
-                                                    {% endif %}
-                                                </td>
-                                            </tr>
                                         {% endif %}
                                     </tr>
                                 {% endfor %}

@@ -78,15 +78,27 @@ class MachineAdmin(admin.ModelAdmin):
 
 class OptionAdmin(admin.ModelAdmin):
     actions = None
-    list_display   = ('numero', 'description', 'fournisseur', 'prix_fournisseur', 'prixCAD_f', 'dateprix', 'escompte',
+    list_display   = ('numero', 'short_details', 'fournisseur', 'prix_fournisseur', 'prixCAD_f', 'dateprix', 'escompte',
                       'costCAD_f', 'ratioEffectif', 'pl_f', 'profit_f', 'profit_pourcent_f')
     search_fields = ['numero', 'description']
     list_filter    = ('fournisseur',)
     ordering       = ('numero', )
+    fields = ('numero', 'details', 'details_en',
+              ('fournisseur', 'prix_fournisseur', 'dateprix'), ('escompte', 'ratio', 'ratio_us'))
     inlines = [
         MachinerieInline,
     ]
     exclude = ('machines',)
+
+    def short_details(self, obj):
+        if obj.details:
+            if len(obj.details) > 50:
+                return obj.details[0:50] + '...'
+            else:
+                return obj.details
+        else:
+            return '-'
+    short_details.short_description = 'Détails'
 
     def prixCAD_f(self, obj):
         return "%.2f" % obj.prixCAD()

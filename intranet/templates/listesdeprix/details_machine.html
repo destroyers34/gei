@@ -76,7 +76,7 @@
                                         <td style='vertical-align:middle;border-bottom: 1px solid black;width:15%' rowspan="2">
                                             <input readonly='True' style='width:92%;' id="id_form-{{ forloop.counter0 }}-numero" maxlength="100" name="form-{{ forloop.counter0 }}-numero" type="text" value="{{ option.numero }}">
                                         </td>
-                                        <td colspan="{% if user.is_superuser %}6{% else %}2{% endif %}">{{ option.description }}</td>
+                                        <td colspan="{% if user.is_superuser %}6{% else %}2{% endif %}">{{ option.details }}</td>
                                     </tr>
                                     <tr>
                                         {% if user.is_superuser %}
@@ -87,14 +87,6 @@
                                         {% if user.is_superuser %}
                                             <td style="text-align: right;border-bottom: 1px solid black;">{{ option.profit|floatformat:2|intcomma }}&nbsp;$</td>
                                             <td style="text-align: right;border-bottom: 1px solid black;">{{ option.profit_pourcent|floatformat:2|intcomma }}&nbsp;%</td>
-                                        {% endif %}
-                                        {% if option.details %}
-                                            <tr>
-                                                <td colspan='2'></td>
-                                                <td colspan='{% if user.is_superuser %}6{% else %}2{% endif %}'>
-                                                    {{option.details}}
-                                                </td>
-                                            </tr>
                                         {% endif %}
                                     </tr>
                                 {% endfor %}
