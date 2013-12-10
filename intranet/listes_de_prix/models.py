@@ -141,4 +141,4 @@ class Option(Machinerie):
             if len(self.details) > 50:
                 return u"%s - %s..." % (self.numero, self.details[0:50])
             else:
-                return u"%s - %s..." % (self.numero, self.details)
+                return u"%s - %s" % (self.numero, self.details)
