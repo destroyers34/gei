@@ -30,7 +30,7 @@
                     {% for option in machine.options_machine.all %}
                         <tr>
                             <th style="text-align: right;">{% if forloop.first %}Options{% else %}{% endif %}</th>
-                            <td>{% if option.description_en %}{{ option.description_en }}{% else %}{{ option.description }}{% endif %}</td>
+                            <td>{% if option.details_en %}{{ option.details_en }}{% else %}{{ option.details }}{% endif %}</td>
                             <td style="text-align: right;">{{ option.numero }}</td>
                             <td style="text-align: right;">$&nbsp;{{ option.plMinUS |floatformat:2|intcomma }}</td>
                         </tr>
