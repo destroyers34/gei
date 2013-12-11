@@ -18,8 +18,10 @@ class Employe(models.Model):
     user = models.OneToOneField(User)
     compagnie = models.ForeignKey(Compagnie, verbose_name=u"Compagnie", blank=True, null=True)
     hire_date = models.DateField(blank=True, null=True, verbose_name=u"Date d'embauche")
-    banque_heure = models.DecimalField(max_digits=11, decimal_places=2, verbose_name=u"Heure(s) en banque", default='0')
-    
+    banque_heure = models.DecimalField(max_digits=11, decimal_places=2, verbose_name=u"Heure(s) en banque", default=0.00)
+    taux_horaire = models.DecimalField(max_digits=6, decimal_places=2, verbose_name=u"Taux horaire", default=0.00)
+    superviseur = models.ForeignKey("self", blank=True, null=True)
+
     def __unicode__(self):
         return u'%s %s' % (self.user.first_name, self.user.last_name)
             
