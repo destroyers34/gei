@@ -12,4 +12,6 @@ urlpatterns = patterns('feuilles_de_temps.views',
     url(r'^blocs/tpe/success/$', 'success', name='success'),
     url(r'^banque/add/$', 'add_banque', name='add_banque'),
     url(r'^banque/success/$', 'success', name='success'),
+    url(r'^employe/eci/add$', 'employe_add_bloc_eugenie', name='employe_add_bloc_eugenie'),
+    url(r'^employe/eci/success/$', 'success', name='success'),
     )

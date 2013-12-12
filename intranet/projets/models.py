@@ -35,10 +35,17 @@ class Projet_Eugenie(Projet):
     serial_number = models.CharField(max_length=30,verbose_name=u"Numéro de série", blank=True, null=True)
     budget_mat = models.DecimalField(max_digits=11,decimal_places=2,verbose_name=u"Budget MAT ($)",default=0)
     budget_mo = models.DecimalField(max_digits=11,decimal_places=2,verbose_name=u"Budget MO (H)",default=0)
-    priority = models.DecimalField(max_digits=1,decimal_places=0,verbose_name=u"Priorité",default='9')
+    priority = models.DecimalField(max_digits=1,decimal_places=0,verbose_name=u"Priorité", default='9')
 
     def __unicode__(self):
         return u'%s : %s %s' % (self.numero, self.nom, self.modele)
+
+    def non_approve_time(self):
+        projet = Projet_Eugenie.objects.filter(numero=self.numero, bloc_eugenie__approuve=False).aggregate(total=Sum('bloc_eugenie__temps'))
+        if projet["total"]:
+            return projet["total"]
+        else:
+            return 0
 
     def temps_total(self):
         projet = Projet_Eugenie.objects.filter(numero=self.numero).aggregate(total=Sum('bloc_eugenie__temps'))
@@ -48,14 +55,16 @@ class Projet_Eugenie(Projet):
             return 0
 
     def pourcent_tache(self, tache):
-        tache_total = Projet_Eugenie.objects.filter(numero=self.numero, bloc_eugenie__tache__numero=tache).aggregate(total=Sum('bloc_eugenie__temps'))
+        tache_total = Projet_Eugenie.objects.filter(numero=self.numero, bloc_eugenie__tache__numero=tache).aggregate(
+            total=Sum('bloc_eugenie__temps'))
         if tache_total['total']:
             return tache_total['total'] / self.temps_total() * 100
         else:
             return 0
 
     def heure_tache(self, tache):
-        tache_total = Projet_Eugenie.objects.filter(numero=self.numero, bloc_eugenie__tache__numero=tache).aggregate(total=Sum('bloc_eugenie__temps'))
+        tache_total = Projet_Eugenie.objects.filter(numero=self.numero, bloc_eugenie__tache__numero=tache).aggregate(
+            total=Sum('bloc_eugenie__temps'))
         if tache_total['total']:
             return tache_total['total']
         else:

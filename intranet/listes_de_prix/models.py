@@ -19,7 +19,7 @@ class Fournisseur(models.Model):
     telephonne = models.CharField(verbose_name=u"Numéro de téléphonne", max_length=100, blank=True, null=True)
     fax = models.CharField(verbose_name=u"Numéro de fax", max_length=100, blank=True, null=True)
     siteweb = models.CharField(verbose_name=u"Site web", max_length=100, blank=True, null=True)
-    devise = models.ForeignKey(Devise,verbose_name=u"Devise")
+    devise = models.ForeignKey(Devise, verbose_name=u"Devise")
     ratio = models.DecimalField(verbose_name=u"Ratio", max_digits=5, decimal_places=2, default='1')
     ratio_us = models.DecimalField(verbose_name=u"Ratio US", max_digits=5, decimal_places=2, default='1')
     actif = models.BooleanField(verbose_name=u"Actif")

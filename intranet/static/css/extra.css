@@ -13,7 +13,7 @@ clear: both;
 /*Footer*/
 #footer {
 width:100%;
-background-color:#0397D7;
+background-color:#111111;
 color:#1e1818;
 font-size:12px;
 text-align:center;
@@ -55,4 +55,18 @@ text-align:center;
 .footer_bottom_wrapper ._logo img {
 
 text-align:center;
+}
+
+/*img grow 2*/
+#ex2 img{
+    height: 125px;
+    width: 125px; margin: 15px 0;
+    -webkit-transition: all 1s ease;
+    -moz-transition: all 1s ease;
+    -o-transition: all 1s ease;
+}
+
+#ex2 img:hover {
+    height: 130px;
+    width: 130px;
 }

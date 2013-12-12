@@ -9,6 +9,7 @@ class Bloc(models.Model):
     tache = models.ForeignKey(Tache, verbose_name=u"Tâche")
     temps = models.DecimalField(max_digits=4, decimal_places=2, verbose_name=u"Temps")
     note = models.TextField(max_length=200, blank=True, verbose_name=u"Commentaires")
+    approuve = models.BooleanField(verbose_name=u"Approuvé", default=False)
 
     def __unicode__(self):
         return u'%s %s %s %s %s' % (self.employe, self.date, self.projet, self.tache, self.temps)

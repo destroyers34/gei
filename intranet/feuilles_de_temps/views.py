@@ -3,7 +3,8 @@ from django.shortcuts import render
 from django.contrib.auth.decorators import permission_required, login_required
 from django.forms.models import modelformset_factory
 from feuilles_de_temps.models import Bloc_Eugenie, Banque, Bloc_TPE
-from feuilles_de_temps.forms import BlocEugenieForm, BanqueForm, BlocTPEForm, ConsultationBlocEugenieForm, ConsultationBlocTPEForm
+from ressources.models import Employe
+from feuilles_de_temps.forms import BlocEugenieForm, BanqueForm, BlocTPEForm, ConsultationBlocEugenieForm, ConsultationBlocTPEForm, BlocEugenieEmployeForm
 
 @permission_required('feuilles_de_temps.add_bloc_eugenie')    
 def blocs_eci(request):
@@ -117,4 +118,27 @@ def add_banque(request):
             return HttpResponseRedirect("../success/")
     else:
         formset = BanqueFormSet(queryset=Banque.objects.none())
-    return render(request,"feuillesdetemps/add_banque.html", {"formset": formset,})   
+    return render(request, "feuillesdetemps/add_banque.html", {"formset": formset,})
+
+
+def employe_add_bloc_eugenie(request):
+    BlocFormSet = modelformset_factory(Bloc_Eugenie, form=BlocEugenieEmployeForm)
+    if request.method == 'POST':
+        formset = BlocFormSet(request.POST, request.FILES)
+        if formset.is_valid():
+            for form in formset:
+                employe = Employe.objects.get(user_id=request.user.id)
+                bloc = Bloc_Eugenie(
+                    employe=employe,
+                    date=form.cleaned_data['date'],
+                    projet=form.cleaned_data['projet'],
+                    tache=form.cleaned_data['tache'],
+                    temps=form.cleaned_data['temps'],
+                    note=form.cleaned_data['note'],
+                    approuve=False
+                )
+                bloc.save()
+            return HttpResponseRedirect("../success/")
+    else:
+        formset = BlocFormSet(queryset=Bloc_Eugenie.objects.none())
+    return render(request,"feuillesdetemps/employe_add_bloc_eugenie.html", {"formset": formset,})

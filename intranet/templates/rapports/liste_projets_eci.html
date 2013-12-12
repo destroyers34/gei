@@ -10,6 +10,7 @@
     $( "#datepicker1" ).datepicker({format: 'yyyy-mm-dd', autoclose: true});
     $( "#datepicker2" ).datepicker({format: 'yyyy-mm-dd', autoclose: true});
     $('#myTab a').click(function (e) {e.preventDefault();$(this).tab('show');})
+    $('.link').tooltip()
 {% endblock jquery %}
 {% block nav-rapport %}<li class="dropdown active">{% endblock nav-rapport %}
 {% block content %}
@@ -125,7 +126,15 @@
                                                 {% endif %}
                                             </td>
                                             <td style="text-align: right;">{{projet.budget_mo|default_if_none:"0,00"}} H</td>
-                                            <td style="text-align: right;">{{projet.heure|default_if_none:"0,00"}} H</td>
+                                            <td style="text-align: right;">
+                                                {% if projet.non_approve_time > 0 %}
+                                                    <a href="#" class="link text-warning" data-toggle="tooltip" title="" data-original-title="Il y a {{ projet.non_approve_time }} heures non-approuvé">
+                                                        {{projet.heure|default_if_none:"0,00"}} H
+                                                    </a>
+                                                {% else %}
+                                                    {{projet.heure|default_if_none:"0,00"}} H
+                                                {% endif %}
+                                            </td>
                                             <td style="text-align: right;">{{projet.pourcent|default_if_none:"0,00"}} %</td>
                                             <td style="text-align: right;">{{projet.jours_restant}}</td>
                                             <td class='center-text'>{{projet.priority}}</td>
