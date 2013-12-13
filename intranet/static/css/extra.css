@@ -10,6 +10,19 @@ text-align: right;
 clear: both;
 }
 
+.errorlist {
+  color: #b94a48;
+}
+
+ul.errorlist{
+    list-style: none;
+}
+
+a.errorlist:hover,
+a.errorlist:focus {
+  color: #953b39;
+}
+
 /*Footer*/
 #footer {
 width:100%;

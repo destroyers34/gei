@@ -28,7 +28,10 @@ class Bloc_Eugenie(Bloc):
     class Meta:
         verbose_name = u"Bloc Eugénie"
         verbose_name_plural = u"Blocs Eugénie"
-        permissions = (("afficher_rapport_temps_eugenie", "Afficher un rapport de temps EuGénie"),)
+        permissions = (
+            ("afficher_rapport_temps_eugenie", "Afficher un rapport de temps EuGénie"),
+            ("superviseur_eugenie", "Superviseur pour EuGénie Canada Inc."),
+        )
 
 
 class Bloc_TPE(Bloc):

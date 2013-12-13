@@ -6,7 +6,7 @@ from ressources.models import Employe
 
 
 class BlocEugenieForm(forms.ModelForm):
-    projet = forms.ModelChoiceField(queryset=Projet_Eugenie.objects.order_by('-actif','-numero'))
+    projet = forms.ModelChoiceField(queryset=Projet_Eugenie.objects.order_by('-actif', '-numero'))
     employe = forms.ModelChoiceField(queryset=Employe.objects.filter(user__is_active=True).order_by('user__first_name'))
 
     class Meta:
@@ -25,10 +25,36 @@ class BlocEugenieEmployeForm(forms.ModelForm):
         self.empty_permitted = False
 
 
-class BaseBlocEugenieFormSet(BaseModelFormSet):
+class BlocEugenieApproveFrom(forms.ModelForm):
+    class Meta:
+        model = Bloc_Eugenie
+
     def __init__(self, *args, **kwargs):
-        super(BaseBlocEugenieFormSet, self).__init__(*args, **kwargs)
-        self.queryset = Bloc_Eugenie.objects.none()
+        super(BlocEugenieApproveFrom, self).__init__(*args, **kwargs)
+        instance = getattr(self, 'instance', None)
+        if instance and instance.pk:
+            self.fields['date'].widget.attrs['readonly'] = True
+            self.fields['projet'].widget.attrs['readonly'] = True
+            self.fields['tache'].widget.attrs['readonly'] = True
+            self.fields['temps'].widget.attrs['readonly'] = True
+
+    def clean_date(self):
+        return self.instance.date
+
+    def clean_projet(self):
+        return self.instance.projet
+
+    def clean_tache(self):
+        return self.instance.tache
+
+    def clean_temps(self):
+        return self.instance.temps
+
+
+#class BaseBlocEugenieFormSet(BaseModelFormSet):
+#    def __init__(self, *args, **kwargs):
+#        super(BaseBlocEugenieFormSet, self).__init__(*args, **kwargs)
+#        self.queryset = Bloc_Eugenie.objects.none()
 
 
 class BanqueForm(forms.ModelForm):
@@ -38,10 +64,10 @@ class BanqueForm(forms.ModelForm):
         model = Banque
 
 
-class BaseBanqueFormSet(BaseModelFormSet):
-    def __init__(self, *args, **kwargs):
-        super(BaseBanqueFormSet, self).__init__(*args, **kwargs)
-        self.queryset = Banque.objects.none()
+#class BaseBanqueFormSet(BaseModelFormSet):
+#    def __init__(self, *args, **kwargs):
+#        super(BaseBanqueFormSet, self).__init__(*args, **kwargs)
+#        self.queryset = Banque.objects.none()
 
 
 class BlocTPEForm(forms.ModelForm):
@@ -52,10 +78,10 @@ class BlocTPEForm(forms.ModelForm):
         model = Bloc_TPE
 
 
-class BaseBlocTPEFormSet(BaseModelFormSet):
-    def __init__(self, *args, **kwargs):
-        super(BaseBlocTPEFormSet, self).__init__(*args, **kwargs)
-        self.queryset = Bloc_TPE.objects.none()
+#class BaseBlocTPEFormSet(BaseModelFormSet):
+#    def __init__(self, *args, **kwargs):
+#        super(BaseBlocTPEFormSet, self).__init__(*args, **kwargs)
+#        self.queryset = Bloc_TPE.objects.none()
 
 
 class ConsultationBlocEugenieForm(forms.ModelForm):

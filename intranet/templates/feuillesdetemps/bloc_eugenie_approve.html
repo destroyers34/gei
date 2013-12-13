@@ -1,71 +1,77 @@
 ﻿{% extends "base.html" %}
-{% block title %}Entrée de temps{% endblock title %}
+{% block title %}Formulaire d'approbation{% endblock title %}
 {% block extrahead %}
-    <link rel="stylesheet" href="{{STATIC_URL}}css\datepicker.css" />
-    <script type="text/javascript" src="{{STATIC_URL}}js/bootstrap-datepicker.js"></script>
-    <script type="text/javascript" src="{{STATIC_URL}}js/jquery.formset.js"></script>
     <style media="screen" type="text/css">
         textarea {
-            height: 20px;
+            height: 40px;
             resize:none;
+            width: 90%
         }
-            input, textarea{
-            width: 175px;
-        }
+
     </style>
 {% endblock extrahead %}
-{% block jquery %}
-    $('#blocForm tbody tr').formset({prefix: '{{ formset.prefix }}',added: function(row) {row.find(".date").datepicker({format: 'yyyy-mm-dd', autoclose: true});}, load: function(row) {row.find(".date").datepicker({format: 'yyyy-mm-dd', autoclose: true});}});
-    $('.date').datepicker({format: 'yyyy-mm-dd', autoclose: true});
-{% endblock jquery %}
 {% block nav-feuille %}<li class="dropdown active">{% endblock nav-feuille %}
 {% block content %}
     <div class="row-fluid">
         <div class="span8 offset2 well">
             <div class="pull-left">
                 <h4>EuGénie Canada Inc.</h4>
-                <h4>Ajout de blocs de temps</h4>
-                <h3>{{ user.first_name }} {{ user.last_name }}</h3>
+                <h4>Approbation des blocs de temps</h4>
             </div>
             <div class="pull-right text-right">
                 <img width="200" src="{{ STATIC_URL }}img/logo_eugenie.png"><br />
             </div>
+            {% if form in formset %}
             <div>
                 <form id="blocForm" class="form-inline" method="post" autocomplete="off" action="">{% csrf_token %}
                     <table class="table table-bordered">
                         <thead>
+                            <th>Employé</th>
                             <th>Date</th>
                             <th>Projet</th>
                             <th>Tâche</th>
                             <th>Temps</th>
                             <th>Notes</th>
+                            <th>Approuvé</th>
                         </thead>
                         <tbody>
                             {% for form in formset %}
+                                {{ form.id }}
                                 <tr>
+                                    <td>
+                                        {% if form.employe.errors %}
+                                            {{ form.employe.errors }}
+                                        {% endif %}
+                                        {{ form.instance.employe }}
+                                        {{ form.employe.as_hidden }}
+                                    </td>
                                     <td>
                                         {% if form.date.errors %}
                                             {{ form.date.errors }}
                                         {% endif %}
-                                        <input class='date' type="text" name="{{ form.date.html_name }}" id="id_{{ form.date.html_name }}" {% if form.date.value %}value='{{ form.date.value }}'{% endif %}/>
+                                        {{ form.instance.date }}
+                                        {{ form.date.as_hidden }}
                                     </td>
                                     <td>
                                         {% if form.projet.errors %}
                                             {{ form.projet.errors }}
                                         {% endif %}
-                                        {{ form.projet }}
+                                        {{ form.instance.projet }}
+                                        {{ form.projet.as_hidden }}
                                     </td>
                                     <td>
                                         {% if form.tache.errors %}
                                             {{ form.tache.errors }}
                                         {% endif %}
-                                        {{ form.tache }}
+                                        {{ form.instance.tache }}
+                                        {{ form.tache.as_hidden }}
                                     </td>
                                     <td>
                                         {% if form.temps.errors %}
                                             {{ form.temps.errors }}
                                         {% endif %}
-                                        {{ form.temps }}
+                                        {{ form.instance.temps }} H
+                                        {{ form.temps.as_hidden }}
                                     </td>
                                     <td>
                                         {% if form.note.errors %}
@@ -75,6 +81,12 @@
                                         {% endif %}
                                         {{ form.note }}
                                     </td>
+                                    <td>
+                                        {% if form.approuve.errors %}
+                                            {{ form.approuve.errors }}
+                                        {% endif %}
+                                        {{ form.approuve }}
+                                    </td>
                                 </tr>
                             {% endfor %}
                         {{ formset.management_form }}
@@ -83,6 +95,10 @@
                     <p><input class="btn btn-primary" type="submit" value="Sauvegarder" /></p>
                 </form>
             </div>
+            {% else %}
+                <br /><br /><br /><br />
+                <h3 class="text-success">Vous n'avez aucun bloc de temps à approuver</h3>
+            {% endif %}
         </div>
     </div>
 {% endblock %}

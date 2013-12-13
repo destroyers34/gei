@@ -4,7 +4,7 @@ from django.contrib.auth.decorators import permission_required, login_required
 from django.forms.models import modelformset_factory
 from feuilles_de_temps.models import Bloc_Eugenie, Banque, Bloc_TPE
 from ressources.models import Employe
-from feuilles_de_temps.forms import BlocEugenieForm, BanqueForm, BlocTPEForm, ConsultationBlocEugenieForm, ConsultationBlocTPEForm, BlocEugenieEmployeForm
+from feuilles_de_temps.forms import *
 
 @permission_required('feuilles_de_temps.add_bloc_eugenie')    
 def blocs_eci(request):
@@ -119,6 +119,19 @@ def add_banque(request):
     else:
         formset = BanqueFormSet(queryset=Banque.objects.none())
     return render(request, "feuillesdetemps/add_banque.html", {"formset": formset,})
+
+@permission_required('feuilles_de_temps.superviseur_eugenie')
+def bloc_eugenie_approve(request):
+    BlocFormSet = modelformset_factory(Bloc_Eugenie, form=BlocEugenieApproveFrom, extra=0)
+    if request.method == 'POST':
+        formset = BlocFormSet(request.POST, request.FILES)
+        if formset.is_valid():
+            formset.save()
+            return HttpResponseRedirect("../approuve/")
+    else:
+        employe = Employe.objects.get(user_id=request.user.id)
+        formset = BlocFormSet(queryset=Bloc_Eugenie.objects.filter(employe__superviseur=employe, approuve=False))
+    return render(request, "feuillesdetemps/bloc_eugenie_approve.html", {"formset": formset})
 
 
 def employe_add_bloc_eugenie(request):
