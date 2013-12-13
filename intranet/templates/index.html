@@ -10,7 +10,9 @@
                     </a>
                 </div>
                 <div id="ex2" class="pull-left" style="margin: 5px;">
+                    <a href="{% url 'employe_edit_bloc_eugenie' %}">
                         <img src="{{ STATIC_URL }}img/consult.png">
+                    </a>
                 </div>
                 {% if perms.feuilles_de_temps.superviseur_eugenie %}
                 <div id="ex2" class="pull-left" style="margin: 5px;">

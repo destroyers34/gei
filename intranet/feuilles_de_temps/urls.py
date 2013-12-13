@@ -13,6 +13,7 @@ urlpatterns = patterns('feuilles_de_temps.views',
     url(r'^banque/add/$', 'add_banque', name='add_banque'),
     url(r'^banque/success/$', 'success', name='success'),
     url(r'^employe/eci/add/$', 'employe_add_bloc_eugenie', name='employe_add_bloc_eugenie'),
+    url(r'^employe/eci/edit/$', 'employe_edit_bloc_eugenie', name='employe_edit_bloc_eugenie'),
     url(r'^employe/eci/success/$', 'success', name='success'),
     url(r'^employe/eci/approuve/$', 'bloc_eugenie_approve', name='bloc_eugenie_approve'),
     )

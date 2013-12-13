@@ -21,7 +21,7 @@
             <div class="pull-right text-right">
                 <img width="200" src="{{ STATIC_URL }}img/logo_eugenie.png"><br />
             </div>
-            {% if form in formset %}
+            {% if formset.0.instance.employe %}
             <div>
                 <form id="blocForm" class="form-inline" method="post" autocomplete="off" action="">{% csrf_token %}
                     <table class="table table-bordered">

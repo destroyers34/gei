@@ -134,6 +134,28 @@ def bloc_eugenie_approve(request):
     return render(request, "feuillesdetemps/bloc_eugenie_approve.html", {"formset": formset})
 
 
+def employe_edit_bloc_eugenie(request):
+    BlocFormSet = modelformset_factory(Bloc_Eugenie, form=BlocEugenieEmployeForm, extra=0)
+    employe = Employe.objects.get(user_id=request.user.id)
+    if request.method == 'POST':
+        formset = BlocFormSet(request.POST, request.FILES)
+        if formset.is_valid():
+            for form in formset:
+                bloc = Bloc_Eugenie.objects.get(id=form.cleaned_data['id'].id)
+                bloc.employe = employe
+                bloc.date = form.cleaned_data['date']
+                bloc.projet = form.cleaned_data['projet']
+                bloc.tache = form.cleaned_data['tache']
+                bloc.temps = form.cleaned_data['temps']
+                bloc.note = form.cleaned_data['note']
+                bloc.approuve = False
+                bloc.save()
+            return HttpResponseRedirect("../edit/")
+    else:
+        formset = BlocFormSet(queryset=Bloc_Eugenie.objects.filter(employe=employe, approuve=False))
+    return render(request, "feuillesdetemps/employe_edit_bloc_eugenie.html", {"formset": formset})
+
+
 def employe_add_bloc_eugenie(request):
     BlocFormSet = modelformset_factory(Bloc_Eugenie, form=BlocEugenieEmployeForm)
     if request.method == 'POST':
