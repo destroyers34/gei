@@ -1,4 +1,4 @@
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.contrib.auth.decorators import permission_required, login_required
 from django.forms.models import modelformset_factory
@@ -102,11 +102,19 @@ def add_blocs_tpe(request):
             return HttpResponseRedirect("../success/")
     else:
         formset = BlocFormSet(queryset=Bloc_TPE.objects.none())
-    return render(request,"feuillesdetemps/add_blocs_tpe.html", {"formset": formset,})    
+    return render(request, "feuillesdetemps/add_blocs_tpe.html", {"formset": formset,})
     
 @login_required    
 def success(request):
-    return render(request,"feuillesdetemps/success.html")    
+    return render(request, "feuillesdetemps/success.html")
+
+@login_required
+def add_success(request):
+    return render(request, "feuillesdetemps/add_success.html")
+
+@login_required
+def edit_success(request):
+    return render(request, "feuillesdetemps/edit_success.html")
 
 @permission_required('feuilles_de_temps.add_bloc_banque')    
 def add_banque(request):
@@ -127,13 +135,14 @@ def bloc_eugenie_approve(request):
         formset = BlocFormSet(request.POST, request.FILES)
         if formset.is_valid():
             formset.save()
-            return HttpResponseRedirect("../approuve/")
+            return HttpResponseRedirect("success/")
     else:
         employe = Employe.objects.get(user_id=request.user.id)
-        formset = BlocFormSet(queryset=Bloc_Eugenie.objects.filter(employe__superviseur=employe, approuve=False))
+        formset = BlocFormSet(queryset=Bloc_Eugenie.objects.filter(employe__superviseur=employe, approuve=False).order_by('employe','date'))
     return render(request, "feuillesdetemps/bloc_eugenie_approve.html", {"formset": formset})
 
 
+@login_required
 def employe_edit_bloc_eugenie(request):
     BlocFormSet = modelformset_factory(Bloc_Eugenie, form=BlocEugenieEmployeForm, extra=0)
     employe = Employe.objects.get(user_id=request.user.id)
@@ -150,12 +159,13 @@ def employe_edit_bloc_eugenie(request):
                 bloc.note = form.cleaned_data['note']
                 bloc.approuve = False
                 bloc.save()
-            return HttpResponseRedirect("../edit/")
+            return HttpResponseRedirect("success/")
     else:
-        formset = BlocFormSet(queryset=Bloc_Eugenie.objects.filter(employe=employe, approuve=False))
+        formset = BlocFormSet(queryset=Bloc_Eugenie.objects.filter(employe=employe, approuve=False).order_by('date'))
     return render(request, "feuillesdetemps/employe_edit_bloc_eugenie.html", {"formset": formset})
 
 
+@login_required
 def employe_add_bloc_eugenie(request):
     BlocFormSet = modelformset_factory(Bloc_Eugenie, form=BlocEugenieEmployeForm)
     if request.method == 'POST':
@@ -173,7 +183,7 @@ def employe_add_bloc_eugenie(request):
                     approuve=False
                 )
                 bloc.save()
-            return HttpResponseRedirect("../success/")
+            return HttpResponseRedirect("success/")
     else:
         formset = BlocFormSet(queryset=Bloc_Eugenie.objects.none())
     return render(request,"feuillesdetemps/employe_add_bloc_eugenie.html", {"formset": formset,})
