@@ -49,7 +49,11 @@
                                         {% if form.date.errors %}
                                             {{ form.date.errors }}
                                         {% endif %}
-                                        {{ form.instance.date }}
+                                        {% if form.instance.date.day < 10 %}
+                                            0{{ form.instance.date.day }}-{{ form.instance.date.month }}-{{ form.instance.date.year }}
+                                        {% else %}
+                                            {{ form.instance.date.day }}-{{ form.instance.date.month }}-{{ form.instance.date.year }}
+                                        {% endif %}
                                         {{ form.date.as_hidden }}
                                     </td>
                                     <td>
