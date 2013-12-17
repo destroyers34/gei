@@ -27,6 +27,7 @@
                         <table id="table1" class="table table-bordered table-condensed">
                             <thead>
                                 <th>Employé</th>
+                                <th>Semaine</th>
                                 <th>Date</th>
                                 <th>Projet</th>
                                 <th>Tâche</th>
@@ -49,12 +50,13 @@
                                             {% if form.date.errors %}
                                                 {{ form.date.errors }}
                                             {% endif %}
-                                            {% if form.instance.date.day < 10 %}
-                                                0{{ form.instance.date.day }}-{{ form.instance.date.month }}-{{ form.instance.date.year }}
-                                            {% else %}
-                                                {{ form.instance.date.day }}-{{ form.instance.date.month }}-{{ form.instance.date.year }}
+                                            {{ form.instance.date|date:"W, o" }}
+                                        </td>
+                                        <td>
+                                            {% if form.date.errors %}
+                                                {{ form.date.errors }}
                                             {% endif %}
-                                            {{ form.date.as_hidden }}
+                                            {{ form.instance.date|date:"d F Y" }}
                                         </td>
                                         <td>
                                             {% if form.projet.errors %}
@@ -102,11 +104,12 @@
                     <script language="javascript" type="text/javascript">
                         var tf_table1  = {
                             col_0: "select",
-                            col_1: "multiple",
-                            col_2: "select",
+                            col_1: "select",
+                            col_2: "multiple",
                             col_3: "select",
-                            col_4: "none",
-                            col_6: "none",
+                            col_4: "select",
+                            col_5: "none",
+                            col_7: "none",
                             btn_reset: true,
                             paging: true,
                             paging_length: 25 ,
