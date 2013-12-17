@@ -4,18 +4,21 @@
         {% if user.is_authenticated %}
         <div class="row-fluid">
             <div class="span8 offset2">
-                <div id="ex2" class="pull-left" style="margin: 5px;">
+                <div class="pull-left" style="text-align:center;margin: 5px;">
+                    <h4>Ajouter</h4>
                     <a href="{% url 'employe_add_bloc_eugenie' %}">
                         <img src="{{ STATIC_URL }}img/timesheet.png">
                     </a>
                 </div>
-                <div id="ex2" class="pull-left" style="margin: 5px;">
+                <div class="pull-left" style="text-align:center;margin: 5px;">
+                    <h4>Consulter</h4>
                     <a href="{% url 'employe_edit_bloc_eugenie' %}">
                         <img src="{{ STATIC_URL }}img/consult.png">
                     </a>
                 </div>
                 {% if perms.feuilles_de_temps.superviseur_eugenie %}
-                <div id="ex2" class="pull-left" style="margin: 5px;">
+                <div class="pull-left" style="text-align:center;margin: 5px;">
+                    <h4>Approuver</h4>
                     <a href="{% url 'bloc_eugenie_approve' %}">
                         <img src="{{ STATIC_URL }}img/approuve.png">
                     </a>

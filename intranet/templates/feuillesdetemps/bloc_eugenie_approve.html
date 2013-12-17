@@ -24,7 +24,7 @@
             {% if formset.0.instance.employe %}
             <div>
                 <form id="blocForm" class="form-inline" method="post" autocomplete="off" action="">{% csrf_token %}
-                    <table class="table table-bordered">
+                    <table id="table1" class="table table-bordered table-condensed">
                         <thead>
                             <th>Employé</th>
                             <th>Date</th>
@@ -94,6 +94,26 @@
                     </table>
                     <p><input class="btn btn-primary" type="submit" value="Sauvegarder" /></p>
                 </form>
+                <script type="text/javascript" language="javascript" src="{{STATIC_URL}}TableFilter/tablefilter.js"></script>
+                <script language="javascript" type="text/javascript">
+                    var tf_table1  = {
+                        col_0: "select",
+                        col_1: "multiple",
+                        col_2: "select",
+                        col_3: "select",
+                        col_4: "none",
+                        col_6: "none",
+                        btn_reset: true,
+                        paging: true,
+                        paging_length: 25 ,
+                        results_per_page: ['Blocs par page',[25,50,100]],
+                        display_all_text: "Tout Afficher",
+                        rows_counter: true,
+                        rows_counter_text: "Blocs: ",
+                        popup_filters: true
+                    };
+                    setFilterGrid("table1",1,tf_table1);
+                </script>
             </div>
             {% else %}
                 <br /><br /><br /><br />
