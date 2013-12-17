@@ -1,6 +1,5 @@
 ﻿from django.contrib import admin
 from listes_de_prix.models import Option, Machine, Fournisseur, Categorie
-from decimal import *
 
 
 class MachinerieInline(admin.TabularInline):

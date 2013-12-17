@@ -120,6 +120,7 @@ INSTALLED_APPS = (
     'rapports',
     'gpao',
     'django.contrib.admin',
+    'south'
 )
 
 APPEND_SLASH = True
