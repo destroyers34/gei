@@ -12,6 +12,7 @@
                 <img width="200" src="{{ STATIC_URL }}img/main.png"><br /><br />
             </div>
             <div>
+                {% if employes.0.banque_heure %}
                 <table id="table1" class="table table-bordered table-condensed">
                     <thead>
                         <th>Compagnie</th>
@@ -80,6 +81,9 @@
                     };
                     setFilterGrid("table1",1,tf_table1);
                 </script>
+                {% else %}
+                    <h4>Il n'y a aucune heure en banque</h4>
+                {% endif %}
             </div>
         </div>
     </div>
