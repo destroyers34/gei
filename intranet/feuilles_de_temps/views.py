@@ -22,7 +22,7 @@ def blocs_eci(request):
             date_d = form.cleaned_data['date_debut']
             date_f = form.cleaned_data['date_fin']
             redirect_str = str(emp.user.username) + '/' + str(date_d) + '/' + str(date_f) + '/'
-            return HttpResponseRedirect(redirect_str) # Redirect after POST
+            return HttpResponseRedirect(redirect_str)
     else: 
         form = ConsultationBlocEugenieForm()
     return render(request,"feuillesdetemps/blocs_eci.html", {"last_blocs": last_blocs,'form':form})
@@ -44,7 +44,7 @@ def blocs_tpe(request):
             date_d = form.cleaned_data['date_debut']
             date_f = form.cleaned_data['date_fin']
             redirect_str = str(emp.user.username) + '/' + str(date_d) + '/' + str(date_f) + '/'
-            return HttpResponseRedirect(redirect_str) # Redirect after POST
+            return HttpResponseRedirect(redirect_str)
     else:
         form = ConsultationBlocTPEForm()
     return render(request,"feuillesdetemps/blocs_tpe.html", {"last_blocs": last_blocs,'form':form})
@@ -60,7 +60,7 @@ def consultation_blocs_eci(request, username, date_debut, date_fin):
             date_d = form.cleaned_data['date_debut']
             date_f = form.cleaned_data['date_fin']
             redirect_str = '../../../' + str(emp.user.username) + '/' + str(date_d) + '/' + str(date_f) + '/'
-            return HttpResponseRedirect(redirect_str) # Redirect after POST
+            return HttpResponseRedirect(redirect_str)
     else: 
         form = ConsultationBlocEugenieForm()
     return render(request, 'feuillesdetemps/consultation_blocs_eci.html', {'blocs':blocs,'form':form,'username':username,'date_debut':date_debut,'date_fin':date_fin})   
@@ -75,7 +75,7 @@ def consultation_blocs_tpe(request, username, date_debut, date_fin):
             date_d = form.cleaned_data['date_debut']
             date_f = form.cleaned_data['date_fin']
             redirect_str = '../../../' + str(emp.user.username) + '/' + str(date_d) + '/' + str(date_f) + '/'
-            return HttpResponseRedirect(redirect_str) # Redirect after POST
+            return HttpResponseRedirect(redirect_str)
     else:
         form = ConsultationBlocTPEForm()
     return render(request, 'feuillesdetemps/consultation_blocs_tpe.html', {'blocs':blocs,'form':form,'username':username,'date_debut':date_debut,'date_fin':date_fin})
@@ -116,17 +116,17 @@ def add_success(request):
 def edit_success(request):
     return render(request, "feuillesdetemps/edit_success.html")
 
-@permission_required('feuilles_de_temps.add_bloc_banque')    
-def add_banque(request):
-    BanqueFormSet = modelformset_factory(Banque, form=BanqueForm)
-    if request.method == 'POST':
-        formset = BanqueFormSet(request.POST, request.FILES)
-        if formset.is_valid():
-            formset.save()
-            return HttpResponseRedirect("../success/")
-    else:
-        formset = BanqueFormSet(queryset=Banque.objects.none())
-    return render(request, "feuillesdetemps/add_banque.html", {"formset": formset,})
+#@permission_required('feuilles_de_temps.add_bloc_banque')
+#def add_banque(request):
+#    BanqueFormSet = modelformset_factory(Banque, form=BanqueForm)
+#    if request.method == 'POST':
+#        formset = BanqueFormSet(request.POST, request.FILES)
+#        if formset.is_valid():
+#            formset.save()
+#            return HttpResponseRedirect("../success/")
+#    else:
+#        formset = BanqueFormSet(queryset=Banque.objects.none())
+#    return render(request, "feuillesdetemps/add_banque.html", {"formset": formset,})
 
 @permission_required('feuilles_de_temps.superviseur_eugenie')
 def bloc_eugenie_approve(request):
@@ -134,7 +134,18 @@ def bloc_eugenie_approve(request):
     if request.method == 'POST':
         formset = BlocFormSet(request.POST, request.FILES)
         if formset.is_valid():
-            formset.save()
+            for form in formset:
+                bloc = Bloc_Eugenie.objects.get(id=form.cleaned_data['id'].id)
+                bloc.note = form.cleaned_data['note']
+                bloc.approuve = form.cleaned_data['approuve']
+                if bloc.approuve and bloc.banque:
+                    employe = Employe.objects.get(id=form.cleaned_data['employe'].id)
+                    if bloc.tache.type == 'PO':
+                        employe.banque_heure += bloc.temps
+                    else:
+                        employe.banque_heure -= bloc.temps
+                    employe.save()
+                bloc.save()
             return HttpResponseRedirect("success/")
     else:
         employe = Employe.objects.get(user_id=request.user.id)
@@ -157,6 +168,7 @@ def employe_edit_bloc_eugenie(request):
                 bloc.tache = form.cleaned_data['tache']
                 bloc.temps = form.cleaned_data['temps']
                 bloc.note = form.cleaned_data['note']
+                bloc.banque = form.cleaned_data['banque']
                 bloc.approuve = False
                 bloc.save()
             return HttpResponseRedirect("success/")
@@ -180,6 +192,7 @@ def employe_add_bloc_eugenie(request):
                     tache=form.cleaned_data['tache'],
                     temps=form.cleaned_data['temps'],
                     note=form.cleaned_data['note'],
+                    banque=form.cleaned_data['banque'],
                     approuve=False
                 )
                 bloc.save()

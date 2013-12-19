@@ -80,14 +80,6 @@
 					  </ul>
 					</li>
 					{% endif %}
-					{% if perms.feuilles_de_temps.add_banque %}
-					<li class="dropdown-submenu">
-					  <a href="{% url 'add_banque' %}">Banque d'heures</a>
-					  <ul class="dropdown-menu">
-						<li><a href="{% url 'add_banque' %}">Ajouter des heures</a></li>
-					  </ul>
-					</li>
-					{% endif %}
 				  </ul>
 			  </li>{% endif %}
               {% if perms.feuilles_de_temps.afficher_rapport_temps_eugenie or perms.feuilles_de_temps.afficher_rapport_temps_tpe or perms.feuilles_de_temps.afficher_rapport_temps_jrc %}

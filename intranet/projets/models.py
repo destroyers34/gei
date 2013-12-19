@@ -42,10 +42,7 @@ class Projet_Eugenie(Projet):
 
     def non_approve_time(self):
         projet = Projet_Eugenie.objects.filter(numero=self.numero, bloc_eugenie__approuve=False).aggregate(total=Sum('bloc_eugenie__temps'))
-        if projet["total"]:
-            return projet["total"]
-        else:
-            return 0
+        return projet["total"]
 
     def temps_total(self):
         projet = Projet_Eugenie.objects.filter(numero=self.numero).aggregate(total=Sum('bloc_eugenie__temps'))

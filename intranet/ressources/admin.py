@@ -16,8 +16,8 @@ class DeviseAdmin(admin.ModelAdmin):
 
 
 class TacheAdmin(admin.ModelAdmin):
-    list_display = ('numero', 'description')
-    search_fields = ['numero', 'description']  
+    list_display = ('numero', 'description', 'type')
+    search_fields = ['numero', 'description', 'type']
 
 
 # Define an inline admin descriptor for Employee model

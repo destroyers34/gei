@@ -37,6 +37,7 @@
                                 <th>Projet</th>
                                 <th>Tâche</th>
                                 <th>Temps</th>
+                                <th>Banque</th>
                                 <th>Notes</th>
                             </thead>
                             <tbody>
@@ -66,6 +67,12 @@
                                                 {{ form.temps.errors }}
                                             {% endif %}
                                             {{ form.temps }}
+                                        </td>
+                                        <td style="text-align: center;">
+                                            {% if form.banque.errors %}
+                                                {{ form.banque.errors }}
+                                            {% endif %}
+                                            {{ form.banque }}
                                         </td>
                                         <td>
                                             {% if form.note.errors %}

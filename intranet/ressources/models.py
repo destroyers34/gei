@@ -53,8 +53,15 @@ class Devise(models.Model):
 
 
 class Tache(models.Model):
+    POSITIF = 'PO'
+    NEGATIF = 'NE'
+    TASK_MODE = (
+        (POSITIF, 'Positif'),
+        (NEGATIF, 'Négatif'),
+    )
     numero = models.CharField(max_length=10, verbose_name=u"Numéro")
     description = models.CharField(max_length=60, verbose_name=u"Description")
+    type = models.CharField(max_length=2, choices=TASK_MODE, default=POSITIF, verbose_name=u"Type de tache:")
 
     def __unicode__(self):
         return u'%s %s' % (self.numero, self.description)
