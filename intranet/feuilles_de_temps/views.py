@@ -2,9 +2,10 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.contrib.auth.decorators import permission_required, login_required
 from django.forms.models import modelformset_factory
-from feuilles_de_temps.models import Bloc_Eugenie, Banque, Bloc_TPE
+from feuilles_de_temps.models import Bloc_Eugenie, Bloc_TPE
 from ressources.models import Employe
 from feuilles_de_temps.forms import *
+from django.db.models import Sum
 
 @permission_required('feuilles_de_temps.add_bloc_eugenie')    
 def blocs_eci(request):
@@ -199,4 +200,11 @@ def employe_add_bloc_eugenie(request):
             return HttpResponseRedirect("success/")
     else:
         formset = BlocFormSet(queryset=Bloc_Eugenie.objects.none())
-    return render(request,"feuillesdetemps/employe_add_bloc_eugenie.html", {"formset": formset,})
+    return render(request,"feuillesdetemps/employe_add_bloc_eugenie.html", {"formset": formset})
+
+
+@permission_required('feuilles_de_temps.superviseur_eugenie')
+def view_banque(request):
+    employes = Employe.objects.filter(user__is_active=True).exclude(banque_heure=0).order_by('compagnie', 'banque_heure')
+    total = Employe.objects.filter(user__is_active=True).aggregate(total=Sum('banque_heure'))
+    return render(request,"feuillesdetemps/view_banque.html",{"employes":employes,"total":total})

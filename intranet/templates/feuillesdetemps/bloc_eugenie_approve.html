@@ -70,13 +70,13 @@
                                             {{ form.instance.tache }}
                                             {{ form.tache.as_hidden }}
                                         </td>
-                                        <td>
+                                        <td style="text-align: center">
                                             {% if form.temps.errors %}
                                                 {{ form.temps.errors }}
                                             {% endif %}
                                             {{ form.instance.temps }} H
                                             {% if form.instance.banque %}
-                                                <br />Banque
+                                                <br />[Banque]
                                             {% endif %}
                                             {{ form.temps.as_hidden }}
                                             {{ form.banque.as_hidden }}
