@@ -130,8 +130,8 @@ GRAPPELLI_ADMIN_TITLE = 'Groupe EuGénie Admin'
 
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = "587"
-EMAIL_HOST_USER = 'anthony@jrcmachinery.com'
-EMAIL_HOST_PASSWORD = 'lucian546575'
+EMAIL_HOST_USER = ''
+EMAIL_HOST_PASSWORD = ''
 EMAIL_USE_TLS = True
 
 # A sample logging configuration. The only tangible logging
