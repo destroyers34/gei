@@ -1,4 +1,5 @@
 ﻿{% extends "base.html" %}
+{% load humanize %}
 {% block title %}Rapports de temps des tâches du projet{% endblock title %}
 {% block extrahead %}
     <link rel="stylesheet" href="{{STATIC_URL}}css\datepicker.css" />
@@ -30,22 +31,73 @@
                             <th>Tâche</th>
                             <th>Détails</th>
                             <th>Temps</th>
+                            <th>Main d'oeuvre</th>
                         </tr>
                     </thead>
-                    <tfoot>
-                        <tr>
-                            <td style="text-align: right;background-color: lightgray"></td>
-                            <th style="text-align: right;background-color: lightgray">Total:</th>
-                            <th style="text-align: right;background-color: lightgray">{{projet_total.heures}} H</th>
-                        </tr>
-                    </tfoot>
                     <tbody>
-                        {% for tache in taches %}
+                    {% for bloc in blocs %}
+                        {% if forloop.last %}
                             <tr>
-                                <td><a href="{% url 'tache_details_eci' tache.numero %}">{{tache.numero}} {{tache.description}}</a></td>
-                                <td><a href="{% url 'projet_tache_details_eci' numero_projet tache.numero %}"><i class="icon-user"></i></a></td>
-                                <td style="text-align: right">{{tache.heure}} H</td>
+                                <td style="text-align: right;background-color: lightgray"></td>
+                                <th style="text-align: right;background-color: lightgray">Total MO:</th>
+                                <th style="text-align: right;background-color: lightgray">{{ bloc.H }} H</th>
+                                <th style="text-align: right;background-color: lightgray">{{ bloc.MO|default_if_none:"0,00"|floatformat:2|intcomma }}
+                                    $
+                                </th>
                             </tr>
+                            <tr>
+                                <th colspan="2">Fournisseur</th>
+                                <th>Catégorie</th>
+                                <th>Montant</th>
+                            </tr>
+                            {% if materiels %}
+                                {% for materiel in materiels %}
+                                    <tr>
+                                        <td colspan="2"><a
+                                                href="{% url 'fournisseurs_materiels_details' materiel.fournisseur.id %}">{{ materiel.fournisseur }}</a>
+                                        </td>
+                                        <td>{{ materiel.categorie }}</td>
+                                        <td style="text-align: right">{{ materiel.montant|default_if_none:"0,00"|floatformat:2|intcomma }}
+                                            $
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            {% else %}
+                                <tr>
+                                    <td colspan="4">Aucun matériel pour ce projet</td>
+                                </tr>
+                            {% endif %}
+                            <tfoot>
+                            <tr>
+                                <th style="text-align: right;background-color: lightgray" colspan="2">Total matériel:
+                                </th>
+                                <th style="text-align: right;background-color: lightgray"
+                                    colspan="2">{{ materiel_total.total|default_if_none:"0,00"|floatformat:2|intcomma }}
+                                    $
+                                </th>
+                            </tr>
+                            <tr>
+                                <th style="text-align: right;background-color: lightgray" colspan="2">Total MO:</th>
+                                <th style="text-align: right;background-color: lightgray"
+                                    colspan="2">{{ bloc.MO|default_if_none:"0,00"|floatformat:2|intcomma }} $
+                                </th>
+                            </tr>
+                            <tr>
+                                <th style="text-align: right;background-color: lightgray" colspan="2">Total:</th>
+                                <th style="text-align: right;background-color: lightgray"
+                                    colspan="2">{{ total|default_if_none:"0,00"|floatformat:2|intcomma }} $
+                                </th>
+                            </tr>
+                            </tfoot>
+                        {% else %}
+                            <tr>
+                                <td><a href="{% url 'tache_details_eci' bloc.NT %}">{{ bloc.tache }}</a></td>
+                                <td><a href="{% url 'projet_tache_details_eci' numero_projet bloc.NT %}"><i
+                                        class="icon-user"></i></a></td>
+                                <td style="text-align: right">{{ bloc.H }} H</td>
+                                <td style="text-align: right">{{ bloc.MO|floatformat:2|intcomma }} $</td>
+                            </tr>
+                        {% endif %}
                         {% endfor %}
                     </tbody>
                 </table>

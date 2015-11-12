@@ -1,7 +1,8 @@
 #!/usr/bin/env python
-import os
 import optparse
+import os
 import subprocess
+
 import sys
 
 here = os.path.dirname(__file__)

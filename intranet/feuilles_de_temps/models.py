@@ -1,6 +1,7 @@
 ﻿from django.db import models
-from ressources.models import Employe, Tache
+
 from projets.models import Projet_Eugenie, Projet_TPE
+from ressources.models import Employe, Tache
 
 
 class Bloc(models.Model):
@@ -18,7 +19,12 @@ class Bloc(models.Model):
     def get_Name(self):
         return self.employe.get_Name()
     get_Name.short_description = 'Nom'
-    
+
+    def get_Cout(self):
+        return self.temps * self.employe.taux_horaire
+
+    get_Cout.short_description = 'Cout'
+
     class Meta:
         abstract = True
 

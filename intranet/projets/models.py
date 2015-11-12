@@ -1,5 +1,6 @@
 ﻿from django.db import models
 from django.db.models import Sum
+
 from clients.models import Compagnie
 from datetime import datetime
 
@@ -73,9 +74,17 @@ class Projet_Eugenie(Projet):
             if self.budget_mo > 0:
                 return format(projets['total']/self.budget_mo*100, '.2f')
             else:
-                return format(projets['total']*100, '.2f')    
+                return None
         else:
-            return format(0, '.2f')    
+            return format(0, '.2f')
+
+    def budget_materiel(self):
+        from budget_materiel.models import Materiel_Eugenie
+        materiel = Materiel_Eugenie.objects.filter(projet__numero=self.numero).aggregate(total=Sum('montant'))
+        if materiel['total']:
+            return materiel['total']
+        else:
+            return format(0, '.2f')
 
     class Meta:
         verbose_name = u"Projet EuGénie"

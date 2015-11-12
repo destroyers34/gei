@@ -116,6 +116,7 @@ INSTALLED_APPS = (
     'projets',
     'listes_de_prix',
     'feuilles_de_temps',
+    'budget_materiel',
     'accounts',
     'rapports',
     'gpao',

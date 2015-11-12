@@ -1,4 +1,5 @@
 ﻿{% extends "print_base.html" %}
+{% load humanize %}
 {% block title %}Rapports{% endblock title %}
 {% block content %}
 		<h4>EuGénie Canada Inc.</h4>
@@ -22,9 +23,9 @@
 				<td>{{ p.projet.numero }}</td>
 				<td>{{ p.projet.nom }}</td>
 				<td>{{ p.projet.modele }}</td>
-				<td>{{ p.projet.budget_mat }}</td>
-				<td>{{ p.projet.budget_mo }}</td>
-				<td>{{ p.heures.total }}</td>
+                <td>{{ p.projet.budget_mat|default_if_none:"0.00"|floatformat:2|intcomma }} $</td>
+                <td>{{ p.projet.budget_mo|default_if_none:"0.00"|floatformat:2|intcomma }} H</td>
+                <td>{{ p.heures.total|default_if_none:"0.00"|floatformat:2|intcomma }} H</td>
 			</tr>
 			{% endfor %}
 		</tbody>

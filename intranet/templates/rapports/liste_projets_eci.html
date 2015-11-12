@@ -1,5 +1,6 @@
 ﻿{% extends "base.html" %}
 {% load admin_urls %}
+{% load humanize %}
 {% block title %}Liste des projets EuGénie Canada Inc.{% endblock title %}
 {% block extrahead %}
     <link rel="stylesheet" href="{{STATIC_URL}}css\datepicker.css" />
@@ -91,8 +92,7 @@
                                         <th>Client</th>
                                         <th>Budget</th>
                                         <th>Temps</th>
-                                        <th>% MO</th>
-                                        <th>Restant (J)</th>
+                                        <th>Matériel</th>
                                         <th class='center-text'>Priorité</th>
                                     </tr>
                                 </thead>
@@ -101,9 +101,13 @@
                                         <td style="text-align: right;background-color: lightgray"></td>
                                         <th style="text-align: right;background-color: lightgray">Total:</th>
                                         <th style="text-align: right;background-color: lightgray">{{total_actif.total_mo}} H</th>
-                                        <th style="text-align: right;background-color: lightgray">{{total_actif.total_heure}} H</th>
-                                        <th style="text-align: right;background-color: lightgray">{{total_actif.total_pourcent}} %</th>
-                                        <td style="text-align: right;background-color: lightgray" colspan='4'></td>
+                                        <th style="text-align: right;background-color: lightgray">
+                                            <a href="#" class="link" data-toggle="tooltip" title=""
+                                               data-original-title="{{ total_actif.total_pourcent|default_if_none:0.00 }} % du budget MO">
+                                                {{ total_actif.total_heure }} H
+                                            </a>
+                                        </th>
+                                        <td style="text-align: right;background-color: lightgray" colspan='3'></td>
                                     </tr>
                                 </tfoot>
                                 <tbody>
@@ -128,16 +132,28 @@
                                             <td style="text-align: right;">{{projet.budget_mo|default_if_none:"0,00"}} H</td>
                                             <td style="text-align: right;">
                                                 {% if projet.non_approve_time > 0 %}
-                                                    <a href="#" class="link text-warning" data-toggle="tooltip" title="" data-original-title="Il y a {{ projet.non_approve_time }} heures non-approuvé">
+                                                    <a href="#" class="link text-warning" data-toggle="tooltip" title=""
+                                                       data-original-title="Il y a {{ projet.non_approve_time }} heures non-approuvé. {{ projet.pourcent|default_if_none:"0,00" }}&nbsp;% du budget MO.">
                                                         {{projet.heure|default_if_none:"0,00"}} H
                                                     </a>
                                                 {% else %}
-                                                    {{projet.heure|default_if_none:"0,00"}} H
+                                                    <a href="#" class="link text-success" data-toggle="tooltip" title=""
+                                                       data-original-title="{{ projet.pourcent|default_if_none:"0,00" }}&nbsp;% du budget MO">
+                                                        {{ projet.heure|default_if_none:"0,00" }} H
+                                                    </a>
                                                 {% endif %}
                                             </td>
-                                            <td style="text-align: right;">{{projet.pourcent|default_if_none:"0,00"}} %</td>
-                                            <td style="text-align: right;">{{projet.jours_restant}}</td>
-                                            <td class='center-text'>{{projet.priority}}</td>
+                                            <td>{{ projet.budget_materiel|default_if_none:"0,00"|floatformat:2|intcomma }}
+                                                $
+                                            </td>
+                                            <td class='center-text'>
+                                                <a href="#"
+                                                   class="link {% if projet.jours_restant > 0 %}text-success{% else %}text-error{% endif %}"
+                                                   data-toggle="tooltip" title=""
+                                                   data-original-title="{{ projet.jours_restant }} jours restant">
+                                                    {{ projet.priority }}
+                                                </a>
+                                            </td>
                                         </tr>
                                     {% endfor %}
                                 </tbody>

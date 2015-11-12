@@ -1,14 +1,20 @@
 ﻿from __future__ import division
+
+from decimal import *
+
+from django.contrib.auth.decorators import permission_required
+from django.db.models import Sum, Count
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, render_to_response
-from django.db.models import Sum, Count
-from django.contrib.auth.decorators import permission_required
-from datetime import datetime, date
+
+from budget_materiel.models import Materiel_Eugenie
 from clients.models import Compagnie
-from projets.models import Projet_Eugenie, Projet_TPE
+from datetime import datetime, date
 from feuilles_de_temps.models import Bloc_Eugenie, Bloc_TPE
-from ressources.models import Tache, Employe
+from projets.models import Projet_Eugenie, Projet_TPE
 from rapports.forms import DateRangeForm
+from ressources.models import Tache, Employe
+
 
 @permission_required('feuilles_de_temps.afficher_rapport_temps_eugenie')    
 def base_liste_clients_eci(request):
@@ -45,7 +51,8 @@ def base_liste_projets_eci(request):
             total_actif.update({'total_pourcent':format(total_actif['total_heure']*100, '.2f')})
     else:
         total_actif.update({'total_pourcent':format(0, '.2f') })
-    return {'projets_attente':projets_attente,'projets_actif':projets_actif,'projets_inactif':projets_inactif,'total_attente':total_attente,'total_actif':total_actif,'total_inactif':total_inactif}
+    return {'projets_attente': projets_attente, 'projets_actif': projets_actif, 'projets_inactif': projets_inactif,
+            'total_attente': total_attente, 'total_actif': total_actif, 'total_inactif': total_inactif}
 
 @permission_required('feuilles_de_temps.afficher_rapport_temps_eugenie')
 def base_liste_taches_eci(request):
@@ -64,9 +71,26 @@ def base_liste_employes_eci(request):
     
 @permission_required('feuilles_de_temps.afficher_rapport_temps_eugenie')
 def base_projet_details_eci(request, numero_projet):
-    taches = Tache.objects.filter(bloc_eugenie__projet__numero=numero_projet).annotate(heure=Sum('bloc_eugenie__temps')).order_by('numero')
-    projet_total = Projet_Eugenie.objects.filter(numero=numero_projet).aggregate(heures=Sum('bloc_eugenie__temps'))
-    return {'taches':taches,'projet_total':projet_total,'numero_projet':numero_projet}
+    # taches = Tache.objects.filter(bloc_eugenie__projet__numero=numero_projet).annotate(heure=Sum('bloc_eugenie__temps')).order_by('numero')
+    # projet_total = Projet_Eugenie.objects.filter(numero=numero_projet).aggregate(heures=Sum('bloc_eugenie__temps'))
+    blocs = Bloc_Eugenie.objects.raw(
+        "SELECT b.id, t.numero as 'NT', CONCAT(t.numero, ' ', t.description) AS 'Tache', SUM(b.temps) AS 'H', "
+        "SUM(b.temps*e.taux_horaire) as 'MO' FROM feuilles_de_temps_bloc_eugenie AS b "
+        "INNER JOIN ressources_tache as t on t.id = b.tache_id "
+        "INNER JOIN projets_projet_eugenie as p on p.id = b.projet_id "
+        "INNER JOIN ressources_employe as e on e.id = b.employe_id "
+        "WHERE p.numero=%s group by t.numero WITH ROLLUP", [numero_projet])
+    materiels = Materiel_Eugenie.objects.filter(projet__numero=numero_projet)
+    materiel_total = Materiel_Eugenie.objects.filter(projet__numero=numero_projet).aggregate(total=Sum('montant'))
+    total_mo = 0.00
+    if len(list(blocs)) > 0:
+        total_mo = list(blocs)[-1].MO
+    if not materiel_total['total']:
+        materiel_total['total'] = 0.00
+    total = (float)(total_mo) + (float)(materiel_total['total'])
+
+    return {'numero_projet': numero_projet, 'blocs': blocs, 'materiels': materiels, 'materiel_total': materiel_total,
+            'total': total}
 
 @permission_required('feuilles_de_temps.afficher_rapport_temps_eugenie')
 def base_tache_details_eci(request, numero_tache):
@@ -96,7 +120,10 @@ def base_liste_projets_modeles_eci(request, nom_projet, modele_projet):
     projets_total = Projet_Eugenie.objects.filter(nom=nom_projet,modele=modele_projet).aggregate(heures=Sum('bloc_eugenie__temps'))
     liste_temps_projet = list()
     for projet in projets:
-        liste_temps_projet.append(projet['heure'])
+        if projet['heure']:
+            liste_temps_projet.append(projet['heure'])
+        else:
+            liste_temps_projet.append(Decimal(0.00))
         liste_taches = Tache.objects.filter(bloc_eugenie__projet__nom=nom_projet,bloc_eugenie__projet__modele=modele_projet,bloc_eugenie__projet__numero=projet['numero']).annotate(heure=Sum('bloc_eugenie__temps')).order_by('numero')
         projet.update({'liste_taches' : liste_taches})
     moyenne = format(reduce(lambda x, y: x + y, liste_temps_projet) / len(liste_temps_projet), '.2f')
@@ -108,7 +135,15 @@ def base_rapport_complet_eci(request, numero_projet):
     total_projet = Projet_Eugenie.objects.filter(numero=numero_projet).aggregate(heures=Sum('bloc_eugenie__temps'))
     liste_taches = Tache.objects.filter(bloc_eugenie__projet=projet).order_by('numero','bloc_eugenie__date','bloc_eugenie__employe').values('numero','description','bloc_eugenie__employe__user__first_name','bloc_eugenie__employe__user__last_name').annotate(total_employe=Sum('bloc_eugenie__temps'))
     total_tache = liste_taches.values('numero','description').annotate(heures=Sum('bloc_eugenie__temps')).order_by('numero')
-    return {'projet':projet,'total_projet':total_projet,'liste_taches':liste_taches,'total_tache':total_tache,'pourcent':format(total_projet['heures']/projet.budget_mo*100, '.2f')}
+    if projet.budget_mo > 0:
+        if total_projet['heures']:
+            pourcent = format(total_projet['heures'] / projet.budget_mo * 100, '.2f')
+        else:
+            pourcent = format(Decimal(0.00) / projet.budget_mo * 100, '.2f')
+    else:
+        pourcent = 'Non définie'
+    return {'projet': projet, 'total_projet': total_projet, 'liste_taches': liste_taches, 'total_tache': total_tache,
+            'pourcent': pourcent}
 
 @permission_required('feuilles_de_temps.afficher_rapport_temps_eugenie')
 def base_employe_details_eci(request, username):

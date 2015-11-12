@@ -56,7 +56,9 @@
                     {% for projet in projets %}
                     <tr>
                         <td><a href="{% url 'projet_details_eci' projet.numero %}">{{projet.numero}}</a> <a href="{% url 'liste_projets_noms_eci' projet.nom %}">{{projet.nom}}</a> <a href="{% url 'liste_projets_modeles_eci' projet.nom projet.modele %}">{{projet.modele}}</a></td></td>
-                        <td><a href="{% url 'client_details_eci' projet.client.id %}">{{ projet.client|truncatewords_html:2 }}</a></td>
+                        <td>
+                            <a {% if client_details_eci %}href="{% url 'client_details_eci' projet.client.id %}"{% endif %}>{{ projet.client|truncatewords_html:2 }}</a>
+                        </td>
                         <td class='center-text'>{{ projet.date_fin|date:"d M Y" }}</td>
                         <td class='center-text'>{{ projet.nbjours }}</td>
 

@@ -1,4 +1,5 @@
 ﻿{% extends "base.html" %}
+{% load humanize %}
 {% block title %}Liste des projets {{ client.nom }}{% endblock title %}
 {% block nav-rapport %}<li class="dropdown active">{% endblock nav-rapport %}
 {% block content %}
@@ -32,9 +33,11 @@
                                 <td><a href="{% url 'projet_details_eci' p.projet.numero %}">{{ p.projet.numero }}</a></td>
                                 <td><a href="{% url 'liste_projets_noms_eci' p.projet.nom %}">{{ p.projet.nom }}</a></td>
                                 <td><a href="{% url 'liste_projets_modeles_eci' p.projet.nom p.projet.modele %}">{{ p.projet.modele }}</a></td>
-                                <td>{{ p.projet.budget_mat }}</td>
-                                <td>{{ p.projet.budget_mo }}</td>
-                                <td style="text-align: right;">{{ p.heures.total }} H</td>
+                                <td>{{ p.projet.budget_mat|default_if_none:"0.00"|floatformat:2|intcomma }} $</td>
+                                <td>{{ p.projet.budget_mo|default_if_none:"0.00"|floatformat:2|intcomma }} H</td>
+                                <td style="text-align: right;">{{ p.heures.total|default_if_none:"0.00"|floatformat:2|intcomma }}
+                                    H
+                                </td>
                             </tr>
                         {% endfor %}
                     </tbody>
