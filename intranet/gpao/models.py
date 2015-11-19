@@ -1,7 +1,8 @@
 ﻿#-*- coding: utf-8 -*-
-from django.db import models
 import datetime
 from operator import itemgetter
+
+from django.db import models
 
 
 class Famille(models.Model):
@@ -64,7 +65,7 @@ class Piece(models.Model):
     ref_commercial = models.CharField(max_length=30, verbose_name=u"Référence commercial:", default='XXX')
     ref_mecanique = models.CharField(max_length=30, verbose_name=u"Référence mécanique:", default='XXX')
     brute = models.CharField(max_length=30, verbose_name=u"Brute:", default='XXX')
-    soudure = models.BooleanField(verbose_name=u"Soudure:")
+    soudure = models.BooleanField(verbose_name=u"Soudure:", default=False)
     finition = models.CharField(max_length=2, choices=FINITIONS, default=NONE, verbose_name=u"Finition:")
     commentaires = models.CharField(max_length=200, verbose_name=u"Commentaires:", null=True, blank=True)
     prix = models.DecimalField(max_digits=6, decimal_places=2, verbose_name=u"Prix:", default=0.00)
@@ -236,8 +237,8 @@ class Nm(models.Model):
 class LienNM(models.Model):
     from_nm = models.ForeignKey(Nm, related_name='from_nm')
     to_nm = models.ForeignKey(Nm, related_name='to_nm', verbose_name=u"Lié à NM:")
-    numero_pe = models.IntegerField(max_length=6, verbose_name=u"# sur le PE:")
-    quantite = models.IntegerField(max_length=6, verbose_name=u"Quantité:")
+    numero_pe = models.IntegerField(verbose_name=u"# sur le PE:")
+    quantite = models.IntegerField(verbose_name=u"Quantité:")
     
     def __unicode__(self):
         return u"%s linkto %s" % (self.from_nm, self.to_nm)
@@ -246,8 +247,8 @@ class LienNM(models.Model):
 class LienPiece(models.Model):
     from_nm = models.ForeignKey(Nm, related_name='from_nm_p')
     to_piece = models.ForeignKey(Piece, related_name='to_piece', verbose_name=u"Lié à Pièce:")
-    numero_pe = models.IntegerField(max_length=6, verbose_name=u"# sur le PE:")
-    quantite = models.IntegerField(max_length=6, verbose_name=u"Quantité:")
+    numero_pe = models.IntegerField(verbose_name=u"# sur le PE:")
+    quantite = models.IntegerField(verbose_name=u"Quantité:")
     
     def __unicode__(self):
         return u"%s linkto %s" % (self.from_nm,self.to_piece)

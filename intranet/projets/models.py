@@ -1,8 +1,9 @@
-﻿from django.db import models
-from django.db.models import Sum
+﻿from datetime import datetime
 
+import django.utils
 from clients.models import Compagnie
-from datetime import datetime
+from django.db import models
+from django.db.models import Sum
 
 
 class Projet(models.Model):
@@ -10,8 +11,8 @@ class Projet(models.Model):
     nom = models.CharField(max_length=30,verbose_name=u"Nom du projet", default='X')
     client = models.ForeignKey(Compagnie,verbose_name=u"Client", null=True, blank=True)
     date_soumission = models.DateField(verbose_name=u"Date de soumission", null=True, blank=True)
-    date_debut = models.DateField(verbose_name=u"Date de début", default=datetime.now())
-    date_fin = models.DateField(verbose_name=u"Date de fin", default=datetime.now())
+    date_debut = models.DateField(verbose_name=u"Date de début", default=django.utils.timezone.now)
+    date_fin = models.DateField(verbose_name=u"Date de fin", default=django.utils.timezone.now)
     actif = models.BooleanField(verbose_name=u"Actif")
     en_attente = models.BooleanField(verbose_name=u"En attente")
 

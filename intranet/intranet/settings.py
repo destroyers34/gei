@@ -125,7 +125,7 @@ INSTALLED_APPS = {
     'grappelli',
     # 'grappelli.dashboard',
     'django.contrib.admin',
-    'south'
+    # 'south'
 }
 
 APPEND_SLASH = True

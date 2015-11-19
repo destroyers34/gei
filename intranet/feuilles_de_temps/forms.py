@@ -1,6 +1,6 @@
 from django import forms
-from projets.models import Projet_Eugenie, Projet_TPE
 from feuilles_de_temps.models import Bloc_Eugenie, Banque, Bloc_TPE
+from projets.models import Projet_Eugenie, Projet_TPE
 from ressources.models import Employe
 
 
@@ -10,6 +10,7 @@ class BlocEugenieForm(forms.ModelForm):
 
     class Meta:
         model = Bloc_Eugenie
+        fields = '__all__'
 
 
 class BlocEugenieEmployeForm(forms.ModelForm):
@@ -27,6 +28,7 @@ class BlocEugenieEmployeForm(forms.ModelForm):
 class BlocEugenieApproveFrom(forms.ModelForm):
     class Meta:
         model = Bloc_Eugenie
+        fields = '__all__'
 
     def __init__(self, *args, **kwargs):
         super(BlocEugenieApproveFrom, self).__init__(*args, **kwargs)
@@ -55,6 +57,7 @@ class BanqueForm(forms.ModelForm):
 
     class Meta:
         model = Banque
+        fields = '__all__'
 
 
 class BlocTPEForm(forms.ModelForm):
@@ -63,6 +66,7 @@ class BlocTPEForm(forms.ModelForm):
 
     class Meta:
         model = Bloc_TPE
+        fields = '__all__'
 
 
 class ConsultationBlocEugenieForm(forms.ModelForm):
