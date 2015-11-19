@@ -71,7 +71,7 @@
             ed.onBeforeExecCommand.add(function(ed, cmd, ui, val) {
                 if ("mceFullScreen" != cmd) {
                     return;
-                };
+                }
                 if ("mce_fullscreen" == ed.id) {
                     base_ed = tinyMCE.get(ed.settings.fullscreen_editor_id);
                     
@@ -172,16 +172,20 @@
         
         // INTERNAL: SHOW/HIDE ADVANCED MENU
         _show_adv_menu: function(ed) {
-            ed.controlManager.setActive("grappelli_adv", 1);
-            DOM.show(ed.controlManager.get(tb).id);
-            this._resizeIframe(ed, tb, -28);
-            ed.settings.grappelli_adv_hidden = 0;
+            if (ed.controlManager.get(tb, false)) {
+                ed.controlManager.setActive("grappelli_adv", 1);
+                DOM.show(ed.controlManager.get(tb).id);
+                this._resizeIframe(ed, tb, -28);
+                ed.settings.grappelli_adv_hidden = 0;
+            }
         },
         _hide_adv_menu: function(ed) {
-            ed.controlManager.setActive("grappelli_adv", 0);
-            DOM.hide(ed.controlManager.get(tb).id);
-            this._resizeIframe(ed, tb, 28);
-            ed.settings.grappelli_adv_hidden = 1;
+            if (ed.controlManager.get(tb, false)) {
+                ed.controlManager.setActive("grappelli_adv", 0);
+                DOM.hide(ed.controlManager.get(tb).id);
+                this._resizeIframe(ed, tb, 28);
+                ed.settings.grappelli_adv_hidden = 1;
+            }
         },
         
         // GET INFO

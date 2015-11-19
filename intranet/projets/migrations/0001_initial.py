@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
-from south.utils import datetime_utils as datetime
 from south.db import db
+from south.utils import datetime_utils as datetime
 from south.v2 import SchemaMigration
-from django.db import models
 
 
 class Migration(SchemaMigration):
@@ -15,8 +14,8 @@ class Migration(SchemaMigration):
             ('nom', self.gf('django.db.models.fields.CharField')(default='X', max_length=30)),
             ('client', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['clients.Compagnie'], null=True, blank=True)),
             ('date_soumission', self.gf('django.db.models.fields.DateField')(null=True, blank=True)),
-            ('date_debut', self.gf('django.db.models.fields.DateField')(default=datetime.datetime(2013, 12, 17, 0, 0))),
-            ('date_fin', self.gf('django.db.models.fields.DateField')(default=datetime.datetime(2013, 12, 17, 0, 0))),
+            ('date_debut', self.gf('django.db.models.fields.DateField')(default=datetime.datetime(2015, 11, 18, 0, 0))),
+            ('date_fin', self.gf('django.db.models.fields.DateField')(default=datetime.datetime(2015, 11, 18, 0, 0))),
             ('actif', self.gf('django.db.models.fields.BooleanField')(default=False)),
             ('en_attente', self.gf('django.db.models.fields.BooleanField')(default=False)),
             ('modele', self.gf('django.db.models.fields.CharField')(default='X', max_length=30)),
@@ -34,8 +33,8 @@ class Migration(SchemaMigration):
             ('nom', self.gf('django.db.models.fields.CharField')(default='X', max_length=30)),
             ('client', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['clients.Compagnie'], null=True, blank=True)),
             ('date_soumission', self.gf('django.db.models.fields.DateField')(null=True, blank=True)),
-            ('date_debut', self.gf('django.db.models.fields.DateField')(default=datetime.datetime(2013, 12, 17, 0, 0))),
-            ('date_fin', self.gf('django.db.models.fields.DateField')(default=datetime.datetime(2013, 12, 17, 0, 0))),
+            ('date_debut', self.gf('django.db.models.fields.DateField')(default=datetime.datetime(2015, 11, 18, 0, 0))),
+            ('date_fin', self.gf('django.db.models.fields.DateField')(default=datetime.datetime(2015, 11, 18, 0, 0))),
             ('actif', self.gf('django.db.models.fields.BooleanField')(default=False)),
             ('en_attente', self.gf('django.db.models.fields.BooleanField')(default=False)),
             ('description', self.gf('django.db.models.fields.CharField')(default='X', max_length=30)),
@@ -73,8 +72,9 @@ class Migration(SchemaMigration):
             'budget_mat': ('django.db.models.fields.DecimalField', [], {'default': '0', 'max_digits': '11', 'decimal_places': '2'}),
             'budget_mo': ('django.db.models.fields.DecimalField', [], {'default': '0', 'max_digits': '11', 'decimal_places': '2'}),
             'client': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['clients.Compagnie']", 'null': 'True', 'blank': 'True'}),
-            'date_debut': ('django.db.models.fields.DateField', [], {'default': 'datetime.datetime(2013, 12, 17, 0, 0)'}),
-            'date_fin': ('django.db.models.fields.DateField', [], {'default': 'datetime.datetime(2013, 12, 17, 0, 0)'}),
+            'date_debut': (
+            'django.db.models.fields.DateField', [], {'default': 'datetime.datetime(2015, 11, 18, 0, 0)'}),
+            'date_fin': ('django.db.models.fields.DateField', [], {'default': 'datetime.datetime(2015, 11, 18, 0, 0)'}),
             'date_soumission': ('django.db.models.fields.DateField', [], {'null': 'True', 'blank': 'True'}),
             'en_attente': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
@@ -90,8 +90,9 @@ class Migration(SchemaMigration):
             'budget_mat': ('django.db.models.fields.DecimalField', [], {'default': '0', 'max_digits': '11', 'decimal_places': '2'}),
             'budget_mo': ('django.db.models.fields.DecimalField', [], {'default': '0', 'max_digits': '11', 'decimal_places': '2'}),
             'client': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['clients.Compagnie']", 'null': 'True', 'blank': 'True'}),
-            'date_debut': ('django.db.models.fields.DateField', [], {'default': 'datetime.datetime(2013, 12, 17, 0, 0)'}),
-            'date_fin': ('django.db.models.fields.DateField', [], {'default': 'datetime.datetime(2013, 12, 17, 0, 0)'}),
+            'date_debut': (
+            'django.db.models.fields.DateField', [], {'default': 'datetime.datetime(2015, 11, 18, 0, 0)'}),
+            'date_fin': ('django.db.models.fields.DateField', [], {'default': 'datetime.datetime(2015, 11, 18, 0, 0)'}),
             'date_soumission': ('django.db.models.fields.DateField', [], {'null': 'True', 'blank': 'True'}),
             'description': ('django.db.models.fields.CharField', [], {'default': "'X'", 'max_length': '30'}),
             'en_attente': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),

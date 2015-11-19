@@ -1,4 +1,6 @@
-﻿from local_settings import *
+﻿import os
+
+from local_settings import *
 
 ADMINS = (
     # ('Anthony Bechard', 'anthony@jrcmachinery.com'),
@@ -42,7 +44,7 @@ MEDIA_URL = '/media/'
 # Don't put anything in this directory yourself; store your static files
 # in apps' "static/" subdirectories and in STATICFILES_DIRS.
 # Example: "/home/media/media.lawrence.com/static/"
-STATIC_ROOT = join(LOCAL_PATH, 'static')
+STATIC_ROOT = os.path.join(os.path.dirname(__file__), 'static/')
 
 # URL prefix for static files.
 # Example: "http://media.lawrence.com/static/"
@@ -53,6 +55,7 @@ STATICFILES_DIRS = (
     # Put strings here, like "/home/html/static" or "C:/www/django/static".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
+    'C:/Users/abechard/PycharmProjects/Projet Github/gei/intranet/static',
 )
 
 # List of finder classes that know how to find static files in
@@ -103,14 +106,13 @@ TEMPLATE_DIRS = (
 
 AUTH_PROFILE_MODULE = 'ressources.Employe'
 
-INSTALLED_APPS = (
+INSTALLED_APPS = {
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.humanize',
-    'grappelli',
     'ressources',
     'clients',
     'projets',
@@ -121,8 +123,9 @@ INSTALLED_APPS = (
     'rapports',
     'gpao',
     'django.contrib.admin',
+    'grappelli',
     'south'
-)
+}
 
 APPEND_SLASH = True
 

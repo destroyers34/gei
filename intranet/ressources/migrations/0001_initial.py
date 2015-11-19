@@ -1,8 +1,6 @@
 # -*- coding: utf-8 -*-
-from south.utils import datetime_utils as datetime
 from south.db import db
 from south.v2 import SchemaMigration
-from django.db import models
 
 
 class Migration(SchemaMigration):
@@ -44,6 +42,7 @@ class Migration(SchemaMigration):
             (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
             ('numero', self.gf('django.db.models.fields.CharField')(max_length=10)),
             ('description', self.gf('django.db.models.fields.CharField')(max_length=60)),
+            ('type', self.gf('django.db.models.fields.CharField')(default='PO', max_length=2)),
         ))
         db.send_create_signal(u'ressources', ['Tache'])
 
@@ -128,7 +127,8 @@ class Migration(SchemaMigration):
             'Meta': {'ordering': "['numero']", 'object_name': 'Tache'},
             'description': ('django.db.models.fields.CharField', [], {'max_length': '60'}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'numero': ('django.db.models.fields.CharField', [], {'max_length': '10'})
+            'numero': ('django.db.models.fields.CharField', [], {'max_length': '10'}),
+            'type': ('django.db.models.fields.CharField', [], {'default': "'PO'", 'max_length': '2'})
         }
     }
 
