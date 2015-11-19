@@ -122,14 +122,17 @@ INSTALLED_APPS = {
     'accounts',
     'rapports',
     'gpao',
-    'django.contrib.admin',
     'grappelli',
+    # 'grappelli.dashboard',
+    'django.contrib.admin',
     'south'
 }
 
 APPEND_SLASH = True
 
 GRAPPELLI_ADMIN_TITLE = 'Groupe EuGénie Admin'
+
+#GRAPPELLI_INDEX_DASHBOARD = 'intranet.dashboard.CustomIndexDashboard'
 
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = "587"
